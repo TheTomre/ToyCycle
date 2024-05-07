@@ -37,7 +37,6 @@ Our project, ToyCycle, leverages a robust and modern tech stack designed to ensu
 - **TypeScript**: Provides static typing to JavaScript, enhancing code quality and maintainability by catching errors early in the development process.
 - **Next.js**: A React framework that enables server-side rendering and static site generation, optimizing performance and improving SEO.
 - **Express.js**: A back-end web application framework for Node.js, used to build our RESTful APIs. It simplifies routing and middleware integration, making the server more modular and easier to maintain.
-- **Vite**: An incredibly fast front-end build tool that leverages modern web technologies for quick development iteration and optimized build steps.
 - **Zod**: A TypeScript-first schema validation library that allows for safe parsing and validation of data at runtime, ensuring robust type safety across the application.
 - **Tailwind CSS**: A utility-first CSS framework for rapidly building custom user interfaces. It allows for styling directly in markup, reducing CSS maintenance issues and speeding up development.
 - **Jira**: Used for project management. It helps us keep track of all tasks, sprints, and issues, facilitating better communication and organization within the team.
