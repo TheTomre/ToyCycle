@@ -44,7 +44,9 @@ Our project, ToyCycle, leverages a robust and modern tech stack designed to ensu
 
 ## Resources
 
+
 ### Users
+
 <table>
   <thead>
     <tr>
@@ -56,33 +58,53 @@ Our project, ToyCycle, leverages a robust and modern tech stack designed to ensu
   <tbody>
     <tr>
       <td>GET</td>
-      <td>/users</td>
-      <td>Retrieve a list of all users</td>
-    </tr>
-    <tr>
-      <td>GET</td>
-      <td>/users/:uid</td>
-      <td>Retrieve a specific user by ID</td>
-    </tr>
-    <tr>
-      <td>POST</td>
-      <td>/users</td>
-      <td>Create a new user</td>
+      <td>/me</td>
+      <td>Retrieve the current user's profile and account details</td>
     </tr>
     <tr>
       <td>PUT</td>
-      <td>/users/:uid</td>
-      <td>Update an existing user by ID</td>
+      <td>/me</td>
+      <td>Update the current user's profile information</td>
     </tr>
     <tr>
       <td>DELETE</td>
-      <td>/users/:uid</td>
-      <td>Soft delete a user by ID (archive)</td>
+      <td>/me</td>
+      <td>Soft delete the current user's account (archive)</td>
+    </tr>
+  </tbody>
+</table>
+
+### Token Management
+
+<table>
+  <thead>
+    <tr>
+      <th>Method</th>
+      <th>Endpoint</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>GET</td>
+      <td>/me/tokens</td>
+      <td>Retrieve the current user's token balance</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/me/tokens/spend</td>
+      <td>Deduct tokens from the current user's balance (specify amount in body)</td>
+    </tr>
+    <tr>
+      <td>POST</td>
+      <td>/me/tokens/earn</td>
+      <td>Add tokens to the current user's balance (specify amount in body)</td>
     </tr>
   </tbody>
 </table>
 
 ### Toys
+
 <table>
   <thead>
     <tr>
@@ -120,34 +142,6 @@ Our project, ToyCycle, leverages a robust and modern tech stack designed to ensu
   </tbody>
 </table>
 
-### Tokens
-<table>
-  <thead>
-    <tr>
-      <th>Method</th>
-      <th>Endpoint</th>
-      <th>Description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>GET</td>
-      <td>/tokens</td>
-      <td>Retrieve token balance for a user</td>
-    </tr>
-    <tr>
-      <td>POST</td>
-      <td>/tokens/spend</td>
-      <td>Deduct tokens from a user's balance (specify amount in body)</td>
-    </tr>
-    <tr>
-      <td>POST</td>
-      <td>/tokens/earn</td>
-      <td>Add tokens to a user's balance (specify amount in body)</td>
-    </tr>
-  </tbody>
-</table>
-
 ## Structure
 
 ### Typescript Interfaces
@@ -174,6 +168,7 @@ interface Toy {
     category: string[];
     status: 'available' | 'exchanged';
     images: string[];
+    tokenValue: number;
 }
 
 interface Transaction {
