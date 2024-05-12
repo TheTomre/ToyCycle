@@ -1,6 +1,5 @@
 import express, { ErrorRequestHandler } from 'express';
 import cors from 'cors';
-import mongoose, { ConnectOptions } from 'mongoose';
 import routes from './routes/index.routes';
 import { middleware as OpenApiValidatorMiddleware } from 'express-openapi-validator';
 import dotenv from 'dotenv';
@@ -9,8 +8,6 @@ import path from 'path';
 dotenv.config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || 'your-mongodb-uri';
 
 // Middleware
 app.use(cors());
@@ -40,20 +37,5 @@ const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
 };
 
 app.use(errorHandler);
-
-// Database connection
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-} as ConnectOptions).then(() => {
-  console.log('MongoDB connected');
-}).catch((error) => {
-  console.error('MongoDB connection error:', error);
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
 
 export default app;
