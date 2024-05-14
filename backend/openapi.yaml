@@ -30,6 +30,55 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Toy'
+
+  /api/users:
+    get:
+      summary: Get list of users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      summary: Create a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: A new user created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/me:
+    get:
+      summary: Get a user's profile
+      responses:
+        '200':
+          description: a user's profile
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
+    delete:
+      summary: Delete a user's profile
+      responses:
+        '204':
+          description: a user's profile deleted
+        '404':
+          description: user id not found
+        '401':
+          description: Unauthorized
 components:
   schemas:
     Toy:
@@ -58,3 +107,26 @@ components:
         - name
         - description
         - tokenValue
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        username:
+          type: string
+        name:
+          type: string
+        lastActive:
+          type: string
+        password:
+          type: string
+        toyListings:
+          type: array
+          items:
+            type: object
+        tokenBalance:
+          type: integer
+      required:
+        - username
+        - name
+        - password
