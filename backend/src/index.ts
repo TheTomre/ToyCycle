@@ -1,8 +1,8 @@
 import app from "./app";
 import mongoose from "mongoose";
 
-const PORT = process.env.PORT || 8000;
-const MONGO_URI = process.env.MONGO_URI || "your-mongodb-uri";
+const PORT = process.env["PORT"] || 8000;
+const MONGO_URI = process.env["MONGO_URI"] || "your-mongodb-uri";
 
 // Database connection
 mongoose

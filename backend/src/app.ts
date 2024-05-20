@@ -29,7 +29,13 @@ app.use(
 app.use("/api", routes);
 
 // Error handler
-const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
+const errorHandler: ErrorRequestHandler = (
+  err,
+  _req,
+  res,
+  // @ts-expect-error
+  next
+) => {
   res.status(err.status || 500).json({
     errors: err.errors,
     message: err.message
