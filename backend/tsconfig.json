@@ -2,8 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "outDir": "./dist",
-    "rootDir": "./src",
+    "outDir": "dist",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
@@ -38,10 +37,23 @@
     "plugins": [],
     "resolveJsonModule": true,
     "sourceMap": true,
-    "types": ["jest"],
+    "types": [],
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "exclude": ["coverage", "dist", "node_modules"],
+  "include": [
+    ".eslintrc.base.cjs",
+    ".eslintrc.cjs",
+    ".eslintrc.next.cjs",
+    ".prettierrc.mjs",
+    ".stylelintrc.base.mjs",
+    ".stylelintrc.mjs",
+    "**/*.cjs",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }
