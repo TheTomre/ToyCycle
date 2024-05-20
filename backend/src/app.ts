@@ -1,9 +1,15 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Postponed, unsafe assumption about `err` variable */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access -- Postponed, unsafe assumption about `err` variable */
+/* eslint-disable @typescript-eslint/no-unsafe-argument -- Postponed, unsafe assumption about `err` variable */
+/* eslint-disable unicorn/prefer-module -- Postponed, consider __dirname -> import.meta.dirname */
+
 import { middleware as OpenApiValidatorMiddleware } from "express-openapi-validator";
+import { StatusCodes } from "http-status-codes";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { ErrorRequestHandler } from "express";
 import path from "node:path";
-import routes from "./routes/index.routes";
+import routes from "./routes";
 
 dotenv.config();
 
@@ -33,10 +39,12 @@ const errorHandler: ErrorRequestHandler = (
   err,
   _req,
   res,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Ok
   // @ts-expect-error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Ok
   next
 ) => {
-  res.status(err.status || 500).json({
+  res.status(err.status ?? StatusCodes.INTERNAL_SERVER_ERROR).json({
     errors: err.errors,
     message: err.message
   });
