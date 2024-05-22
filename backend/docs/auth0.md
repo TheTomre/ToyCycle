@@ -18,6 +18,9 @@
    - `SESSION_SECRET` - Random string
 7. Optionally add admin e-mails:
    - `ADMIN_EMAIL` - Comma-separated list of e-mails
+8. Add SSL certificates:
+   - `certificates/localhost.pem`
+   - `certificates/localhost-key.pem`
 
 ## Routes
 
