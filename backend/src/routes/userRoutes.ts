@@ -1,34 +1,48 @@
-import express from 'express';
-import { sendEmail } from '../emailService';
-import fs from 'fs';
-import path from 'path';
-import handlebars from 'handlebars';
+/* eslint-disable @typescript-eslint/no-unsafe-argument -- Postponed */
+/* eslint-disable no-magic-numbers -- Postponed */
+/* eslint-disable i18n-text/no-en -- Postponed */
+/* eslint-disable unicorn/prefer-module -- Postponed */
+/* eslint-disable no-sync -- Postponed */
+/* eslint-disable @typescript-eslint/no-misused-promises -- Postponed */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Postponed */
+
+import express from "express";
+import fs from "node:fs";
+import handlebars from "handlebars";
+import path from "node:path";
+import { sendEmail } from "../emailService";
 
 const router = express.Router();
 
 // Route to create a new user
-router.post('/users', async (req, res) => {
+router.post("/users", async (req, res) => {
   const { email, username } = req.body;
 
   // Request validation with express-openapi-validator happens automatically
 
   // Logic to create a new user
   const newUser = {
-    // Here should be the logic to save the user to the database
-    id: 'generated-id',
     email,
-    username,
+    // Here should be the logic to save the user to the database
+    id: "generated-id",
+    username
     // other fields...
   };
 
   // Load and compile the email template
-  const templatePath = path.join(__dirname, '..', 'templates', 'emails', 'registration.html');
-  const source = fs.readFileSync(templatePath, 'utf8');
+  const templatePath = path.join(
+    __dirname,
+    "..",
+    "templates",
+    "emails",
+    "registration.html"
+  );
+  const source = fs.readFileSync(templatePath, "utf8");
   const template = handlebars.compile(source);
   const html = template({ username });
 
   // Send the email
-  await sendEmail(email, 'Welcome to ToyCycle', html);
+  await sendEmail(email, "Welcome to ToyCycle", html);
 
   res.status(201).json(newUser);
 });

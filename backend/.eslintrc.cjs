@@ -17,7 +17,8 @@ const config = {
     sourceType: "module"
   },
   rules: {
-    "spellcheck/spell-checker": "off"
+    "spellcheck/spell-checker": "off",
+    "unicorn/no-null": "off"
   }
 };
 
