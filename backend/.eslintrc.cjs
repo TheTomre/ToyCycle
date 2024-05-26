@@ -17,6 +17,8 @@ const config = {
     sourceType: "module"
   },
   rules: {
+    "i18n-text/no-en": "off",
+    "sonarjs/no-duplicate-string": "off",
     "spellcheck/spell-checker": "off"
   }
 };

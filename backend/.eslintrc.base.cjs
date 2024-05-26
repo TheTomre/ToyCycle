@@ -91,7 +91,7 @@ const config = {
     "id-length": "off",
     "id-match": "off",
     "import/named": "off",
-    "import/no-internal-modules": "warn",
+    "import/no-internal-modules": "off",
     "import/no-self-import": "warn",
     "import/no-unresolved": "off",
     "init-declarations": "off",

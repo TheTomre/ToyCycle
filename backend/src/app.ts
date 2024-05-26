@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument -- Postponed, unsafe assumption about `err` variable */
 /* eslint-disable unicorn/prefer-module -- Postponed, consider __dirname -> import.meta.dirname */
 
-import { middleware as OpenApiValidatorMiddleware } from "express-openapi-validator";
+// import { middleware as OpenApiValidatorMiddleware } from "express-openapi-validator";
 import { StatusCodes } from "http-status-codes";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -23,13 +23,13 @@ app.use(express.json());
 app.use("/api-docs", express.static(path.join(__dirname, "openapi.yaml")));
 
 // Install the OpenAPI validator
-app.use(
-  OpenApiValidatorMiddleware({
-    apiSpec: path.join(__dirname, "openapi.yaml"),
-    validateRequests: true,
-    validateResponses: true
-  })
-);
+// app.use(
+//   OpenApiValidatorMiddleware({
+//     apiSpec: path.join(__dirname, "openapi.yaml"),
+//     validateRequests: true,
+//     validateResponses: true
+//   })
+// );
 
 // Routes
 app.use("/api", routes);

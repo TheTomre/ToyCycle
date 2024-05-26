@@ -1,9 +1,11 @@
 {
   "compilerOptions": {
     "target": "ES6",
-    "module": "CommonJS",
+    // "module": "CommonJS",
     "outDir": "dist",
     "strict": true,
+    "moduleResolution": "nodenext",
+    "module": "nodenext",
     "noImplicitAny": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -23,7 +25,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["DOM", "ES2020"],
-    "moduleResolution": "Node10",
+    // "moduleResolution": "Node10",
     "newLine": "lf",
     "noEmit": false,
     "noEmitOnError": true,
