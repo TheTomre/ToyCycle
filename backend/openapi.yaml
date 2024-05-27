@@ -30,7 +30,70 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Toy'
-
+  /api/toys/{id}:
+    get:
+      summary: Get a toy by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Toy found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toy'
+        '404':
+          description: Toy not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a toy by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Toy'
+      responses:
+        '200':
+          description: Toy updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toy'
+        '400':
+          description: Invalid input
+        '404':
+          description: Toy not found
+    delete:
+      summary: Delete a toy by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Toy deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toy'
+        '404':
+          description: Toy not found
+        '500':
+          description: Internal server error
   /api/users:
     get:
       summary: Get list of users
@@ -67,9 +130,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  $ref: '#/components/schemas/User'
+                $ref: '#/components/schemas/User'
     delete:
       summary: Delete a user's profile
       responses:
@@ -123,7 +184,7 @@ components:
         toyListings:
           type: array
           items:
-            type: object
+            $ref: '#/components/schemas/Toy'
         tokenBalance:
           type: integer
       required:
