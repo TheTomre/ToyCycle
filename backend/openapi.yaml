@@ -63,7 +63,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Toy'
+              $ref: '#/components/schemas/PartialToy'
       responses:
         '200':
           description: Toy updated
@@ -130,7 +130,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
     delete:
       summary: Delete a user's profile
       responses:
@@ -168,6 +170,26 @@ components:
         - name
         - description
         - tokenValue
+    PartialToy:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [available, exchanged]
+        images:
+          type: array
+          items:
+            type: string
+        tokenValue:
+          type: integer
     User:
       type: object
       properties:
