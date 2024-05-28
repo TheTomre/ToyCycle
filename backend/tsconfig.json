@@ -37,7 +37,7 @@
     "plugins": [],
     "resolveJsonModule": true,
     "sourceMap": true,
-    "types": [],
+    "types": ["jest", "node"],
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true
   },
