@@ -18,7 +18,7 @@ describe("Toys API", () => {
   let toyId: string;
 
   it("should create a new toy", async () => {
-    const response = await request.post("/api/toys").send({
+    const response = await request.post("/api/v1/toys").send({
       category: ["stuffed", "toy"],
       description: "A soft teddy bear",
       images: [],
@@ -34,7 +34,7 @@ describe("Toys API", () => {
   });
 
   it("should get a list of toys", async () => {
-    const response = await request.get("/api/toys");
+    const response = await request.get("/api/v1/toys");
 
     expect(response.status).toBe(200);
     // eslint-disable-next-line jest-extended/prefer-to-be-true, jest-extended/prefer-to-be-array
@@ -42,14 +42,14 @@ describe("Toys API", () => {
   });
 
   it("should get a toy by ID", async () => {
-    const response = await request.get(`/api/toys/${toyId}`);
+    const response = await request.get(`/api/v1/toys/${toyId}`);
 
     expect(response.status).toBe(200);
     expect(response.body).toHaveProperty("_id", toyId);
   });
 
   it("should update a toy by ID", async () => {
-    const response = await request.put(`/api/toys/${toyId}`).send({
+    const response = await request.put(`/api/v1/toys/${toyId}`).send({
       name: "Updated Teddy Bear"
     });
 
@@ -58,7 +58,7 @@ describe("Toys API", () => {
   });
 
   it("should delete a toy by ID", async () => {
-    const response = await request.delete(`/api/toys/${toyId}`);
+    const response = await request.delete(`/api/v1/toys/${toyId}`);
 
     expect(response.status).toBe(200);
   });
