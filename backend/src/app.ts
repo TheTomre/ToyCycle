@@ -77,7 +77,7 @@ app.use(
 );
 
 // Routes
-app.use("/api", routes);
+app.use("/api/v1", routes);
 
 // Error handler
 const errorHandler: ErrorRequestHandler = (

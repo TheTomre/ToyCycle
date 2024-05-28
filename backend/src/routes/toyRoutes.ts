@@ -14,6 +14,10 @@ const STATUS = {
   OK: 200
 };
 
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
+const DEFAULT_SORT = "asc";
+
 // Create Toy
 router.post(
   "/",
@@ -31,9 +35,18 @@ router.post(
 // Read Toys
 router.get(
   "/",
-  async (_req: Request, res: Response, next: NextFunction): Promise<void> => {
+  async (req: Request, res: Response, next: NextFunction): Promise<void> => {
     try {
-      const toys = await Toy.find({});
+      const {
+        limit = DEFAULT_LIMIT,
+        page = DEFAULT_PAGE,
+        sort = DEFAULT_SORT
+      } = req.query;
+      const sortOrder = sort === "asc" || sort === "desc" ? sort : DEFAULT_SORT;
+      const toys = await Toy.find({})
+        .skip((Number(page) - 1) * Number(limit))
+        .limit(Number(limit))
+        .sort({ name: sortOrder });
       res.status(STATUS.OK).send(toys);
     } catch (err) {
       next(err);
