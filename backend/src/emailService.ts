@@ -1,4 +1,7 @@
+/* eslint-disable i18n-text/no-en -- Postponed, decide if lang file is needed */
+
 import { EMAIL_FROM, SENDGRID_API_KEY } from "./config";
+import logger from "./logger/logger";
 import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(SENDGRID_API_KEY);
@@ -17,10 +20,8 @@ export const sendEmail = async (
 
   try {
     await sgMail.send(msg);
-    /* eslint-disable-next-line no-console -- Postponed, talk to Firill about this file */
-    console.log("Email sent successfully");
+    logger.info("Email sent successfully");
   } catch (err) {
-    /* eslint-disable-next-line no-console -- Postponed, talk to Firill about this file */
-    console.error("Error sending email:", err);
+    logger.error("Error sending email:", err);
   }
 };

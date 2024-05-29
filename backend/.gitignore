@@ -1,4 +1,5 @@
 node_modules
+certificates
 dist
 .env
 logs
