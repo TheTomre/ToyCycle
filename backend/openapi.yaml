@@ -105,10 +105,15 @@ paths:
             description: An array of user objects
             content:
               application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Users'
+                 schema:
+                  type: object
+                  properties:
+                    data:
+                      type: array
+                      items:
+                        $ref: '#/components/schemas/UserResponse'
+                    status:
+                      type: string
           '404':
             description: Toys not found
             content:
@@ -142,8 +147,15 @@ paths:
             description: A new user created
             content:
               application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
+                 schema:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      items:
+                        $ref: '#/components/schemas/UserResponse'
+                    status:
+                      type: string
           '400':
             description: Bad request
             content:
@@ -156,7 +168,7 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error'  
-    /users/{user_id}:
+    /api/v1/users/{user_id}:
       get:
         summary: Get user by id
         operationId: getUserById
@@ -174,16 +186,51 @@ paths:
             description: An user of user objects
             content:
               application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/User'
+                 schema:
+                  type: object
+                  properties:
+                    data:
+                      type: object
+                      items:
+                        $ref: '#/components/schemas/UserResponse'
+                    status:
+                      type: string
           '404':
             description: User not found
             content:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      put:
+        summary: Update a user's profile
+        operationId: updateCurrentUser
+        tags: 
+          - Users
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        responses:
+          '201':
+            description: A current user updated
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UserResponse'
           '400':
             description: Bad request
             content:
@@ -212,7 +259,12 @@ paths:
           '204':
             description:  Delete user object by id
             content:
-              application/json: {}
+              application/json:   
+                schema: 
+                  type: object
+                  properties:
+                   status:
+                      type: string
           '404':
             description: User not found
             content:
@@ -358,11 +410,10 @@ components:
         tokenBalance:
           type: integer
       required:
-        - username
-        - name
+        - firstName
+        - lastName
+        - email
         - password
-        - city
-        - country
         - address
     Address:
       type: object
@@ -382,17 +433,42 @@ components:
           type: string
         street2:
           type: string
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+         type: string
+        lastName: 
+         type: string
+        lastActive:
+          type: string
+          format: date-time
+        email:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+        address:
+          $ref: '#/components/schemas/Address'
+        bio:
+          type: string
+        toyListings:
+          $ref: '#/components/schemas/Toys'
+        tokenBalance:
+          type: integer
     Users:
       type: array
       items: 
-         $ref: '#/components/schemas/User'
+         $ref: '#/components/schemas/UserResponse'
     Error:
       type: object
       required:
-          - code
+          - status
           - message
       properties:
-        code:
+        status:
           type: integer
         message:
           type: string 

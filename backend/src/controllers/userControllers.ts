@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { STATUS, STATUS_MESSAGE } from "../consts/status-codes";
-import userService from "./services";
+import User from "../models/userModel";
+import logger from "../logger/logger";
+import { PAGINATION } from "../consts/pagination";
 
 const createNewUser = async (
   req: Request,
@@ -8,7 +10,10 @@ const createNewUser = async (
   next: NextFunction
 ) => {
   try {
-    const newUser = await userService.createUser(req.body);
+    const newUser = await User.create(req.body);
+    await newUser.save();
+    logger.info(`User ${newUser.email} created`);
+
     if (!newUser)
       return res.status(STATUS.BAD_REQUEST).json({
         message: "User not created",
@@ -33,11 +38,13 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
     });
 
   try {
-    const user = await userService.fetchUserById(req.params["id"]);
+    const user = await User.findById(req.params["id"]);
     if (!user)
       return res
         .status(STATUS.NOT_FOUND)
         .json({ message: "User not found", status: STATUS_MESSAGE.FAIL });
+
+    logger.info(`User ${user.email} fetched successfully`);
 
     return res.status(STATUS.SUCCESS).json({
       data: user,
@@ -49,17 +56,30 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getAllUsers = async (
-  _req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await userService.fetchAllUsers();
+    const {
+      limit = PAGINATION.limit,
+      page = PAGINATION.page,
+      sort = PAGINATION.sort
+    } = req.query;
+
+    const sortOrder =
+      sort === "asc" || sort === "desc" ? sort : PAGINATION.sort;
+
+    const sortOrderValue = sortOrder === "asc" ? 1 : -1;
+
+    const users = await User.find({})
+      .skip((Number(page) - 1) * Number(limit))
+      .limit(Number(limit))
+      .sort({ name: sortOrderValue });
+
     if (!users?.length)
       return res
         .status(STATUS.NOT_FOUND)
         .json({ message: "No users found", status: STATUS_MESSAGE.FAIL });
+
+    logger.info(`Users fetched successfully ${users}`);
     return res.status(STATUS.SUCCESS).json({
       data: users,
       status: STATUS_MESSAGE.SUCCESS
@@ -82,16 +102,22 @@ const updateUserById = async (
     });
 
   try {
-    const updatedUser = await userService.updateUserById(
+    const updatedUser = await User.findByIdAndUpdate(
       req.params["id"],
-      req.body
+      req.body,
+      {
+        new: true,
+        runValidators: true
+      }
     );
     if (!updatedUser)
       return res
         .status(STATUS.NOT_FOUND)
         .json({ message: "User not found", status: STATUS_MESSAGE.FAIL });
 
-    return res.status(STATUS.SUCCESS).json({
+    logger.info(`User ${updatedUser.email} updated successfully`);
+
+    return res.status(STATUS.SUCCESS_201).json({
       data: updatedUser,
       status: STATUS_MESSAGE.SUCCESS
     });
@@ -113,14 +139,14 @@ const deleteUserById = async (
     });
 
   try {
-    const deletedUser = await userService.deleteUserById(req.params["id"]);
+    const deletedUser = await User.findByIdAndDelete(req.params["id"]);
     if (!deletedUser)
       return res
         .status(STATUS.NOT_FOUND)
         .json({ message: "User not found", status: STATUS_MESSAGE.FAIL });
 
-    return res.status(STATUS.SUCCESS).json({
-      data: deletedUser,
+    logger.info(`User ${deletedUser.email} deleted successfully`);
+    return res.status(STATUS.SUCCESS_204).json({
       status: STATUS_MESSAGE.SUCCESS
     });
   } catch (err) {
@@ -128,6 +154,32 @@ const deleteUserById = async (
     return undefined;
   }
 };
+
+// const addUserAvatar = async (id: string, avatar: string) => {
+//   try {
+//     const user = await User.findById(id);
+//     if (!user) return undefined;
+//     user.avatar = avatar;
+//     await user.save();
+//     logger.info(`Avatar added to user ${user.email}`);
+//     return user;
+//   } catch (err) {
+//     throw new Error((err as Error).message);
+//   }
+// };
+
+// const deleteUserAvatar = async (id: string) => {
+//   try {
+//     const user = await User.findById(id);
+//     if (!user) return undefined;
+//     user.avatar = "";
+//     await user.save();
+//     logger.info(`Avatar deleted from user ${user.email}`);
+//     return user;
+//   } catch (err) {
+//     throw new Error((err as Error).message);
+//   }
+// };
 
 export default {
   createNewUser,

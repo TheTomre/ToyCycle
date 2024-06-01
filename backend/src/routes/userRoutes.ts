@@ -2,17 +2,16 @@ import express from "express";
 // import fs from "node:fs";
 // import handlebars from "handlebars";
 // import path from "node:path";
-import controller from "../users/controller";
+import controller from "../controllers/userControllers";
 // import { sendEmail } from "../emailService";
 
 const router = express.Router();
 
-router.get("/users", controller.getAllUsers);
-router.post("/users", controller.createNewUser);
-
-router.get("/users/:id", controller.getUserById);
-router.put("/users/:id", controller.updateUserById);
-router.delete("/users/:id", controller.deleteUserById);
+router.get("/", controller.getAllUsers);
+router.post("/", controller.createNewUser);
+router.get("/:id", controller.getUserById);
+router.put("/:id", controller.updateUserById);
+router.delete("/:id", controller.deleteUserById);
 /*
 // Route to create a new user
 router.post("/users", async (req, res) => {

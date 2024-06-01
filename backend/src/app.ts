@@ -9,6 +9,7 @@ import passport from "passport";
 import path from "node:path";
 import session from "express-session";
 import routes from "./routes";
+import { appendJwt } from "./middleware";
 import {
   AUTH0_CALLBACK_URL,
   AUTH0_CLIENT_ID,
@@ -16,7 +17,6 @@ import {
   AUTH0_DOMAIN,
   SESSION_SECRET
 } from "./config";
-import { appendJwt } from "./middleware";
 
 dotenv.config();
 
@@ -36,10 +36,6 @@ app.use(
     secret: SESSION_SECRET
   })
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(appendJwt);
 
 passport.use(
   new Auth0Strategy(
@@ -63,8 +59,6 @@ app.use(appendJwt);
 // Serve the OpenAPI specification
 app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));
 
-// Routes
-app.use("/api", routes);
 // Install the OpenAPI validator
 app.use(
   OpenApiValidator({
@@ -78,7 +72,15 @@ app.use(
 app.use("/api/v1", routes);
 
 // Error handler
-const errorHandler: ErrorRequestHandler = (err, _req, res) => {
+const errorHandler: ErrorRequestHandler = (
+  err,
+  _req,
+  res,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment -- Ok
+  // @ts-expect-error
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- Ok
+  next
+) => {
   res.status(err.status ?? StatusCodes.INTERNAL_SERVER_ERROR).json({
     errors: err.errors,
     message: err.message

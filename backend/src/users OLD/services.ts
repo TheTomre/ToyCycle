@@ -1,5 +1,5 @@
 import { UserInputDTO, User as UserType } from "../types/user";
-import User from "./models/user-model";
+import User from "../models/userModel";
 import logger from "../logger/logger";
 
 const createUser = async (data: UserInputDTO) => {
@@ -29,7 +29,7 @@ const fetchAllUsers = async () => {
   try {
     const users = await User.find({});
     if (users.length === 0) return undefined;
-    logger.info("Users fetched successfully");
+    logger.info(`Users fetched successfully ${users}`);
     return users;
   } catch (err) {
     throw new Error((err as Error).message);

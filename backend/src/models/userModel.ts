@@ -52,14 +52,10 @@ const userSchema = new Schema({
     required: [true, "A first name is required"],
     type: String
   },
-  id: {
-    required: true,
-    type: Schema.ObjectId
-  },
   lastActive: {
-    default: Date.now,
+    default: new Date().toISOString(),
     required: true,
-    type: Date
+    type: String
   },
   lastName: {
     minlength: 1,
@@ -73,13 +69,14 @@ const userSchema = new Schema({
     trim: true,
     type: String
   },
-  passwordChangedAt: Date,
-  passwordConfirm: {
-    required: [true, "Please confirm your password"],
-    type: String
-  },
-  passwordResetExpires: Date,
-  passwordResetToken: String,
+  //! TODO: Add password encryption
+  // passwordChangedAt: Date,
+  // passwordConfirm: {
+  //   required: [true, "Please confirm your password"],
+  //   type: String
+  // },
+  // passwordResetExpires: Date,
+  // passwordResetToken: String,
 
   tokenBalance: { default: 0, required: true, type: Number },
   toyListings: {
