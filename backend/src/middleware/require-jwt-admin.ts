@@ -1,6 +1,6 @@
-import { ADMIN_EMAIL } from "../config";
 import type { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
+import { ADMIN_EMAIL } from "../config";
 
 export const requireJwtAdmin: RequestHandler = (req, res, next) => {
   if (req.jwt && ADMIN_EMAIL.includes(req.jwt.email)) next();

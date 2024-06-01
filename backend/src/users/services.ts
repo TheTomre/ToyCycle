@@ -1,6 +1,3 @@
-/* eslint-disable no-type-assertion/no-type-assertion -- Due to eeror type issue */
-/* eslint-disable @typescript-eslint/explicit-function-return-type -- Posponed */
-
 import { UserInputDTO, User as UserType } from "../types/user";
 import User from "./models/user-model";
 import logger from "../logger/logger";

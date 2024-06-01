@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type -- Posponed */
-
 import { NextFunction, Request, Response } from "express";
-import { STATUS } from "../consts/status-codes";
+import { STATUS, STATUS_MESSAGE } from "../consts/status-codes";
 import userService from "./services";
 
 const createNewUser = async (
@@ -10,17 +8,16 @@ const createNewUser = async (
   next: NextFunction
 ) => {
   try {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Posponed
     const newUser = await userService.createUser(req.body);
     if (!newUser)
       return res.status(STATUS.BAD_REQUEST).json({
         message: "User not created",
-        status: "fail"
+        status: STATUS_MESSAGE.FAIL
       });
 
     return res.status(STATUS.SUCCESS_201).json({
       data: newUser,
-      status: "success"
+      status: STATUS_MESSAGE.SUCCESS
     });
   } catch (err) {
     next(err);
@@ -32,7 +29,7 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   if (!req.params["id"])
     return res.status(STATUS.BAD_REQUEST).json({
       message: "Please provide a user id",
-      status: "fail"
+      status: STATUS_MESSAGE.FAIL
     });
 
   try {
@@ -40,11 +37,11 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
     if (!user)
       return res
         .status(STATUS.NOT_FOUND)
-        .json({ message: "User not found", status: "fail" });
+        .json({ message: "User not found", status: STATUS_MESSAGE.FAIL });
 
     return res.status(STATUS.SUCCESS).json({
       data: user,
-      status: "success"
+      status: STATUS_MESSAGE.SUCCESS
     });
   } catch (err) {
     next(err);
@@ -62,10 +59,10 @@ const getAllUsers = async (
     if (!users?.length)
       return res
         .status(STATUS.NOT_FOUND)
-        .json({ message: "No users found", status: "fail" });
+        .json({ message: "No users found", status: STATUS_MESSAGE.FAIL });
     return res.status(STATUS.SUCCESS).json({
       data: users,
-      status: "success"
+      status: STATUS_MESSAGE.SUCCESS
     });
   } catch (err) {
     next(err);
@@ -81,7 +78,7 @@ const updateUserById = async (
   if (!req.params["id"])
     return res.status(STATUS.BAD_REQUEST).json({
       message: "Please provide a user id",
-      status: "fail"
+      status: STATUS_MESSAGE.FAIL
     });
 
   try {
@@ -92,11 +89,11 @@ const updateUserById = async (
     if (!updatedUser)
       return res
         .status(STATUS.NOT_FOUND)
-        .json({ message: "User not found", status: "fail" });
+        .json({ message: "User not found", status: STATUS_MESSAGE.FAIL });
 
     return res.status(STATUS.SUCCESS).json({
       data: updatedUser,
-      status: "success"
+      status: STATUS_MESSAGE.SUCCESS
     });
   } catch (err) {
     next(err);
@@ -112,7 +109,7 @@ const deleteUserById = async (
   if (!req.params["id"])
     return res.status(STATUS.BAD_REQUEST).json({
       message: "Please provide a user id",
-      status: "fail"
+      status: STATUS_MESSAGE.FAIL
     });
 
   try {
@@ -120,11 +117,11 @@ const deleteUserById = async (
     if (!deletedUser)
       return res
         .status(STATUS.NOT_FOUND)
-        .json({ message: "User not found", status: "fail" });
+        .json({ message: "User not found", status: STATUS_MESSAGE.FAIL });
 
     return res.status(STATUS.SUCCESS).json({
       data: deletedUser,
-      status: "success"
+      status: STATUS_MESSAGE.SUCCESS
     });
   } catch (err) {
     next(err);

@@ -6,3 +6,8 @@ export const STATUS = {
   SUCCESS_201: 201,
   UNAUTHORIZED: 401
 };
+
+export const STATUS_MESSAGE = {
+  SUCCESS: "success",
+  FAIL: "fail"
+};

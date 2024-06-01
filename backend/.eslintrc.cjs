@@ -17,8 +17,10 @@ const config = {
     sourceType: "module"
   },
   rules: {
+    "@typescript-eslint/no-unsafe-argument": "off",
     "spellcheck/spell-checker": "off",
-    "unicorn/no-null": "off"
+    "unicorn/no-null": "off",
+    "import/prefer-default-export": "off"
   }
 };
 

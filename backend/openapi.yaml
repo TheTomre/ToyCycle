@@ -1,0 +1,398 @@
+openapi: 3.0.0
+info:
+  title: ToyCycle API
+  version: 1.0.0
+paths:
+    /api/toys:
+      get:
+        summary: Get list of toys
+        responses:
+          '200':
+            description: A list of toys
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Toy'
+      post:
+        summary: Add a new toy
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toy'
+        responses:
+          '201':
+            description: Toy created
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Toy'
+    /api/toys/{id}:
+      get:
+        summary: Get a toy by ID
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Toy found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Toy'
+          '404':
+            description: Toy not found
+          '500':
+            description: Internal server error
+      put:
+        summary: Update a toy by ID
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Toy'
+        responses:
+          '200':
+            description: Toy updated
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Toy'
+          '400':
+            description: Invalid input
+          '404':
+            description: Toy not found
+      delete:
+        summary: Delete a toy by ID
+        parameters:
+          - name: id
+            in: path
+            required: true
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Toy deleted
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Toy'
+          '404':
+            description: Toy not found
+          '500':
+            description: Internal server error
+    /api/users:
+      get:
+        summary: Get list of users
+        operationId: getAllUsers
+        tags: 
+          - Users
+        responses:
+          '200':
+            description: An array of user objects
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Users'
+          '404':
+            description: Toys not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'                  
+      post:
+        summary: Create a new user
+        tags: 
+          - Users
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          '201':
+            description: A new user created
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'  
+    /users/{user_id}:
+      get:
+        summary: Get user by id
+        operationId: getUserById
+        parameters:
+          - name: user_id
+            in: path
+            required: true
+            description: Id of user
+            schema:
+              type: string
+        tags: 
+          - Users
+        responses:
+          '200':
+            description: An user of user objects
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+          '404':
+            description: User not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+      delete:
+        summary: Delete user by id
+        operationId: deleteuserById
+        parameters:
+          - name: user_id
+            in: path
+            required: true
+            description: Id of toy
+            schema:
+              type: string
+        tags: 
+          - Users
+        responses:
+          '204':
+            description:  Delete user object by id
+            content:
+              application/json: {}
+          '404':
+            description: User not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'  
+    /me:
+      get:
+        summary: Get a current user's profile
+        operationId: getCurrentUser
+        tags: 
+          - Me
+        responses:
+          '201':
+            description: Get current user
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      put:
+        summary: Update a current user's profile
+        operationId: updateCurrentUser
+        tags: 
+          - Me
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        responses:
+          '201':
+            description: A current user updated
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/User'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+      delete:
+        summary: Delete a current user's profile
+        operationId: deleteCurrentUser
+        tags: 
+          - Me
+        responses:
+          '204':
+            description: a user's profile deleted
+          '404':
+            description: user id not found
+          '401':
+            description: Unauthorized
+components:
+  schemas:
+    Toy:
+      type: object
+      required:
+        - name
+        - description
+        - tokenValue
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [available, exchanged]
+        images:
+          type: array
+          items:
+            type: string
+        tokenValue:
+          type: integer
+    Toys:
+      type: array
+      items: 
+         $ref: '#/components/schemas/Toy'
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+        firstName:
+         type: string
+        lastName: 
+         type: string
+        lastActive:
+          type: string
+          format: date-time
+        email:
+          type: string
+        password:
+          type: string
+        avatar:
+          type: string
+          nullable: true
+        address:
+          $ref: '#/components/schemas/Address'
+        bio:
+          type: string
+        toyListings:
+          $ref: '#/components/schemas/Toys'
+        tokenBalance:
+          type: integer
+      required:
+        - username
+        - name
+        - password
+        - city
+        - country
+        - address
+    Address:
+      type: object
+      required:
+        - city
+        - country
+        - zipcode
+        - street1
+      properties:
+        city:
+          type: string
+        country:
+          type: string
+        zipcode:
+          type: string
+        street1:
+          type: string
+        street2:
+          type: string
+    Users:
+      type: array
+      items: 
+         $ref: '#/components/schemas/User'
+    Error:
+      type: object
+      required:
+          - code
+          - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string 

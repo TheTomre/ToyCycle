@@ -1,8 +1,6 @@
-/* eslint-disable i18n-text/no-en -- Postponed, decide if lang file is needed */
-
+import sgMail from "@sendgrid/mail";
 import { EMAIL_FROM, SENDGRID_API_KEY } from "./config";
 import logger from "./logger/logger";
-import sgMail from "@sendgrid/mail";
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 

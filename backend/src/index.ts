@@ -1,16 +1,11 @@
-/* eslint-disable no-sync -- Ok */
-/* eslint-disable i18n-text/no-en -- Postponed, decide if lang file is needed */
-/* eslint-disable no-magic-numbers -- Postponed, better move all constants to consts/index.ts */
-/* eslint-disable no-process-env -- Postponed, better move all process.env to config/index.ts */
-
-import { ENV, SECURE_PORT } from "./config";
-import app from "./app";
 import fs from "node:fs";
 import http from "node:http";
 import https from "node:https";
+import mongoose from "mongoose";
+import { ENV, SECURE_PORT } from "./config";
+import app from "./app";
 import { initPassport } from "./providers";
 import { logger } from "./services";
-import mongoose from "mongoose";
 
 const PORT = process.env["PORT"] || 8000;
 const MONGO_URI = process.env["MONGO_URI"] || "your-mongodb-uri";
@@ -22,11 +17,9 @@ initPassport();
 // Database connection
 mongoose
   .connect(MONGO_URI)
-  // eslint-disable-next-line github/no-then -- Ok
   .then(() => {
     logger.info("Connected to MongoDB");
   })
-  // eslint-disable-next-line github/no-then -- Ok
   .catch((err: unknown) => {
     logger.error("MongoDB connection error:", err);
   });

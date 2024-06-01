@@ -8,9 +8,9 @@ export const SENDGRID_API_KEY =
   process.env["SENDGRID_API_KEY"] || "sendgrid-api-key";
 export const EMAIL_FROM = process.env["EMAIL_FROM"] || "email@example.com";
 
-export const ENV = process.env["ENV"];
+export const { ENV } = process.env;
 
-export const SECURE_PORT = process.env["SECURE_PORT"];
+export const { SECURE_PORT } = process.env;
 
 export const ADMIN_EMAIL = (process.env["ADMIN_EMAIL"] ?? "")
   .split(",")
@@ -27,7 +27,7 @@ export const AUTH0_DOMAIN = process.env["AUTH0_DOMAIN"] ?? "";
 
 export const AUTH0_RETURN_URL = process.env["AUTH0_RETURN_URL"] ?? "";
 
-export const COOKIE_DOMAIN = process.env["COOKIE_DOMAIN"];
+export const { COOKIE_DOMAIN } = process.env;
 
 export const JWT_SECRET = process.env["JWT_SECRET"] ?? "";
 

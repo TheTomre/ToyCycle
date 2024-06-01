@@ -9,9 +9,7 @@ export type User = {
   id: string;
   lastActive: Date;
   lastName: string;
-  // Unique username
   password: string;
-  // Stores hashed password
   tokenBalance: number;
   toyListings: Toy[];
 };
