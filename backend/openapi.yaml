@@ -3,7 +3,7 @@ info:
   title: ToyCycle API
   version: 1.0.0
 paths:
-    /api/toys:
+    /api/v1/toys:
       get:
         summary: Get list of toys
         responses:
@@ -94,7 +94,7 @@ paths:
             description: Toy not found
           '500':
             description: Internal server error
-    /api/users:
+    /api/v1/users:
       get:
         summary: Get list of users
         operationId: getAllUsers
