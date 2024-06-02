@@ -1,5 +1,5 @@
 /* eslint-disable no-sync -- Ok */
-/* eslint-disable i18n-text/no-en -- Postponed, decide if lang file is needed */
+
 /* eslint-disable no-magic-numbers -- Postponed, better move all constants to consts/index.ts */
 /* eslint-disable no-process-env -- Postponed, better move all process.env to config/index.ts */
 /* eslint-disable no-console -- Postponed, better use logger */
@@ -25,7 +25,7 @@ mongoose
   .connect(MONGO_URI)
   // eslint-disable-next-line github/no-then -- Ok
   .then(() => {
-    console.log("MongoDB connectedon");
+    console.log("MongoDB connected");
   })
   // eslint-disable-next-line github/no-then -- Ok
   .catch((err: unknown) => {
@@ -39,16 +39,16 @@ if (ENV === "development") {
     key: fs.readFileSync("./certificates/localhost-key.pem")
   } as const;
 
+  // HTTP server
   http.createServer(app).listen(PORT, () => {
-    logger.info("Server started");
+    logger.info(`HTTP Server started on http://localhost:${PORT}`);
   });
 
+  // HTTPS server
   https.createServer(httpsOptions, app).listen(SECURE_PORT, () => {
-    logger.info("Secure server started");
+    logger.info(`HTTPS Server started on https://localhost:${SECURE_PORT}`);
   });
-}
-// Start server
-else
+} else
   app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
   });

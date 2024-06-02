@@ -83,7 +83,7 @@ const config = {
       "warn",
       { allow: ["eslint", "eslint-disable", "eslint-disable-next-line"] }
     ],
-    "eslint-comments/require-description": "warn",
+    "eslint-comments/require-description": "off",
     "etc/no-deprecated": "off",
     "etc/no-implicit-any-catch": "off",
     "filenames/match-regex": "off",
@@ -91,7 +91,7 @@ const config = {
     "id-length": "off",
     "id-match": "off",
     "import/named": "off",
-    "import/no-internal-modules": "warn",
+    "import/no-internal-modules": "off",
     "import/no-self-import": "warn",
     "import/no-unresolved": "off",
     "init-declarations": "off",
