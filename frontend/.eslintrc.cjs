@@ -1,18 +1,28 @@
-module.exports = {
-  root: true,
-  env: { browser: true, es2020: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react-hooks/recommended',
-  ],
-  ignorePatterns: ['dist', '.eslintrc.cjs'],
-  parser: '@typescript-eslint/parser',
-  plugins: ['react-refresh'],
-  rules: {
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
+/**
+ * @type {import("eslint").Linter.Config }
+ */
+const config = {
+  env: {
+    es2020: true,
+    jest: true
   },
-}
+  extends: ["./.eslintrc.base.cjs"],
+  globals: { Express: true },
+  ignorePatterns: ["!.*", "coverage/**", "dist/**", "node_modules/**"],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: 2020,
+    project: "tsconfig.json",
+    sourceType: "module"
+  },
+  rules: {
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "spellcheck/spell-checker": "off",
+    "unicorn/no-null": "off",
+    "import/prefer-default-export": "off"
+  }
+};
+
+// eslint-disable-next-line import/no-commonjs -- Ok
+module.exports = config;
