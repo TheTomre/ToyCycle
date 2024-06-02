@@ -10,6 +10,7 @@ import {
   AUTH0_DOMAIN,
   SESSION_SECRET
 } from "./config";
+
 import { Strategy as Auth0Strategy } from "passport-auth0";
 import { middleware as OpenApiValidator } from "express-openapi-validator";
 import { StatusCodes } from "http-status-codes";
@@ -20,7 +21,9 @@ import dotenv from "dotenv";
 import express, { ErrorRequestHandler } from "express";
 import passport from "passport";
 import path from "node:path";
+
 import routes from "./routes";
+
 import session from "express-session";
 
 dotenv.config();
@@ -74,7 +77,7 @@ app.use(
 );
 
 // Routes
-app.use("/api", routes);
+app.use("/api/v1", routes);
 
 // Error handler
 const errorHandler: ErrorRequestHandler = (

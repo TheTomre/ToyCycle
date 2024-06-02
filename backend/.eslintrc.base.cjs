@@ -2,6 +2,10 @@
  * @type {import("eslint").Linter.Config }
  */
 const config = {
+  env: {
+    jest: true,
+    node: true
+  },
   extends: [
     "eslint:recommended",
     "strict",
@@ -18,7 +22,6 @@ const config = {
     "plugin:promise/recommended",
     "plugin:regexp/recommended",
     "plugin:security/recommended-legacy",
-    "plugin:sonarjs/recommended",
     "plugin:sort/recommended",
     "plugin:typescript-sort-keys/recommended",
     "plugin:unicorn/recommended",
@@ -34,12 +37,29 @@ const config = {
     {
       files: ["*.test.ts", "*.test.tsx"],
       rules: {
+        "@typescript-eslint/no-unsafe-argument": "off",
+        "@typescript-eslint/no-unsafe-assignment": "off",
+        "@typescript-eslint/no-unsafe-call": "off",
+        "@typescript-eslint/no-unsafe-member-access": "off",
         "i18n-text/no-en": "off",
+        "jest/no-disabled-tests": "warn",
+        "jest/no-focused-tests": "error",
+        "jest/no-identical-title": "error",
+        "jest/prefer-to-have-length": "warn",
+        "jest/valid-expect": "error",
         "no-magic-numbers": "off",
         "node/no-unpublished-import": "off"
       }
     }
   ],
+  parser: "@typescript-eslint/parser",
+  parserOptions: {
+    ecmaFeatures: { jsx: true },
+    ecmaVersion: 2020,
+    project: ["./tsconfig.json"],
+    sourceType: "module",
+    tsconfigRootDir: __dirname
+  },
   plugins: [
     "es",
     "no-type-assertion",
@@ -47,7 +67,8 @@ const config = {
     "sort-annotation",
     "sort-imports-requires",
     "spellcheck",
-    "unused-imports"
+    "unused-imports",
+    "jest"
   ],
   rules: {
     "@typescript-eslint/explicit-function-return-type": [

@@ -16,6 +16,8 @@ const ToySchema: Schema = new Schema({
 
 export default mongoose.model<ToyType>("Toy", ToySchema);
 
+export type PartialToyType = Partial<ToyType>;
+
 export type ToyType = Document & {
   category: string[];
   description: string;

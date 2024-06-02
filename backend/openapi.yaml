@@ -3,9 +3,29 @@ info:
   title: ToyCycle API
   version: 1.0.0
 paths:
-  /api/toys:
+  /api/v1/toys:
     get:
       summary: Get list of toys
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            default: 1
+          description: Page number
+        - in: query
+          name: limit
+          schema:
+            type: integer
+            default: 10
+          description: Number of items per page
+        - in: query
+          name: sort
+          schema:
+            type: string
+            enum: [asc, desc]
+            default: asc
+          description: Sort order (asc or desc)
       responses:
         '200':
           description: A list of toys
@@ -30,7 +50,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Toy'
-  /api/toys/{id}:
+  /api/v1/toys/{id}:
     get:
       summary: Get a toy by ID
       parameters:
@@ -63,7 +83,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Toy'
+              $ref: '#/components/schemas/PartialToy'
       responses:
         '200':
           description: Toy updated
@@ -94,7 +114,7 @@ paths:
           description: Toy not found
         '500':
           description: Internal server error
-  /api/users:
+  /api/v1/users:
     get:
       summary: Get list of users
       responses:
@@ -121,7 +141,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/User'
-  /api/me:
+  /api/v1/me:
     get:
       summary: Get a user's profile
       responses:
@@ -130,7 +150,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                items:
+                  $ref: '#/components/schemas/User'
     delete:
       summary: Delete a user's profile
       responses:
@@ -168,6 +190,26 @@ components:
         - name
         - description
         - tokenValue
+    PartialToy:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        category:
+          type: array
+          items:
+            type: string
+        status:
+          type: string
+          enum: [available, exchanged]
+        images:
+          type: array
+          items:
+            type: string
+        tokenValue:
+          type: integer
     User:
       type: object
       properties:
