@@ -1,11 +1,10 @@
-/* eslint-disable i18n-text/no-en -- Postponed, decide if lang file is needed */
-
-import {
-  ADMIN_EMAIL,
-  AUTH0_RETURN_URL,
-  COOKIE_DOMAIN,
-  JWT_SECRET
-} from "../config";
+import { Router } from "express";
+import { StatusCodes } from "http-status-codes";
+import jwt from "jsonwebtoken";
+import passport from "passport";
+import zod from "zod";
+import logger from "../logger/logger";
+import { requireJwtAdmin, requireJwtUser } from "../middleware";
 import {
   AUTH0_SCOPE,
   AUTH_COOKIE_EXPIRATION_LIFETIME_MS,
@@ -13,20 +12,58 @@ import {
   AUTH_COOKIE_NAME,
   JWT_EXPIRES_IN
 } from "../consts";
-import { requireJwtAdmin, requireJwtUser } from "../middleware";
-import { Router } from "express";
-import { StatusCodes } from "http-status-codes";
-import jwt from "jsonwebtoken";
-import { logger } from "../services";
-import passport from "passport";
-import zod from "zod";
+import {
+  adminEmails,
+  AUTH0_RETURN_URL,
+  COOKIE_DOMAIN,
+  JWT_SECRET
+} from "../config";
+
+// Переместите определения функций и схем выше по коду
+const preprocessEmail = <T extends zod.ZodTypeAny>(
+  schema: T
+): zod.ZodEffects<T> => {
+  return zod.preprocess(
+    value => (typeof value === "string" ? value.toLowerCase() : value),
+    schema
+  );
+};
+
+const Auth0UserValidationSchema = zod.object({
+  emails: zod
+    .array(zod.strictObject({ value: zod.string() }))
+    .nonempty()
+    .max(1)
+});
+
+const JwtValidationSchema = zod.object({
+  email: preprocessEmail(zod.string().email())
+});
+
+const redirectHtml = `
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <meta http-equiv="refresh" content="0;url=${AUTH0_RETURN_URL}">
+          <title>Redirecting...</title>
+      </head>
+      <body>
+          <p>If you are not redirected automatically, follow this <a href="${AUTH0_RETURN_URL}">link to the new page</a>.</p>
+      </body>
+    </html>
+  `;
+
+interface Jwt {
+  readonly email: string;
+}
 
 const auth0Router = Router();
 
 auth0Router
   .get(
     "/callback",
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Postponed
     passport.authenticate("auth0", {
       failureRedirect: AUTH0_RETURN_URL
     }),
@@ -57,7 +94,6 @@ auth0Router
   )
   .get(
     "/login",
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument -- Postponed
     passport.authenticate("auth0", { scope: AUTH0_SCOPE }),
     (_req, res) => {
       res.redirect(AUTH0_RETURN_URL);
@@ -75,11 +111,9 @@ auth0Router
       })
       .send(redirectHtml);
   })
-  // eslint-disable-next-line @typescript-eslint/no-misused-promises -- Ok
   .get("/me", async (req, res, next) => {
     try {
       const result = await new Promise<Jwt | undefined>(resolve => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
         const token = req.cookies[AUTH_COOKIE_NAME] as unknown;
 
         if (typeof token === "string")
@@ -100,7 +134,7 @@ auth0Router
         const { email } = result;
 
         res.status(StatusCodes.OK).json({
-          admin: ADMIN_EMAIL.includes(email),
+          admin: adminEmails.includes(email),
           email
         });
       } else res.status(StatusCodes.OK).json(null);
@@ -119,49 +153,3 @@ auth0Router
   });
 
 export default auth0Router;
-
-const Auth0UserValidationSchema = zod
-  // Do not use strictObject: auth0 may return additional fields
-  .object({
-    emails: zod
-      .array(zod.strictObject({ value: zod.string() }))
-      .nonempty()
-      .max(1)
-  });
-
-const JwtValidationSchema = zod.object({
-  email: preprocessEmail(zod.string().email())
-});
-
-const redirectHtml = `
-    <!DOCTYPE html>
-    <html lang="en">
-      <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <meta http-equiv="refresh" content="0;url=${AUTH0_RETURN_URL}">
-          <title>Redirecting...</title>
-      </head>
-      <body>
-          <p>If you are not redirected automatically, follow this <a href="${AUTH0_RETURN_URL}">link to the new page</a>.</p>
-      </body>
-    </html>
-  `;
-
-/**
- * Preprocesses a schema to unify emails (lowercase).
- * @param schema - The schema to preprocess.
- * @returns The preprocessed schema.
- */
-function preprocessEmail<T extends zod.ZodTypeAny>(
-  schema: T
-): zod.ZodEffects<T> {
-  return zod.preprocess(
-    value => (typeof value === "string" ? value.toLowerCase() : value),
-    schema
-  );
-}
-
-interface Jwt {
-  readonly email: string;
-}

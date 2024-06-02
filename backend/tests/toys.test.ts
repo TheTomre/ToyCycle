@@ -1,6 +1,6 @@
-import app from "../src/app";
 import mongoose from "mongoose";
 import supertest from "supertest";
+import app from "../src/app";
 
 const request = supertest(app);
 // eslint-disable-next-line no-process-env
@@ -30,6 +30,7 @@ describe("Toys API", () => {
 
     expect(response.status).toBe(201);
     expect(response.body).toHaveProperty("_id");
+    // eslint-disable-next-line no-underscore-dangle
     toyId = response.body._id;
   });
 
@@ -37,7 +38,6 @@ describe("Toys API", () => {
     const response = await request.get("/api/v1/toys");
 
     expect(response.status).toBe(200);
-    // eslint-disable-next-line jest-extended/prefer-to-be-true, jest-extended/prefer-to-be-array
     expect(Array.isArray(response.body)).toBe(true);
   });
 
