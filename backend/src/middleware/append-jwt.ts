@@ -1,32 +1,27 @@
-/* eslint-disable i18n-text/no-en -- Postponed, decide if lang file is needed */
-
+import type { RequestHandler } from "express";
+import jwt from "jsonwebtoken";
+import zod from "zod";
 import {
   AUTH_COOKIE_NAME,
   AUTH_HEADER_NAME,
   AUTH_HEADER_PREFIX
 } from "../consts";
 import { JWT_SECRET } from "../config";
-import type { RequestHandler } from "express";
-import jwt from "jsonwebtoken";
-import { logger } from "../services";
-import zod from "zod";
+import logger from "../logger/logger";
 
-export const appendJwt: RequestHandler = (req, _res, next) => {
-  const token = getToken(req);
-
-  if (typeof token === "string")
-    jwt.verify(token, JWT_SECRET, (jwtError, decoded) => {
-      if (jwtError) logger.warn("Jwt verification failed", jwtError);
-      else {
-        const parsed = JwtValidationSchema.safeParse(decoded);
-
-        if (parsed.success) req.jwt = parsed.data;
-        else logger.warn("Jwt verification failed", parsed.error);
-      }
-    });
-
-  next();
-};
+/**
+ * Preprocesses a schema to unify emails (lowercase).
+ * @param schema - The schema to preprocess.
+ * @returns The preprocessed schema.
+ */
+function preprocessEmail<T extends zod.ZodTypeAny>(
+  schema: T
+): zod.ZodEffects<T> {
+  return zod.preprocess(
+    value => (typeof value === "string" ? value.toLowerCase() : value),
+    schema
+  );
+}
 
 const JwtValidationSchema = zod.object({
   email: preprocessEmail(zod.string().email())
@@ -38,7 +33,6 @@ const JwtValidationSchema = zod.object({
  * @returns The token.
  */
 function getToken(req: Parameters<RequestHandler>[0]): string | undefined {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
   const authCookie = req.cookies[AUTH_COOKIE_NAME] as unknown;
 
   const authHeader = req.headers[AUTH_HEADER_NAME];
@@ -58,16 +52,19 @@ function getToken(req: Parameters<RequestHandler>[0]): string | undefined {
   return undefined;
 }
 
-/**
- * Preprocesses a schema to unify emails (lowercase).
- * @param schema - The schema to preprocess.
- * @returns The preprocessed schema.
- */
-function preprocessEmail<T extends zod.ZodTypeAny>(
-  schema: T
-): zod.ZodEffects<T> {
-  return zod.preprocess(
-    value => (typeof value === "string" ? value.toLowerCase() : value),
-    schema
-  );
-}
+export const appendJwt: RequestHandler = (req, _res, next) => {
+  const token = getToken(req);
+
+  if (typeof token === "string")
+    jwt.verify(token, JWT_SECRET, (jwtError, decoded) => {
+      if (jwtError) logger.warn("Jwt verification failed", jwtError);
+      else {
+        const parsed = JwtValidationSchema.safeParse(decoded);
+
+        if (parsed.success) req.jwt = parsed.data;
+        else logger.warn("Jwt verification failed", parsed.error);
+      }
+    });
+
+  next();
+};

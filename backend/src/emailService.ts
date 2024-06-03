@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type -- Ok */
 /* eslint-disable no-console -- Ok */
 
-import { EMAIL_FROM, SENDGRID_API_KEY } from "./config";
 import sgMail from "@sendgrid/mail";
+import { EMAIL_FROM, SENDGRID_API_KEY } from "./config";
 
 sgMail.setApiKey(SENDGRID_API_KEY);
 

@@ -1,5 +1,3 @@
-/* eslint-disable i18n-text/no-en -- Ok */
-
 export const AUTH_COOKIE_EXPIRATION_LIFETIME_MS = 86_400_000;
 
 export const AUTH_COOKIE_LIFETIME_MS = 86_400_000;

@@ -1,20 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Postponed, unsafe assumption about `err` variable */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access -- Postponed, unsafe assumption about `err` variable */
-/* eslint-disable @typescript-eslint/no-unsafe-argument -- Postponed, unsafe assumption about `err` variable */
-/* eslint-disable unicorn/prefer-module -- Postponed, consider __dirname -> import.meta.dirname */
-
-import {
-  AUTH0_CALLBACK_URL,
-  AUTH0_CLIENT_ID,
-  AUTH0_CLIENT_SECRET,
-  AUTH0_DOMAIN,
-  SESSION_SECRET
-} from "./config";
-
 import { Strategy as Auth0Strategy } from "passport-auth0";
 import { middleware as OpenApiValidator } from "express-openapi-validator";
 import { StatusCodes } from "http-status-codes";
-import { appendJwt } from "./middleware";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -22,9 +8,17 @@ import express, { ErrorRequestHandler } from "express";
 import passport from "passport";
 import path from "node:path";
 
+import session from "express-session";
 import routes from "./routes";
 
-import session from "express-session";
+import { appendJwt } from "./middleware";
+import {
+  AUTH0_CALLBACK_URL,
+  AUTH0_CLIENT_ID,
+  AUTH0_CLIENT_SECRET,
+  AUTH0_DOMAIN,
+  SESSION_SECRET
+} from "./config";
 
 dotenv.config();
 

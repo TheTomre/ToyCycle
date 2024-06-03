@@ -1,11 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument -- Postponed */
-/* eslint-disable no-magic-numbers -- Postponed */
-/* eslint-disable i18n-text/no-en -- Postponed */
-/* eslint-disable unicorn/prefer-module -- Postponed */
-/* eslint-disable no-sync -- Postponed */
-/* eslint-disable @typescript-eslint/no-misused-promises -- Postponed */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment -- Postponed */
-
 import express from "express";
 import fs from "node:fs";
 import handlebars from "handlebars";
