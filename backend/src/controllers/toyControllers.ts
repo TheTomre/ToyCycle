@@ -7,6 +7,7 @@ import {
   updateToyById as updateToy,
   deleteToyById as deleteToy
 } from "../services/toyServices";
+import logger from "../logger/logger";
 
 export const createNewToy = async (
   req: Request,
@@ -23,11 +24,10 @@ export const createNewToy = async (
       return;
     }
 
-    res.status(STATUS.CREATED).json({
-      data: newToy,
-      status: STATUS_MESSAGE.SUCCESS
-    });
+    res.status(STATUS.CREATED).json(newToy);
+    logger.info("Toy created successfully");
   } catch (err) {
+    logger.error("Error creating toy:", err);
     next(err);
   }
 };
@@ -55,11 +55,10 @@ export const getToyById = async (
       return;
     }
 
-    res.status(STATUS.OK).json({
-      data: toy,
-      status: STATUS_MESSAGE.SUCCESS
-    });
+    res.status(STATUS.OK).json(toy);
+    logger.info("Toy fetched successfully");
   } catch (err) {
+    logger.error("Error fetching toy:", err);
     next(err);
   }
 };
@@ -78,11 +77,10 @@ export const getAllToys = async (
       return;
     }
 
-    res.status(STATUS.OK).json({
-      data: toys,
-      status: STATUS_MESSAGE.SUCCESS
-    });
+    res.status(STATUS.OK).json(toys);
+    logger.info("Toys fetched successfully");
   } catch (err) {
+    logger.error("Error fetching toys:", err);
     next(err);
   }
 };
@@ -110,11 +108,10 @@ export const updateToyById = async (
       return;
     }
 
-    res.status(STATUS.OK).json({
-      data: updatedToy,
-      status: STATUS_MESSAGE.SUCCESS
-    });
+    res.status(STATUS.OK).json(updatedToy);
+    logger.info("Toy updated successfully");
   } catch (err) {
+    logger.error("Error updating toy:", err);
     next(err);
   }
 };
@@ -142,10 +139,10 @@ export const deleteToyById = async (
       return;
     }
 
-    res.status(STATUS.OK).json({
-      status: STATUS_MESSAGE.SUCCESS
-    });
+    res.status(STATUS.OK).json(deletedToy);
+    logger.info("Toy deleted successfully");
   } catch (err) {
+    logger.error("Error deleting toy:", err);
     next(err);
   }
 };
