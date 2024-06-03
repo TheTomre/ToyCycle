@@ -18,6 +18,8 @@ const config = {
   },
   rules: {
     "@typescript-eslint/no-unsafe-argument": "off",
+    "import/prefer-default-export": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
     "spellcheck/spell-checker": "off",
     "unicorn/no-null": "off",
     "import/prefer-default-export": "off"

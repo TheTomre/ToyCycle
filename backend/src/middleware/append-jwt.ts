@@ -7,7 +7,7 @@ import {
   AUTH_HEADER_PREFIX
 } from "../consts";
 import { JWT_SECRET } from "../config";
-import { logger } from "../services";
+import logger from "../logger/logger";
 
 /**
  * Preprocesses a schema to unify emails (lowercase).
@@ -33,7 +33,6 @@ const JwtValidationSchema = zod.object({
  * @returns The token.
  */
 function getToken(req: Parameters<RequestHandler>[0]): string | undefined {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access -- Ok
   const authCookie = req.cookies[AUTH_COOKIE_NAME] as unknown;
 
   const authHeader = req.headers[AUTH_HEADER_NAME];

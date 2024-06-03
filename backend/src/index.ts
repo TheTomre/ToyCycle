@@ -5,20 +5,19 @@ import mongoose from "mongoose";
 import { ENV, SECURE_PORT } from "./config";
 import app from "./app";
 import { initPassport } from "./providers";
-import { logger } from "./services";
+import logger from "./logger/logger";
 
 const PORT = process.env["PORT"] || 8000;
 const MONGO_URI = process.env["MONGO_URI"] || "your-mongodb-uri";
 
 initPassport();
 
-// eslint-disable-next-line no-warning-comments -- Postponed
 // TODO: Suggestion: Move mongoose initialization to providers folder
 // Database connection
 mongoose
   .connect(MONGO_URI)
   .then(() => {
-    logger.info("Connected to MongoDB");
+    logger.info("MongoDB connected");
   })
   .catch((err: unknown) => {
     logger.error("MongoDB connection error:", err);
@@ -31,16 +30,17 @@ if (ENV === "development") {
     key: fs.readFileSync("./certificates/localhost-key.pem")
   } as const;
 
+  // HTTP server
   http.createServer(app).listen(PORT, () => {
-    logger.info("Server started");
+    logger.info(`HTTP Server started on http://localhost:${PORT}`);
   });
 
+  // HTTPS server
   https.createServer(httpsOptions, app).listen(SECURE_PORT, () => {
-    logger.info("Secure server started");
+    logger.info(`HTTPS Server started on https://localhost:${SECURE_PORT}`);
   });
-}
-// Start server
-else
+} else {
   app.listen(PORT, () => {
     logger.info(`Server is running on http://localhost:${PORT}`);
   });
+}
