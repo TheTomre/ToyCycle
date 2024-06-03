@@ -7,10 +7,8 @@ import dotenv from "dotenv";
 import express, { ErrorRequestHandler } from "express";
 import passport from "passport";
 import path from "node:path";
-
 import session from "express-session";
 import routes from "./routes";
-
 import { appendJwt } from "./middleware";
 import {
   AUTH0_CALLBACK_URL,

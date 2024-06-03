@@ -1,11 +1,18 @@
 import express from "express";
-import fs from "node:fs";
-import handlebars from "handlebars";
-import path from "node:path";
-import { sendEmail } from "../emailService";
+// import fs from "node:fs";
+// import handlebars from "handlebars";
+// import path from "node:path";
+import controller from "../controllers/userControllers";
+// import { sendEmail } from "../emailService";
 
 const router = express.Router();
 
+router.get("/", controller.getAllUsers);
+router.post("/", controller.createNewUser);
+router.get("/:id", controller.getUserById);
+router.put("/:id", controller.updateUserById);
+router.delete("/:id", controller.deleteUserById);
+/*
 // Route to create a new user
 router.post("/users", async (req, res) => {
   const { email, username } = req.body;
@@ -39,4 +46,5 @@ router.post("/users", async (req, res) => {
   res.status(201).json(newUser);
 });
 
+*/
 export default router;

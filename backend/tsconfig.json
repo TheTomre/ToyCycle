@@ -25,7 +25,7 @@
     "lib": ["DOM", "ES2020"],
     "moduleResolution": "Node10",
     "newLine": "lf",
-    "noEmit": false,
+    "noEmit": true,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
@@ -39,7 +39,8 @@
     "sourceMap": true,
     "types": ["jest", "node"],
     "useDefineForClassFields": true,
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "allowImportingTsExtensions": true
   },
   "exclude": ["coverage", "dist", "node_modules"],
   "include": [
