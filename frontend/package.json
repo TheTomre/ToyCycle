@@ -12,6 +12,7 @@
     "test:watch": "jest --watchAll",
     "coverage": "jest --coverage",
     "test": "jest",
+    "type-check": "tsc --incremental false --noEmit",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -102,5 +103,9 @@
     "prettier": "^3.2.5",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
+  },
+  "lint-staged": {
+    "*.{css,html,json,less,postcss,scss}": "prettier --write",
+    "*.{js,jsx,ts,tsx}": "eslint --max-warnings=0"
   }
 }

@@ -20,3 +20,15 @@ npx lint-staged
 
 cd ..
 # Visit backend END
+
+# Visit backend
+cd ./frontend
+
+# Prefer global type check, because changes to one file may cause type errors in other files
+npm run type-check
+
+# Lint the staged files
+npx lint-staged
+
+cd ..
+# Visit backend END
