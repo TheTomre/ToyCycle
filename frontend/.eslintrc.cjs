@@ -20,7 +20,8 @@ const config = {
     "@typescript-eslint/no-unsafe-argument": "off",
     "spellcheck/spell-checker": "off",
     "unicorn/no-null": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "react/jsx-props-no-spreading": "off"
   }
 };
 
