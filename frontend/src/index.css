@@ -1,71 +1,64 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
+.loader {
+  width: 48px;
+  height: 48px;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  transform-origin: 50% 125%;
+  animation: mov-y 1s infinite linear;
+}
+.loader:before,
+.loader:after {
+  content: "";
+  flex: 1;
+  background: #fff;
+  transform-origin: 0% 100%;
+  animation: rtr-x 1s infinite linear;
+}
+.loader:before {
+  transform-origin: 100% 100%;
+  animation-name: rtr-rx;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+@keyframes mov-y {
+  0%,
+  25% {
+    transform: translateY(0) scaleY(1);
+  }
+  49% {
+    transform: translateY(-75%) scaleY(1);
+  }
+  50% {
+    transform: translateY(-75%) scaleY(-1);
+  }
+  75%,
+  100% {
+    transform: translateY(-150%) scaleY(-1);
+  }
+}
+@keyframes rtr-x {
+  25%,
+  75% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(90deg);
+  }
+}
+@keyframes rtr-rx {
+  25%,
+  75% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-90deg);
+  }
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
 }
