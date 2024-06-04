@@ -1,6 +1,9 @@
+import { Request } from "express";
 import { UserInputDTO, User as UserType } from "../types/user";
 import User from "../models/userModel";
 import logger from "../logger/logger";
+import { PAGINATION } from "../consts/pagination";
+import { EXCLUDED_QUERY_FIELDS } from "../consts/queryFields";
 
 const createUser = async (data: UserInputDTO) => {
   try {
@@ -25,9 +28,48 @@ const fetchUserById = async (id: string) => {
   }
 };
 
-const fetchAllUsers = async () => {
+const fetchAllUsers = async (req: Request) => {
   try {
-    const users = await User.find({});
+    const queryObj = { ...req.query };
+
+    // FILTERING
+    const excludeFields = [...EXCLUDED_QUERY_FIELDS];
+    excludeFields.forEach(el => delete queryObj[el]);
+
+    let queryStr = JSON.stringify(queryObj);
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+
+    let query = User.find(JSON.parse(queryStr));
+
+    // SORTING
+    if (req.query["sort"]) {
+      const sortBy = (req.query["sort"] as string).split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // FIELD LIMITING
+    if (req.query["fields"]) {
+      const fields = (req.query["fields"] as string).split(",").join(" ");
+      query = query.select(fields);
+    } else {
+      query = query.select("-__v");
+    }
+
+    // PAGINATION
+    const page = Number(req.query["page"]) || PAGINATION.page;
+    const limit = Number(req.query["limit"]) || PAGINATION.limit;
+    const skip = (page - 1) * limit;
+
+    query = query.skip(skip).limit(limit);
+
+    const users = await query
+      .skip((Number(page) - 1) * Number(limit))
+      .limit(Number(limit));
+
+    if (!users?.length) return undefined;
+
     logger.info(`Users fetched successfully ${users}`);
     return users;
   } catch (err) {

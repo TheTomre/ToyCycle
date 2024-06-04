@@ -40,7 +40,8 @@
     "types": ["jest", "node"],
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true,
-    "allowImportingTsExtensions": true
+    "allowImportingTsExtensions": true,
+    "baseUrl": "./"
   },
   "exclude": ["coverage", "dist", "node_modules"],
   "include": [
@@ -50,9 +51,13 @@
     ".prettierrc.mjs",
     ".stylelintrc.base.mjs",
     ".stylelintrc.mjs",
+    "./tests/**/*.ts",
+    "./src/**/*.ts",
     "**/*.cjs",
     "**/*.js",
     "**/*.jsx",
+    "**/*.mjs",
+    "**/*.ts",
     "**/*.mjs",
     "**/*.ts",
     "**/*.tsx"

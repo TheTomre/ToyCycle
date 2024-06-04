@@ -1,9 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { STATUS, STATUS_MESSAGE } from "../consts/statusCodes";
 import usersServices from "../services/usersServices";
-// import { PAGINATION } from "../consts/pagination";
-// import { QueryObj, ReqQuery } from "../types/queryTypes";
-// import { EXCLUDED_QUERY_FIELDS } from "../consts/queryFields";
 
 const createNewUser = async (
   req: Request,
@@ -55,13 +52,9 @@ const getUserById = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-const getAllUsers = async (
-  _req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const users = await usersServices.fetchAllUsers();
+    const users = await usersServices.fetchAllUsers(req);
 
     if (!users?.length)
       return res
@@ -77,69 +70,6 @@ const getAllUsers = async (
     return undefined;
   }
 };
-// const getAllUsers = async (
-//   req: Request<{}, {}, {}, ReqQuery>,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   try {
-//     // REMOVE FIELDS WHICH ARE NOT NECCESSARY
-//     const queryObj: QueryObj = { ...req.query };
-//     const excludeFields = [...EXCLUDED_QUERY_FIELDS];
-//     excludeFields.forEach(el => delete queryObj[el]);
-
-//     let queryStr = JSON.stringify(queryObj);
-//     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
-
-//     let query = User.find(JSON.parse(queryStr));
-
-//     // SORTING
-//     if (req.query.sort) {
-//       const sortBy = req.query.sort.split(",").join(" ");
-//       query = query.sort(sortBy);
-//     } else {
-//       query = query.sort("-createdAt");
-//     }
-
-//     // FIELD LIMITING
-//     if (req.query.fields) {
-//       const fields = req.query.fields.split(",").join(" ");
-//       query = query.select(fields);
-//     } else {
-//       query = query.select("-__v");
-//     }
-
-//     // PAGINATION
-//     const page = Number(req.query.page) || PAGINATION.page;
-//     const limit = Number(req.query.limit) || PAGINATION.limit;
-//     const skip = (page - 1) * limit;
-
-//     query = query.skip(skip).limit(limit);
-
-//     if (req.query.page) {
-//       const numUsers = await User.countDocuments();
-//       if (skip >= numUsers) throw new Error("Page does not exist");
-//     }
-
-//     const users = await User.find({})
-//       .skip((Number(page) - 1) * Number(limit))
-//       .limit(Number(limit));
-
-//     if (!users?.length)
-//       return res
-//         .status(STATUS.NOT_FOUND)
-//         .json({ status: STATUS_MESSAGE.FAIL, message: "No users found" });
-
-//     logger.info(`Users fetched successfully ${users}`);
-//     return res.status(STATUS.OK).json({
-//       status: STATUS_MESSAGE.SUCCESS,
-//       data: users
-//     });
-//   } catch (err) {
-//     next(err);
-//     return undefined;
-//   }
-// };
 
 const updateUserById = async (
   req: Request,
