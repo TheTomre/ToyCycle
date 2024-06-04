@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "ES6",
     "module": "CommonJS",
-    "outDir": "dist",
+    "outDir": "./dist",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
@@ -23,9 +23,9 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "lib": ["DOM", "ES2020"],
-    "moduleResolution": "Node10",
+    "moduleResolution": "Node",
     "newLine": "lf",
-    "noEmit": true,
+    "noEmit": false,
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
@@ -40,26 +40,8 @@
     "types": ["jest", "node"],
     "useDefineForClassFields": true,
     "useUnknownInCatchVariables": true,
-    "allowImportingTsExtensions": true,
     "baseUrl": "./"
   },
   "exclude": ["coverage", "dist", "node_modules"],
-  "include": [
-    ".eslintrc.base.cjs",
-    ".eslintrc.cjs",
-    ".eslintrc.next.cjs",
-    ".prettierrc.mjs",
-    ".stylelintrc.base.mjs",
-    ".stylelintrc.mjs",
-    "./tests/**/*.ts",
-    "./src/**/*.ts",
-    "**/*.cjs",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.mjs",
-    "**/*.ts",
-    "**/*.mjs",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
+  "include": ["./src/**/*.ts", "./tests/**/*.ts"]
 }
