@@ -9,10 +9,14 @@ type ToyProps = {
 function ToyCard({ toy }: ToyProps) {
   return (
     <div>
-      <div className="toy-card">
-        <img src={toy.image} alt={toy.name} />
-        <h3>{toy.name}</h3>
-        <p>{toy.description}</p>
+      <div className="w-[300px] toy-card bg-gray-200 p-4 rounded-lg shadow-md">
+        <img
+          className=" sm:w-auto object-cover"
+          src={toy.image}
+          alt={toy.name}
+        />
+        <h3 className="text-xl font-bold mt-2">{toy.name}</h3>
+        <p className="text-gray-600">{toy.description}</p>
       </div>
     </div>
   );

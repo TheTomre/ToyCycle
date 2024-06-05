@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./features/home/Home";
 import About from "./features/about/About";
 import Catalog from "./features/toy/Toys";
@@ -10,20 +10,18 @@ import AppLayout from "./components/AppLayout";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route index element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/toys" element={<Catalog />} />
-          <Route path="/toys/:id" element={<ToyDetails />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<UserProfile />} />
-          <Route path="/contactus" element={<ContactUs />} />
-        </Route>
-        <Route path="*" element={<div>Not Found</div>} />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<AppLayout />}>
+        <Route index element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/toys" element={<Catalog />} />
+        <Route path="/toys/:id" element={<ToyDetails />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<UserProfile />} />
+        <Route path="/contactus" element={<ContactUs />} />
+      </Route>
+      <Route path="*" element={<div>Not Found</div>} />
+    </Routes>
   );
 }
 

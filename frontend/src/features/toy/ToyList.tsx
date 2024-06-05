@@ -24,9 +24,10 @@ function ToyList() {
     <div>
       <h2>List of Toys</h2>
       <ul>
-        {toys.map(toy => (
+        {toys.map((toy, index) => (
           <ToyCard
-            key={toy.id}
+            // eslint-disable-next-line react/no-array-index-key
+            key={index}
             toy={{
               name: toy.name,
               description: toy.description,
