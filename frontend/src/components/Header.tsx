@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { NAV } from "../utils/consts";
+import { Button } from "./ui/button";
 
 function Header() {
   return (
@@ -12,6 +13,7 @@ function Header() {
             </NavLink>
           ))}
         </ul>
+        <Button>Login</Button>
       </nav>
     </header>
   );

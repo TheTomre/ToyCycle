@@ -1,12 +1,11 @@
-import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Catalog from "./pages/Toys";
-import ToyDetails from "./pages/ToyDetails";
-import Users from "./pages/Users";
-import UserProfile from "./pages/UserProfile";
-import ContactUs from "./pages/ContactUs";
+import Home from "./features/home/Home";
+import About from "./features/about/About";
+import Catalog from "./features/toy/Toys";
+import ToyDetails from "./features/toy/ToyDetails";
+import Users from "./features/user/Users";
+import UserProfile from "./features/user/UserProfile";
+import ContactUs from "./features/about/ContactUs";
 import AppLayout from "./components/AppLayout";
 
 function App() {
