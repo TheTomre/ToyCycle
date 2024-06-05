@@ -2,9 +2,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     },
     "target": "ES2020",
     "useDefineForClassFields": true,
@@ -13,8 +11,8 @@
     "skipLibCheck": true,
 
     /* Bundler mode */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "Node10",
+    "allowImportingTsExtensions": false,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -25,8 +23,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-
-    "outDir": "dist",
+    "outDir": "./dist",
     "noImplicitAny": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -50,10 +47,10 @@
     "noUncheckedIndexedAccess": true,
     "plugins": [],
     "sourceMap": true,
-    "types": ["jest", "node"],
-    "useUnknownInCatchVariables": true,
+    "types": ["jest", "node", "@testing-library/jest-dom"],
+    "useUnknownInCatchVariables": true
   },
- "exclude": ["coverage", "dist", "node_modules"],
+  "exclude": ["coverage", "dist", "node_modules"],
   "include": [
     ".eslintrc.base.cjs",
     ".eslintrc.cjs",
@@ -63,6 +60,8 @@
     "**/*.jsx",
     "**/*.mjs",
     "**/*.ts",
-    "**/*.tsx"
-  ],
+    "**/*.tsx",
+    "./src/**/*.ts",
+    "./tests/**/*.ts"
+  ]
 }
