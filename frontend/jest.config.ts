@@ -1,14 +1,15 @@
-export default {
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.json"
-    }
-  },
-  collectCoverage: true,
-  coverageDirectory: "coverage",
-  coverageProvider: "v8",
-  moduleFileExtensions: ["js", "ts"],
+import type { Config } from "@jest/types";
+
+const config: Config.InitialOptions = {
   preset: "ts-jest",
-  testEnvironment: "node",
-  testMatch: ["**/tests/**/*.(spec|test).[jt]s?(x)"]
+  testEnvironment: "jsdom",
+  roots: ["<rootDir>/tests"],
+  testMatch: ["**/*.test.ts?(x)"],
+  moduleFileExtensions: ["ts", "tsx", "js", "json"],
+  setupFilesAfterEnv: ["<rootDir>/tests/setupTests.ts"],
+  transform: {
+    "^.+\\.tsx?$": "ts-jest"
+  }
 };
+
+export default config;
