@@ -43,5 +43,24 @@
     "baseUrl": "./"
   },
   "exclude": ["coverage", "dist", "node_modules"],
-  "include": ["./src/**/*.ts", "./tests/**/*.ts"]
+  "include": [
+    ".eslintrc.base.cjs",
+    ".eslintrc.cjs",
+    ".eslintrc.next.cjs",
+    ".prettierrc.mjs",
+    ".stylelintrc.base.mjs",
+    ".stylelintrc.mjs",
+    "./tests/**/*.ts",
+    "./src/**/*.ts",
+    "**/*.cjs",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.mjs",
+    "**/*.ts",
+    "**/*.tsx",
+    "./src/**/*.ts",
+    "./tests/**/*.ts"
+  ]
 }

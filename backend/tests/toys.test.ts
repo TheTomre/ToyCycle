@@ -29,6 +29,7 @@ describe("Toys API", () => {
 
     expect(response.status).toBe(201);
     expect(response.body.data).toHaveProperty("_id");
+    // eslint-disable-next-line no-underscore-dangle
     toyId = response.body.data._id;
   });
 
