@@ -1,0 +1,23 @@
+version: '3.9'
+services:
+  mysql_staging:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    env_file:
+      - .env.development.local
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  mysql_testing:
+    image: mysql:latest
+    ports:
+      - "3307:3306"
+    env_file:
+      - .env.test.local
+    volumes:
+      - mysql-data-2:/var/lib/mysql
+
+volumes:
+  mysql-data:
+  mysql-data-2:

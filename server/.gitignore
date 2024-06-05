@@ -1,0 +1,6 @@
+node_modules
+coverage
+logs
+.env.*
+dist
+vscode.code-workspace
