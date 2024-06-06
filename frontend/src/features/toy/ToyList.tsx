@@ -32,8 +32,8 @@ const ToyList: React.FC = () => {
         .reverse()
         .map(toy => (
           <ToyCard
-            key={toy.id}
-            id={toy.id}
+            key={toy._id}
+            id={toy._id}
             name={toy.name}
             description={toy.description}
             images={
