@@ -22,7 +22,7 @@ export const fetchToys = createAsyncThunk<Toy[], void, { rejectValue: string }>(
         throw new Error("Network response was not ok");
       }
       const data = await response.json();
-      return data.data as Toy[]; // Предполагая, что данные находятся в поле `data`
+      return data.data as Toy[];
     } catch (err) {
       return rejectWithValue("Failed to fetch toys");
     }
