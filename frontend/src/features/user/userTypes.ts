@@ -1,4 +1,8 @@
-import { Toy } from "./toys";
+import { Toy } from "../toy/toyTypes";
+
+export type UserState = {
+  email: string;
+};
 
 export type User = {
   address: Address;
