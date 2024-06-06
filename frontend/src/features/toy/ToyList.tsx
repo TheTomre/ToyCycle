@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
 import { fetchToys } from "./toySlice";
 import ToyCard from "./ToyCard";
-import "./ToyList.css";
 
 const ToyList: React.FC = () => {
   const dispatch = useAppDispatch();
