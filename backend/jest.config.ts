@@ -1,11 +1,20 @@
-export default {
-  globals: {
-    "ts-jest": {
-      tsconfig: "tsconfig.json"
-    }
-  },
-  moduleFileExtensions: ["js", "ts"],
+import type { Config } from "@jest/types";
+
+const config: Config.InitialOptions = {
   preset: "ts-jest",
   testEnvironment: "node",
-  testMatch: ["**/tests/**/*.(spec|test).[jt]s?(x)"]
+  roots: ["<rootDir>/tests"],
+  testMatch: ["**/*.test.ts"],
+  moduleFileExtensions: ["ts", "tsx", "js", "json"],
+  transform: {
+    "^.+\\.ts$": [
+      "ts-jest",
+      {
+        tsconfig: "tsconfig.json"
+      }
+    ]
+  },
+  setupFilesAfterEnv: ["<rootDir>/tests/setupTests.ts"]
 };
+
+export default config;
