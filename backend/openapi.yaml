@@ -209,7 +209,8 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error'                  
+                  $ref: '#/components/schemas/Error'
+  /api/v1/users/me:
       post:
         summary: Create a new user
         tags: 
@@ -374,73 +375,73 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error'  
-  /me:
-      get:
-        summary: Get a current user's profile
-        operationId: getCurrentUser
-        tags: 
-          - Me
-        responses:
-          '201':
-            description: Get current user
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
-          '400':
-            description: Bad request
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-          '401':
-            description: Unauthorized
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-      put:
-        summary: Update a current user's profile
-        operationId: updateCurrentUser
-        tags: 
-          - Me
-        requestBody:
-          required: true
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
-        responses:
-          '201':
-            description: A current user updated
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/User'
-          '400':
-            description: Bad request
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error'
-          '401':
-            description: Unauthorized
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error' 
-      delete:
-        summary: Delete a current user's profile
-        operationId: deleteCurrentUser
-        tags: 
-          - Me
-        responses:
-          '204':
-            description: a user's profile deleted
-          '404':
-            description: user id not found
-          '401':
-            description: Unauthorized
+  # /me:
+  #     get:
+  #       summary: Get a current user's profile
+  #       operationId: getCurrentUser
+  #       tags: 
+  #         - Me
+  #       responses:
+  #         '201':
+  #           description: Get current user
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/User'
+  #         '400':
+  #           description: Bad request
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/Error'
+  #         '401':
+  #           description: Unauthorized
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/Error'
+  #     put:
+  #       summary: Update a current user's profile
+  #       operationId: updateCurrentUser
+  #       tags: 
+  #         - Me
+  #       requestBody:
+  #         required: true
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: '#/components/schemas/User'
+  #       responses:
+  #         '201':
+  #           description: A current user updated
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/User'
+  #         '400':
+  #           description: Bad request
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/Error'
+  #         '401':
+  #           description: Unauthorized
+  #           content:
+  #             application/json:
+  #               schema:
+  #                 $ref: '#/components/schemas/Error' 
+  #     delete:
+  #       summary: Delete a current user's profile
+  #       operationId: deleteCurrentUser
+  #       tags: 
+  #         - Me
+  #       responses:
+  #         '204':
+  #           description: a user's profile deleted
+  #         '404':
+  #           description: user id not found
+  #         '401':
+  #           description: Unauthorized
 components:
   schemas:
     Toy:
@@ -496,7 +497,7 @@ components:
     User:
       type: object
       properties:
-        id:
+        auth0Id:
           type: string
         firstName:
          type: string
@@ -521,11 +522,8 @@ components:
         tokenBalance:
           type: integer
       required:
-        - firstName
-        - lastName
+        - auth0Id
         - email
-        - password
-        - address
     Address:
       type: object
       required:

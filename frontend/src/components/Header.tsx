@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { NAV } from "../utils/consts";
+import { NAV } from "../lib/consts";
 import Login from "./Login";
 
 function Header() {

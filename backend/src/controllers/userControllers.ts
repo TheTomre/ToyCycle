@@ -8,7 +8,7 @@ const createNewUser = async (
   next: NextFunction
 ) => {
   try {
-    const newUser = await usersServices.createUser(req.body);
+    const newUser = await usersServices.createUser(req);
     if (!newUser) {
       return res.status(STATUS.BAD_REQUEST).json({
         status: STATUS_MESSAGE.FAIL,

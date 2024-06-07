@@ -12,6 +12,9 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   const defaultImage = "../public/bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  // eslint-disable-next-line no-console
+  console.log(id);
+
   const handleMouseEnter = () => {
     if (images?.length > 1) {
       setCurrentImageIndex((currentImageIndex + 1) % images.length);

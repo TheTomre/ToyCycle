@@ -8,7 +8,7 @@ import controller from "../controllers/userControllers";
 const router = express.Router();
 
 router.get("/", controller.getAllUsers);
-router.post("/", controller.createNewUser);
+router.post("/me", controller.createNewUser);
 router.get("/:id", controller.getUserById);
 router.put("/:id", controller.updateUserById);
 router.delete("/:id", controller.deleteUserById);
