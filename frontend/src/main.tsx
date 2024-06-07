@@ -1,16 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { store } from "./store/store";
+import Auth0ProviderWithNavigate from "./auth/Auth0ProviderWithNavigate";
+
 import App from "./App";
 import "./index.css";
-import Auth0ProviderWithNavigate from "./auth/Auth0ProviderWithNavigate";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
-      <Auth0ProviderWithNavigate>
-        <App />
-      </Auth0ProviderWithNavigate>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Auth0ProviderWithNavigate>
+          <App />
+        </Auth0ProviderWithNavigate>
+      </BrowserRouter>
+    </Provider>
   </React.StrictMode>
 );

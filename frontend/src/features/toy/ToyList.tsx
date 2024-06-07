@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BASE_URL } from "../../utils/consts";
+import { BASE_URL } from "../../lib/consts";
 import ToyCard from "./ToyCard";
 import { Toy } from "./toyTypes";
 

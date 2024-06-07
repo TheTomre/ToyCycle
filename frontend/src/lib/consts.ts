@@ -6,4 +6,6 @@ export const NAV: { [key: string]: string } = {
   contactus: "/contactus"
 };
 
+export const NAV_ITEMS = Object.keys(NAV);
+
 export const BASE_URL = "http://localhost:3001/api/v1";

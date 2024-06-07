@@ -1,28 +1,28 @@
 import { useAuth0 } from "@auth0/auth0-react";
-
-import UserNameNav from "./UserNameNav";
+import { GrLogin } from "react-icons/gr";
+import { AvatarImage, Avatar, AvatarFallback } from "./UI/avatar";
 import { Button } from "./UI/button";
 
 function Login() {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, user } = useAuth0();
 
   const handleLogin = async () => {
     await loginWithRedirect();
   };
 
   return (
-    <span className="hidden sm:inline ml-auto">
+    <span className="">
       {isAuthenticated ? (
-        <UserNameNav />
+        <Avatar>
+          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarFallback>{user?.name || "teddy"}</AvatarFallback>
+        </Avatar>
       ) : (
         <Button
-          variant="secondary"
-          className="font-bold hover:bg-gray-800 hover:text-white"
+          className="hover:bg-[#3a0e7b] hover:text-white"
           onClick={handleLogin}
-          aria-label="Login"
-          data-testid="login-button"
         >
-          Login
+          <GrLogin />
         </Button>
       )}
     </span>
