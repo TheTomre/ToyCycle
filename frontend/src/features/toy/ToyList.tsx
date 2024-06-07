@@ -1,42 +1,47 @@
-import { useEffect, useState } from "react";
-import { BASE_URL } from "../../utils/consts";
+/* eslint-disable no-underscore-dangle */
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { RootState } from "../../store/store";
+import { fetchToys } from "./toySlice";
 import ToyCard from "./ToyCard";
-import { Toy } from "./toyTypes";
 
 function ToyList() {
-  const [toys, setToys] = useState<Toy[]>([]);
-  useEffect(() => {
-    async function fetchToys() {
-      try {
-        const response = await fetch(`${BASE_URL}/toys`);
-        const data = await response.json();
-        const toysArr: Toy[] = data.data;
+  const dispatch = useAppDispatch();
+  const toys = useAppSelector((state: RootState) => state.toys.toys);
+  const status = useAppSelector((state: RootState) => state.toys.status);
+  const error = useAppSelector((state: RootState) => state.toys.error);
 
-        setToys(toysArr);
-      } catch (error) {
-        throw new Error((error as Error).message);
-      }
+  useEffect(() => {
+    if (status === "idle") {
+      dispatch(fetchToys());
     }
-    fetchToys();
-  }, []);
+  }, [status, dispatch]);
+
+  if (status === "loading") {
+    return <div>Loading...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Failed to load toys. Error: {error}</div>;
+  }
 
   return (
-    <div>
-      <h2>List of Toys</h2>
-      <ul>
-        {toys.map((toy, index) => (
+    <div className="flex flex-wrap justify-center">
+      {toys
+        .slice()
+        .reverse()
+        .map(toy => (
           <ToyCard
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            toy={{
-              name: toy.name,
-              description: toy.description,
-              image:
-                "https://gratisography.com/wp-content/uploads/2024/03/gratisography-funflower-800x525.jpg"
-            }}
+            key={toy._id}
+            id={toy._id}
+            name={toy.name}
+            description={toy.description}
+            images={
+              toy.images.length > 0 ? toy.images : ["../public/bear.webp"]
+            }
+            tokens={toy.tokenValue}
           />
         ))}
-      </ul>
     </div>
   );
 }

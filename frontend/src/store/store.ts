@@ -7,7 +7,7 @@ import toyReducer from "../features/toy/toySlice";
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    toy: toyReducer
+    toys: toyReducer
 
     // [rtkqApi.userPath]: rtkqApi.reducer
   }
