@@ -1,20 +1,14 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-interface ToyProps {
+type ToyProps = {
   id: string;
   name: string;
   description?: string;
   images: string[];
   tokens: number;
-}
+};
 
-const ToyCard: React.FC<ToyProps> = ({
-  id,
-  name,
-  description,
-  images,
-  tokens
-}) => {
+function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   const defaultImage = "../public/bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -53,6 +47,6 @@ const ToyCard: React.FC<ToyProps> = ({
       </div>
     </div>
   );
-};
+}
 
 export default ToyCard;

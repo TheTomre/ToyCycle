@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+/* eslint-disable no-underscore-dangle */
+import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
 import { fetchToys } from "./toySlice";
 import ToyCard from "./ToyCard";
 
-const ToyList: React.FC = () => {
+function ToyList() {
   const dispatch = useAppDispatch();
   const toys = useAppSelector((state: RootState) => state.toys.toys);
   const status = useAppSelector((state: RootState) => state.toys.status);
@@ -21,7 +22,6 @@ const ToyList: React.FC = () => {
   }
 
   if (status === "failed") {
-    console.error(error);
     return <div>Failed to load toys. Error: {error}</div>;
   }
 
@@ -44,6 +44,6 @@ const ToyList: React.FC = () => {
         ))}
     </div>
   );
-};
+}
 
 export default ToyList;
