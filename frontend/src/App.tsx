@@ -7,6 +7,7 @@ import Users from "./features/user/Users";
 import UserProfile from "./features/user/UserProfile";
 import ContactUs from "./features/about/ContactUs";
 import AppLayout from "./components/AppLayout";
+import AuthUserCallbackPage from "./features/auth/AuthUserCallbackPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/toys" element={<Catalog />} />
         <Route path="/toys/:id" element={<ToyDetails />} />
+        <Route path="/auth-user" element={<AuthUserCallbackPage />} />
         <Route path="/users" element={<Users />} />
         <Route path="/users/:id" element={<UserProfile />} />
         <Route path="/contactus" element={<ContactUs />} />

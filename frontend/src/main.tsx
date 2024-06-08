@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { store } from "./store/store";
-import Auth0ProviderWithNavigate from "./auth/Auth0ProviderWithNavigate";
+import Auth0ProviderWithNavigate from "./features/auth/Auth0ProviderWithNavigate";
 import App from "./App";
 import "./index.css";
 

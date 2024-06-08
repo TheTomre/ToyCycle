@@ -1,11 +1,11 @@
-/* eslint-disable no-console */
-import { AppState, Auth0Provider, User } from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 import { ReactNode } from "react";
-import useCreateUserQuery from "../apiService/UserApi";
+import { useNavigate } from "react-router-dom";
 
 type Auth0ProviderWithNavigateProps = {
   children: ReactNode;
 };
+
 function Auth0ProviderWithNavigate({
   children
 }: Auth0ProviderWithNavigateProps) {
@@ -13,18 +13,14 @@ function Auth0ProviderWithNavigate({
   const clientId = import.meta.env["VITE_AUTH0_CLIENT_ID"] ?? "";
   const redirectUri = import.meta.env["VITE_AUTH0_CALLBACK_URL"] ?? "";
 
-  const { createUser } = useCreateUserQuery();
+  const navigate = useNavigate();
 
   if (!domain || !clientId || !redirectUri) {
-    throw new Error("unable to retrieve Auth0 configuration.");
+    throw new Error("Unable to retrieve Auth0 configuration.");
   }
 
-  const onRedirectCallack = (appState?: AppState, user?: User) => {
-    if (!user?.sub || !user?.email) return;
-
-    createUser({ auth0Id: user.sub, email: user.email });
-    console.log("USER:", user);
-    console.log("appState:", appState);
+  const onRedirectCallack = () => {
+    navigate("/auth-user");
   };
 
   return (
