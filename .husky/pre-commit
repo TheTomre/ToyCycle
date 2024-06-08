@@ -10,25 +10,25 @@ if [ "$BRANCH_NAME" = "master" ] || [ "$BRANCH_NAME" = "develop" ]; then
 fi
 
 # Visit backend
-cd ./backend
+cd ../BackEnd
 
 # Prefer global type check, because changes to one file may cause type errors in other files
-npm run type-check
+yarn type-check
 
 # Lint the staged files
 npx lint-staged
 
-cd ..
+cd ../Husky
 # Visit backend END
 
 # Visit frontend
-cd ./frontend
+cd ../FrontEnd
 
 # Prefer global type check, because changes to one file may cause type errors in other files
-npm run type-check
+yarn type-check
 
 # Lint the staged files
 npx lint-staged
 
-cd ..
+cd ../Husky
 # Visit frontend END

@@ -114,9 +114,10 @@
     "eslint-plugin-typescript-sort-keys": "^3.2.0",
     "eslint-plugin-unicorn": "^52.0.0",
     "eslint-plugin-unused-imports": "^3.2.0",
+    "husky": "^9.0.11",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
-    "lint-staged": "^15.2.2",
+    "lint-staged": "^15.2.5",
     "prettier": "^3.2.5",
     "ts-jest": "^29.1.4",
     "ts-node": "^10.9.2",
@@ -131,5 +132,5 @@
   "lint-staged": {
     "*.{css,html,json,less,postcss,scss}": "prettier --write",
     "*.{js,jsx,ts,tsx}": "eslint --max-warnings=0"
-  }
+  }  
 }
