@@ -75,16 +75,19 @@ function Header() {
         className={
           isNav
             ? "fixed md:hidden left-0 top-[78px] w-full h-full bg-white ease-in-out duration-500"
-            : "ease-in-out w-full duration-500 fixed top-[96px] bottom-0 left-[-100%]"
+            : "ease-in-out w-full duration-500 fixed top-[78px] bottom-0 left-[-100%]"
         }
       >
         {/* Mobile drawer Navigation Items */}
         {NAV_ITEMS.map(navEl => (
-          <li
-            key={navEl}
-            className="p-4 hover:bg-[#70e2d2] duration-300 cursor-pointer uppercase font-mono  px-6 py-4 "
-          >
-            {navEl}
+          <li key={navEl} className="flex">
+            <NavLink
+              className="w-full p-4 hover:bg-[#70e2d2] duration-300 cursor-pointer uppercase font-mono  px-6 py-4"
+              onClick={handleNav}
+              to={NAV[navEl] || "/"}
+            >
+              {navEl}
+            </NavLink>
           </li>
         ))}
       </ul>

@@ -8,7 +8,7 @@ import uiReducer from "./uiSlice";
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    toy: toyReducer,
+    toys: toyReducer,
     ui: uiReducer
 
     // [rtkqApi.userPath]: rtkqApi.reducer

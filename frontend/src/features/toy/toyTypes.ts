@@ -1,7 +1,7 @@
 export type Toy = {
   category: string[];
   description: string;
-  id: string;
+  _id: string;
   images: string[];
   name: string;
   price: number;
