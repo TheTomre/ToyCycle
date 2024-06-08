@@ -9,6 +9,8 @@ type ToyProps = {
 };
 
 function ToyCard({ id, name, description, images, tokens }: ToyProps) {
+  // eslint-disable-next-line no-console
+  console.log(id);
   const defaultImage = "../public/bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
