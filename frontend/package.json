@@ -27,6 +27,8 @@
     "@radix-ui/react-separator": "^1.0.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-icons/all-files": "^4.1.0",
+    "@react-spring/parallax": "^9.7.3",
+    "@react-spring/web": "^9.7.3",
     "@reduxjs/toolkit": "^2.2.5",
     "@testing-library/dom": "^10.1.0",
     "@types/cookie-parser": "^1.4.7",
