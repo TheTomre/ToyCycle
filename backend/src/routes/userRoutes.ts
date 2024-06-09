@@ -2,15 +2,23 @@ import express from "express";
 // import fs from "node:fs";
 // import handlebars from "handlebars";
 // import path from "node:path";
+import { jwtParse, jwtCheck, handleValidationError } from "../middleware";
 import controller from "../controllers/userControllers";
 // import { sendEmail } from "../emailService";
 
 const router = express.Router();
 
 router.get("/", controller.getAllUsers);
-router.post("/me", controller.createNewUser);
+router.post("/me", jwtCheck, controller.createNewUser);
 router.get("/:id", controller.getUserById);
-router.put("/:id", controller.updateUserById);
+router.put(
+  "/me",
+  jwtCheck,
+  jwtParse,
+  handleValidationError,
+  controller.updateUserById
+);
+// router.put("/:id", jwtCheck, jwtParse, controller.updateUserById);
 router.delete("/:id", controller.deleteUserById);
 /*
 // Route to create a new user

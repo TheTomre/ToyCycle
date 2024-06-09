@@ -1,6 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { GrLogout, GrLogin } from "react-icons/gr";
-import { FaUserAlt } from "react-icons/fa";
 import { AvatarImage, Avatar, AvatarFallback } from "./UI/avatar";
 import { Button } from "./UI/button";
 
@@ -20,8 +19,11 @@ function Login() {
       {isAuthenticated ? (
         <>
           <Avatar>
-            <AvatarImage src={user?.picture || "../assets/react.svg"} />
-            <AvatarFallback>JD</AvatarFallback>
+            <AvatarImage src={user?.picture || "./assets/icons/avatar.svg"} />
+
+            <AvatarFallback>
+              <span className="block w-10 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
+            </AvatarFallback>
           </Avatar>
           <Button
             className="hover:bg-[#3a0e7b] hover:text-white"
@@ -33,10 +35,7 @@ function Login() {
       ) : (
         <>
           <Avatar>
-            <AvatarImage>
-              <FaUserAlt />
-            </AvatarImage>
-            <AvatarFallback>JD</AvatarFallback>
+            <span className="block p-0 bg-cover bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
           </Avatar>
           <Button
             className="hover:bg-[#3a0e7b] hover:text-white"
@@ -45,7 +44,7 @@ function Login() {
             <GrLogin />
           </Button>
         </>
-      )}
+      )}{" "}
     </span>
   );
 }

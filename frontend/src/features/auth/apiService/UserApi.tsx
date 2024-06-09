@@ -38,4 +38,59 @@ function useCreateUserQuery() {
   };
 }
 
+type UpdateUserRequest = {
+  email?: string | undefined;
+  bio?: string | undefined;
+  firstName: string;
+  lastName: string;
+  avatar?: string | undefined;
+  lastActive?: string | undefined;
+  tokenBalance?: number | undefined;
+  address: {
+    city: string;
+    country: string;
+    street1: string;
+    street2?: string | undefined;
+    zipcode: string;
+  };
+};
+
+export function useUpdateUserQuery() {
+  const { getAccessTokenSilently } = useAuth0();
+
+  async function updateUserRequest(userData: UpdateUserRequest) {
+    const token = await getAccessTokenSilently();
+    const response = await fetch(`${API_BASE_URL}${ENDPOINT.me}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(userData)
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to update user");
+    }
+  }
+
+  const {
+    mutateAsync: updateUser,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    reset
+  } = useMutation(updateUserRequest);
+
+  return {
+    updateUser,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    reset
+  };
+}
+
 export default useCreateUserQuery;
