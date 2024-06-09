@@ -8,6 +8,8 @@ export const NAV: { [key: string]: string } = {
   contactus: "/contactus"
 };
 
+export const NAV_ITEMS = Object.keys(NAV);
+
 export const ENDPOINT = {
   users: "/users",
   userEdit: "/users/edit",

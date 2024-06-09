@@ -16,6 +16,12 @@ module.exports = {
         "2xl": "1400px"
       }
     },
+    // colors: {
+    // primary: "[#3a0e7b]",
+    // secondary: "[##70e2d2]",
+    // tertiary: "[##fff24f]",
+    // destructive: "[#ff4d4d]"
+    // },
     extend: {
       colors: {
         border: "hsl(var(--border))",
@@ -73,5 +79,6 @@ module.exports = {
       }
     }
   },
+  // eslint-disable-next-line global-require
   plugins: [require("tailwindcss-animate")]
 };

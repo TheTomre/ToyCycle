@@ -2,12 +2,16 @@ import { Outlet } from "react-router-dom";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
+import { useAppSelector } from "../hooks/redux";
 
 function AppLayout() {
+  const { isNavOpen } = useAppSelector(state => state.ui);
   return (
-    <div className="grid-rows-[auto_1fr_auto ] grid h-screen w-full">
+    <div
+      className={`${isNavOpen ? "overflow-y-hidden" : ""} flex-col h-screen w-full`}
+    >
       <Header />
-      <Main className="overflow-scroll">
+      <Main className="overflow-scroll mt-[78px] sm:mt-[96px]">
         <Outlet />
       </Main>
       <Footer />
