@@ -513,25 +513,12 @@ components:
         avatar:
           type: string
           nullable: true
-        address:
-          $ref: '#/components/schemas/Address'
         bio:
           type: string
         toyListings:
           $ref: '#/components/schemas/Toys'
         tokenBalance:
           type: integer
-      required:
-        - auth0Id
-        - email
-    Address:
-      type: object
-      required:
-        - city
-        - country
-        - zipcode
-        - street1
-      properties:
         city:
           type: string
         country:
@@ -542,19 +529,9 @@ components:
           type: string
         street2:
           type: string
-    AddressPartial:
-        type: object
-        properties:
-          city:
-            type: string
-          country:
-            type: string
-          zipcode:
-            type: string
-          street1:
-            type: string
-          street2:
-            type: string
+      required:
+        - auth0Id
+        - email
     UserResponse:
       type: object
       properties:
@@ -572,8 +549,16 @@ components:
         avatar:
           type: string
           nullable: true
-        address:
-          $ref: '#/components/schemas/AddressPartial'
+        city:
+          type: string
+        country:
+          type: string
+        zipcode:
+          type: string
+        street1:
+          type: string
+        street2:
+          type: string
         bio:
           type: string
         toyListings:

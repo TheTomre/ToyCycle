@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { auth } from "express-oauth2-jwt-bearer";
 import jwt from "jsonwebtoken";
 
+import logger from "../logger/logger";
 import User from "../models/userModel";
 import { STATUS, STATUS_MESSAGE } from "../consts/statusCodes";
 
@@ -26,9 +27,9 @@ export const jwtParse = async (
   next: NextFunction
 ) => {
   const { authorization } = req.headers;
-
-  if (!authorization?.startsWith("Bearer")) {
-    return res.status(STATUS.UNAUTHORIZED).json({
+  logger.info(authorization);
+  if (!authorization || !authorization.startsWith("Bearer ")) {
+    return res.sendStatus(STATUS.UNAUTHORIZED).json({
       status: STATUS_MESSAGE.FAIL,
       message: "Unauthorized user"
     });
@@ -37,8 +38,8 @@ export const jwtParse = async (
   const accessToken = authorization.split(" ")[1];
 
   try {
-    const decodedToken = jwt.decode(accessToken ?? "") as jwt.JwtPayload;
-    const auth0Id = decodedToken.sub;
+    const decoded = jwt.decode(accessToken ?? "") as jwt.JwtPayload;
+    const auth0Id = decoded.sub;
 
     const user = await User.findOne({ auth0Id });
 
@@ -49,9 +50,8 @@ export const jwtParse = async (
       });
     }
 
-    req.auth0Id = auth0Id ?? "";
+    req.auth0Id = auth0Id as string;
     req.userId = user._id.toString();
-
     return next();
   } catch (error) {
     return res.status(STATUS.UNAUTHORIZED).json({

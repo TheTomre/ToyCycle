@@ -2,7 +2,7 @@ import express from "express";
 // import fs from "node:fs";
 // import handlebars from "handlebars";
 // import path from "node:path";
-import { jwtParse, jwtCheck, handleValidationError } from "../middleware";
+import { jwtParse, jwtCheck, validateUserMeRequest } from "../middleware";
 import controller from "../controllers/userControllers";
 // import { sendEmail } from "../emailService";
 
@@ -15,7 +15,7 @@ router.put(
   "/me",
   jwtCheck,
   jwtParse,
-  handleValidationError,
+  validateUserMeRequest,
   controller.updateUserById
 );
 // router.put("/:id", jwtCheck, jwtParse, controller.updateUserById);

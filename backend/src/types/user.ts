@@ -2,7 +2,6 @@ import { Toy } from "./toys";
 
 export type User = {
   auth0Id: string;
-  address?: Address;
   avatar?: string;
   bio?: string;
   email: string;
@@ -12,9 +11,6 @@ export type User = {
   password?: string;
   tokenBalance: number;
   toyListings: Toy[];
-};
-
-type Address = {
   city: string;
   country: string;
   street1: string;
@@ -23,6 +19,5 @@ type Address = {
 };
 
 export type UserUpdateBioDTO = Pick<User, "bio" | "lastName" | "firstName">;
-export type UserUpdateAddressDTO = Pick<User, "address">;
 
 export type UserInputDTO = Omit<User, "id">;

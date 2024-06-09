@@ -8,36 +8,32 @@ const userSchema = new Schema({
     type: String,
     unique: [true, "id is not unique"]
   },
-  address: {
-    // required: [true, "An address is required"],
-    type: {
-      city: {
-        default: "Tel Aviv",
-        // required: [true, "A city is required"],
-        trim: true,
-        type: String
-      },
-      country: {
-        default: "Israel",
-        // required: [true, "A country is required"],
-        trim: true,
-        type: String
-      },
-      street1: {
-        // required: [true, "A street1 is required"],
-        trim: true,
-        type: String
-      },
-      street2: {
-        trim: true,
-        type: String
-      },
-      zipcode: {
-        // required: [true, "A zipcode is required"],
-        trim: true,
-        type: String
-      }
-    }
+
+  city: {
+    default: "Tel Aviv",
+    // required: [true, "A city is required"],
+    trim: true,
+    type: String
+  },
+  country: {
+    default: "Israel",
+    // required: [true, "A country is required"],
+    trim: true,
+    type: String
+  },
+  street1: {
+    // required: [true, "A street1 is required"],
+    trim: true,
+    type: String
+  },
+  street2: {
+    trim: true,
+    type: String
+  },
+  zipcode: {
+    // required: [true, "A zipcode is required"],
+    trim: true,
+    type: String
   },
   avatar: {
     type: String
