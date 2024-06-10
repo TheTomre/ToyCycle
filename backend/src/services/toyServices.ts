@@ -23,12 +23,14 @@ export const fetchToyById = async (id: string) => {
   }
 };
 
-export const fetchAllToys = async () => {
+export const fetchAllToys = async (page: number, limit: number) => {
   try {
-    const toys = await Toy.find({});
-    if (toys.length === 0) return undefined;
+    const toys = await Toy.find({})
+      .skip((page - 1) * limit)
+      .limit(limit);
+    const total = await Toy.countDocuments({});
     logger.info("Toys fetched successfully");
-    return toys;
+    return { toys, total };
   } catch (err) {
     throw new Error((err as Error).message);
   }
