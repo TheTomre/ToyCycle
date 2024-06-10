@@ -7,6 +7,10 @@ export type Toy = {
   price: number;
   status: "available" | "exchanged";
   tokenValue: number;
+  condition: string;
+  origin: string;
+  quantity: number;
+  fullDescription: string;
 };
 
 export type ToyState = {

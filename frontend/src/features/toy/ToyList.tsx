@@ -45,9 +45,7 @@ function ToyList() {
             id={toy._id}
             name={toy.name}
             description={toy.description}
-            images={
-              toy.images.length > 0 ? toy.images : ["../public/bear.webp"]
-            }
+            images={toy.images.length > 0 ? toy.images : ["../bear.webp"]}
             tokens={toy.tokenValue}
           />
         ))}

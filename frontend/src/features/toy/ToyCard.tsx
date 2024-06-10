@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 type ToyProps = {
   id: string;
@@ -9,13 +10,8 @@ type ToyProps = {
 };
 
 function ToyCard({ id, name, description, images, tokens }: ToyProps) {
-  // eslint-disable-next-line no-console
-  console.log(id);
-  const defaultImage = "../public/bear.webp";
+  const defaultImage = "../bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  // eslint-disable-next-line no-console
-  console.log(id);
 
   const handleMouseEnter = () => {
     if (images?.length > 1) {
@@ -28,12 +24,15 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   };
 
   return (
-    <div
+    <Link
+      to={`/toys/${id}`}
       className="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden m-4 border border-gray-200 transform transition-transform duration-300 hover:scale-105"
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
-      <div className="relative h-64 overflow-hidden flex items-center justify-center">
+      <div
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        className="relative h-64 overflow-hidden flex items-center justify-center"
+      >
         <img
           className="w-full h-full object-contain transition-transform duration-300 transform hover:scale-110"
           src={images?.length > 0 ? images[currentImageIndex] : defaultImage}
@@ -50,7 +49,7 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
