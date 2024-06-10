@@ -11,8 +11,8 @@ function ToyList() {
   const dispatch = useAppDispatch();
   const toys = useAppSelector((state: RootState) => state.toys.toys);
   const { error, loading } = useAppSelector((state: RootState) => state.toys);
-  const selectedCategory = useAppSelector(
-    (state: RootState) => state.toys.selectedCategory
+  const { category, ageCategory, brand } = useAppSelector(
+    (state: RootState) => state.toys
   );
   const currentPage = useAppSelector(
     (state: RootState) => state.toys.currentPage
@@ -32,10 +32,12 @@ function ToyList() {
       fetchToys({
         page: currentPage,
         limit: resultsPerPage,
-        category: selectedCategory
+        category,
+        ageCategory,
+        brand
       })
     );
-  }, [dispatch, currentPage, resultsPerPage, selectedCategory]);
+  }, [dispatch, currentPage, resultsPerPage, category, ageCategory, brand]);
 
   if (loading) {
     return <div>Loading...</div>;

@@ -11,7 +11,9 @@ const initialState: ToysState = {
   totalPages: 1,
   totalResults: 0,
   loading: false,
-  selectedCategory: ""
+  ageCategory: "",
+  brand: "",
+  category: ""
 };
 
 const axiosInstance = axios.create({
@@ -21,29 +23,52 @@ const axiosInstance = axios.create({
   }
 });
 
+const getParams = (params: Record<string, string | number | undefined>) => {
+  const definedParams: Record<string, string | number> = {};
+  Object.entries(params).reduce((acc, [key, value]) => {
+    if (value) {
+      acc[key] = value;
+    }
+    return acc;
+  }, definedParams);
+  return definedParams;
+};
+
 export const fetchToys = createAsyncThunk<
   { toys: Toy[]; totalPages: number; totalResults: number },
-  { page: number; limit: number; category?: string },
+  {
+    page: number;
+    limit: number;
+    category?: string;
+    ageCategory?: string;
+    brand?: string;
+  },
   { rejectValue: string }
->("toys/fetchToys", async ({ page, limit, category }, { rejectWithValue }) => {
-  try {
-    const response = await axiosInstance.get(`/toys`, {
-      params: { page, limit, category }
-    });
-    const { data } = response;
-    return {
-      toys: data.data,
-      totalPages: data.totalPages,
-      totalResults: data.totalResults
-    };
-  } catch (err) {
-    let message = "Failed to fetch toys";
-    if (err instanceof AxiosError && err.response) {
-      message = err.response.data?.message || message;
+>(
+  "toys/fetchToys",
+  async (
+    { page, limit, category, ageCategory, brand },
+    { rejectWithValue }
+  ) => {
+    try {
+      const response = await axiosInstance.get(`/toys`, {
+        params: getParams({ page, limit, category, ageCategory, brand })
+      });
+      const { data } = response;
+      return {
+        toys: data.data,
+        totalPages: data.totalPages,
+        totalResults: data.totalResults
+      };
+    } catch (err) {
+      let message = "Failed to fetch toys";
+      if (err instanceof AxiosError && err.response) {
+        message = err.response.data?.message || message;
+      }
+      return rejectWithValue(message);
     }
-    return rejectWithValue(message);
   }
-});
+);
 
 export const fetchToyDetails = createAsyncThunk<
   Toy,
@@ -73,12 +98,21 @@ const toySlice = createSlice({
       state.resultsPerPage = action.payload;
     },
     setCategory: (state, action: PayloadAction<string>) => {
-      state.selectedCategory = action.payload;
+      state.category = action.payload;
+    },
+    setAgeCategory: (state, action: PayloadAction<string>) => {
+      state.ageCategory = action.payload;
+    },
+    setBrandCategory: (state, action: PayloadAction<string>) => {
+      state.brand = action.payload;
     },
     resetToyList: state => {
       state.currentPage = 1;
       state.resultsPerPage = 10;
       state.totalPages = 1;
+      state.category = "";
+      state.ageCategory = "";
+      state.brand = "";
     }
   },
   extraReducers: builder => {
@@ -135,7 +169,13 @@ const toySlice = createSlice({
   }
 });
 
-export const { setPage, setResultsPerPage, resetToyList, setCategory } =
-  toySlice.actions;
+export const {
+  setPage,
+  setResultsPerPage,
+  resetToyList,
+  setCategory,
+  setAgeCategory,
+  setBrandCategory
+} = toySlice.actions;
 
 export default toySlice.reducer;

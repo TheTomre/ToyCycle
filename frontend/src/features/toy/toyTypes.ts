@@ -20,6 +20,19 @@ export type Brand =
   | "Barbie"
   | "Nerf";
 
+export type Category =
+  | "stuffed"
+  | "toy"
+  | "electronic"
+  | "building"
+  | "educational"
+  | "outdoor"
+  | "creative"
+  | "musical"
+  | "puzzle"
+  | "vehicle"
+  | "construction";
+
 export type Toy = {
   ageCategory: AgeCategory[];
   brand: Brand;
@@ -45,5 +58,7 @@ export type ToysState = {
   totalPages: number;
   totalResults: number;
   loading: boolean;
-  selectedCategory: string;
+  ageCategory: string;
+  brand: string;
+  category: string;
 };

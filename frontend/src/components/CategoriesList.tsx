@@ -10,7 +10,12 @@ function CategoriesList({ categories, className }: CategoriesListProps) {
   return (
     <section className={className}>
       {categories.map(element => (
-        <CategoryItem key={element.id} title={element.title} />
+        <CategoryItem
+          key={element.id}
+          filterForApi={element.filterForApi}
+          title={element.title}
+          link="/toys"
+        />
       ))}
     </section>
   );
