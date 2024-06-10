@@ -1,18 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
-import { Toy } from "./toyTypes";
-
-export interface ToysState {
-  toys: Toy[];
-  selectedToy: Toy | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
-  error: string | null;
-  currentPage: number;
-  resultsPerPage: number;
-  totalPages: number;
-  totalResults: number;
-  loading: boolean;
-}
+import { Toy, ToysState } from "./toyTypes";
 
 const initialState: ToysState = {
   toys: [],
@@ -27,7 +15,7 @@ const initialState: ToysState = {
 };
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3001/api/v1",
+  baseURL: import.meta.env["VITE_API_BASE_URL"],
   headers: {
     "Content-Type": "application/json"
   }
@@ -39,20 +27,21 @@ export const fetchToys = createAsyncThunk<
   { rejectValue: string }
 >("toys/fetchToys", async ({ page, limit }, { rejectWithValue }) => {
   try {
-    const response = await fetch(
-      `http://localhost:3001/api/v1/toys?page=${page}&limit=${limit}`
-    );
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const data = await response.json();
+    const response = await axiosInstance.get(`/toys`, {
+      params: { page, limit }
+    });
+    const { data } = response;
     return {
       toys: data.data,
       totalPages: data.totalPages,
       totalResults: data.total
     };
   } catch (err) {
-    return rejectWithValue("Failed to fetch toys");
+    let message = "Failed to fetch toys";
+    if (err instanceof AxiosError && err.response) {
+      message = err.response.data?.message || message;
+    }
+    return rejectWithValue(message);
   }
 });
 
