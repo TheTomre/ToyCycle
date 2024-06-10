@@ -43,8 +43,8 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
         <h3 className="text-xl font-semibold mb-2">{name}</h3>
         {description && <p className="text-gray-600 mb-4">{description}</p>}
         <div className="flex items-center justify-between mt-4">
-          <span className="text-purple-500 font-semibold">{tokens} Tokens</span>
-          <button className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300">
+          <span className="text-purple-400 font-semibold">{tokens} Tokens</span>
+          <button className="bg-purple-500 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300">
             Exchange Now
           </button>
         </div>
