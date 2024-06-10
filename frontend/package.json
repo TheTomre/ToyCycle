@@ -38,6 +38,7 @@
     "@types/react-icons": "^3.0.0",
     "@types/set-cookie-parser": "^2.4.7",
     "autoprefixer": "^10.4.19",
+    "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cookie-parser": "^1.4.6",

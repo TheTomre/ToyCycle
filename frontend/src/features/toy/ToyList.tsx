@@ -10,8 +10,7 @@ import { CATEGORIES } from "../../lib/consts";
 function ToyList() {
   const dispatch = useAppDispatch();
   const toys = useAppSelector((state: RootState) => state.toys.toys);
-  const status = useAppSelector((state: RootState) => state.toys.status);
-  const error = useAppSelector((state: RootState) => state.toys.error);
+  const { error, loading } = useAppSelector((state: RootState) => state.toys);
   const selectedCategory = useAppSelector(
     (state: RootState) => state.toys.selectedCategory
   );
@@ -38,11 +37,11 @@ function ToyList() {
     );
   }, [dispatch, currentPage, resultsPerPage, selectedCategory]);
 
-  if (status === "loading") {
+  if (loading) {
     return <div>Loading...</div>;
   }
 
-  if (status === "failed") {
+  if (error) {
     return <div>Failed to load toys. Error: {error}</div>;
   }
 
@@ -72,9 +71,7 @@ function ToyList() {
             id={toy._id}
             name={toy.name}
             description={toy.description}
-            images={
-              toy.images.length > 0 ? toy.images : ["../public/bear.webp"]
-            }
+            images={toy.images.length > 0 ? toy.images : ["../bear.webp"]}
             tokens={toy.tokenValue}
           />
         ))}
