@@ -38,6 +38,14 @@ function ToyList() {
 
   return (
     <div>
+      <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={page => dispatch(setPage(page))}
+        resultsPerPage={resultsPerPage}
+        onResultsPerPageChange={results => dispatch(setResultsPerPage(results))}
+        totalResults={totalResults}
+      />
       <div className="flex flex-wrap justify-center">
         {toys.map(toy => (
           <ToyCard
