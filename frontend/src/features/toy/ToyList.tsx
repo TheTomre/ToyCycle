@@ -1,16 +1,20 @@
 /* eslint-disable no-underscore-dangle */
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
-import { fetchToys, setPage, setResultsPerPage } from "./toySlice";
+import { fetchToys, setCategory, setPage, setResultsPerPage } from "./toySlice";
 import ToyCard from "./ToyCard";
 import Pagination from "../../components/Pagination";
+import { CATEGORIES } from "../../lib/consts";
 
 function ToyList() {
   const dispatch = useAppDispatch();
   const toys = useAppSelector((state: RootState) => state.toys.toys);
   const status = useAppSelector((state: RootState) => state.toys.status);
   const error = useAppSelector((state: RootState) => state.toys.error);
+  const selectedCategory = useAppSelector(
+    (state: RootState) => state.toys.selectedCategory
+  );
   const currentPage = useAppSelector(
     (state: RootState) => state.toys.currentPage
   );
@@ -25,8 +29,14 @@ function ToyList() {
   );
 
   useEffect(() => {
-    dispatch(fetchToys({ page: currentPage, limit: resultsPerPage }));
-  }, [dispatch, currentPage, resultsPerPage]);
+    dispatch(
+      fetchToys({
+        page: currentPage,
+        limit: resultsPerPage,
+        category: selectedCategory
+      })
+    );
+  }, [dispatch, currentPage, resultsPerPage, selectedCategory]);
 
   if (status === "loading") {
     return <div>Loading...</div>;
@@ -38,6 +48,23 @@ function ToyList() {
 
   return (
     <div>
+      <div>
+        <span>category</span>
+        <select
+          name="category"
+          id="category"
+          onChange={(event: ChangeEvent<HTMLSelectElement>) =>
+            dispatch(setCategory(event.target.value))
+          }
+        >
+          {CATEGORIES.map(cat => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <div className="flex flex-wrap justify-center">
         {toys.map(toy => (
           <ToyCard

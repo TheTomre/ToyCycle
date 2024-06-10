@@ -1,5 +1,8 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import { useAppDispatch } from "../hooks/redux";
+import { resetToyList } from "../features/toy/toySlice";
+import { Button } from "./UI/button";
 
 interface PaginationProps {
   currentPage: number;
@@ -21,11 +24,18 @@ function Pagination({
   const pages = [...Array(totalPages).keys()].map(num => num + 1);
   const start = (currentPage - 1) * resultsPerPage + 1;
   const end = Math.min(currentPage * resultsPerPage, totalResults);
+  const dispatch = useAppDispatch();
+
+  const handleReset = () => {
+    dispatch(resetToyList());
+  };
 
   return (
     <div className="flex flex-col items-center mt-4 space-y-2">
       <span className="text-gray-700">{`${start}-${end} of ${totalResults}`}</span>
+
       <div className="flex items-center space-x-2">
+        <Button onClick={handleReset}>reset</Button>
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}

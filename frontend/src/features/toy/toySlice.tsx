@@ -9,6 +9,7 @@ export interface ToysState {
   resultsPerPage: number;
   totalPages: number;
   totalResults: number;
+  selectedCategory: string;
 }
 
 const initialState: ToysState = {
@@ -18,17 +19,18 @@ const initialState: ToysState = {
   currentPage: 1,
   resultsPerPage: 10,
   totalPages: 1,
-  totalResults: 0
+  totalResults: 0,
+  selectedCategory: ""
 };
 
 export const fetchToys = createAsyncThunk<
   { toys: Toy[]; totalPages: number; totalResults: number },
-  { page: number; limit: number },
+  { page: number; limit: number; category?: string },
   { rejectValue: string }
->("toys/fetchToys", async ({ page, limit }, { rejectWithValue }) => {
+>("toys/fetchToys", async ({ page, limit, category }, { rejectWithValue }) => {
   try {
     const response = await fetch(
-      `http://localhost:3001/api/v1/toys?page=${page}&limit=${limit}`
+      `http://localhost:3001/api/v1/toys?page=${page}&limit=${limit}${category ? `category=${category}` : ""}`
     );
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -37,7 +39,7 @@ export const fetchToys = createAsyncThunk<
     return {
       toys: data.data,
       totalPages: data.totalPages,
-      totalResults: data.total
+      totalResults: data.totalResults
     };
   } catch (err) {
     return rejectWithValue("Failed to fetch toys");
@@ -53,6 +55,15 @@ const toySlice = createSlice({
     },
     setResultsPerPage: (state, action: PayloadAction<number>) => {
       state.resultsPerPage = action.payload;
+    },
+    setCategory: (state, action: PayloadAction<string>) => {
+      state.selectedCategory = action.payload;
+    },
+    resetToyList: state => {
+      state.currentPage = 1;
+      state.resultsPerPage = 10;
+      state.totalPages = 1;
+      state.status = "idle";
     }
   },
   extraReducers: builder => {
@@ -86,6 +97,7 @@ const toySlice = createSlice({
   }
 });
 
-export const { setPage, setResultsPerPage } = toySlice.actions;
+export const { setPage, setResultsPerPage, resetToyList, setCategory } =
+  toySlice.actions;
 
 export default toySlice.reducer;

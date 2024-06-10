@@ -22,11 +22,25 @@ paths:
             default: 10
           description: Number of items per page
         - in: query
+          name: category
+          schema:
+            type: string
+          description: Category of toys
+        - in: query
+          name: age
+          schema:
+            type: string
+          description: Age category of toys
+        - in: query
+          name: brand
+          schema:
+            type: string
+          description: Brand of toys
+        - in: query
           name: sort
           schema:
             type: string
-            enum: [asc, desc]
-            default: asc
+            default: name
           description: Sort order (asc or desc)
       responses:
         '200':

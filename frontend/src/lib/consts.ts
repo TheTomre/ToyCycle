@@ -18,6 +18,19 @@ export const ENDPOINT = {
   me: "/users/me"
 };
 
+export const CATEGORIES = [
+  "stuffed",
+  "toy",
+  "electronic",
+  "building",
+  "educational",
+  "outdoor",
+  "creative",
+  "musical",
+  "puzzle",
+  "vehicle",
+  "construction"
+];
 export const CATEGORIES_AGE = [
   {
     id: 1,
