@@ -18,9 +18,11 @@ const config = {
   },
   rules: {
     "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-namespace": "off",
     "import/prefer-default-export": "off",
     "spellcheck/spell-checker": "off",
-    "unicorn/no-null": "off"
+    "unicorn/no-null": "off",
+    "no-underscore-dangle": "off"
   }
 };
 

@@ -5,7 +5,7 @@ function Footer() {
   const hoverEffect = "hover:scale-110 transition-transform duration-300";
 
   return (
-    <footer className="w-full py-6 px-4 self-end bg-[#70e2d2] font-sans">
+    <footer className="w-full px-7 py-4 sm:px-10 sm:py-6 self-end bg-[#70e2d2] font-sans">
       <div className="flex-col w-full justify-between items-start">
         <div>
           <h2 className="text-[#3a0e7b] text-2xl font-bold font-mono">
