@@ -3,36 +3,37 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const userSchema = new Schema({
-  address: {
-    required: [true, "An address is required"],
-    type: {
-      city: {
-        default: "Tel Aviv",
-        required: [true, "A city is required"],
-        trim: true,
-        type: String
-      },
-      country: {
-        default: "Israel",
-        required: [true, "A country is required"],
-        trim: true,
-        type: String
-      },
-      street1: {
-        required: [true, "A street1 is required"],
-        trim: true,
-        type: String
-      },
-      street2: {
-        trim: true,
-        type: String
-      },
-      zipcode: {
-        required: [true, "A zipcode is required"],
-        trim: true,
-        type: String
-      }
-    }
+  auth0Id: {
+    required: [true, "An auth0Id is required"],
+    type: String,
+    unique: [true, "id is not unique"]
+  },
+
+  city: {
+    default: "Tel Aviv",
+    // required: [true, "A city is required"],
+    trim: true,
+    type: String
+  },
+  country: {
+    default: "Israel",
+    // required: [true, "A country is required"],
+    trim: true,
+    type: String
+  },
+  street1: {
+    // required: [true, "A street1 is required"],
+    trim: true,
+    type: String
+  },
+  street2: {
+    trim: true,
+    type: String
+  },
+  zipcode: {
+    // required: [true, "A zipcode is required"],
+    trim: true,
+    type: String
   },
   avatar: {
     type: String
@@ -49,7 +50,7 @@ const userSchema = new Schema({
   },
   firstName: {
     minlength: 1,
-    required: [true, "A first name is required"],
+    // required: [true, "A first name is required"],
     type: String
   },
   lastActive: {
@@ -59,12 +60,12 @@ const userSchema = new Schema({
   },
   lastName: {
     minlength: 1,
-    required: [true, "A last name is required"],
+    // required: [true, "A last name is required"],
     type: String
   },
   password: {
     minlength: 8,
-    required: [true, "A password is required"],
+    // required: [true, "A password is required"],
     select: false,
     trim: true,
     type: String
@@ -78,7 +79,11 @@ const userSchema = new Schema({
   // passwordResetExpires: Date,
   // passwordResetToken: String,
 
-  tokenBalance: { default: 0, required: true, type: Number },
+  tokenBalance: {
+    default: 0,
+    required: true,
+    type: Number
+  },
   toyListings: {
     required: true,
     type: [

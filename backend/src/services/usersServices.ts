@@ -1,13 +1,18 @@
 import { Request } from "express";
-import { UserInputDTO, User as UserType } from "../types/user";
+import { User as UserType } from "../types/user";
 import User from "../models/userModel";
 import logger from "../logger/logger";
 import { PAGINATION } from "../consts/pagination";
 import { EXCLUDED_QUERY_FIELDS } from "../consts/queryFields";
 
-const createUser = async (data: UserInputDTO) => {
+const createUser = async (data: Request) => {
   try {
-    const newUser = await User.create(data);
+    const { auth0Id } = data.body;
+    const existingUser = await User.findOne({ auth0Id });
+
+    if (existingUser) return existingUser;
+
+    const newUser = await User.create(data.body);
     await newUser.save();
     logger.info(`User ${newUser.email} created`);
     return newUser;
