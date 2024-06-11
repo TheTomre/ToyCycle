@@ -113,6 +113,11 @@ const toySlice = createSlice({
       state.category = "";
       state.ageCategory = "";
       state.brand = "";
+    },
+    resetToysFilter: state => {
+      state.category = "";
+      state.ageCategory = "";
+      state.brand = "";
     }
   },
   extraReducers: builder => {
@@ -175,7 +180,8 @@ export const {
   resetToyList,
   setCategory,
   setAgeCategory,
-  setBrandCategory
+  setBrandCategory,
+  resetToysFilter
 } = toySlice.actions;
 
 export default toySlice.reducer;
