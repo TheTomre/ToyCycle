@@ -31,7 +31,7 @@ function Pagination({
   };
 
   return (
-    <div className="flex flex-col items-center mt-4 space-y-2">
+    <div className="flex flex-col items-center mt-4 space-y-2 pb-4">
       <span className="text-gray-700">{`${start}-${end} of ${totalResults}`}</span>
 
       <div className="flex items-center space-x-2">
@@ -39,7 +39,7 @@ function Pagination({
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full transition-all duration-300 ${currentPage === 1 ? "bg-gray-200 cursor-not-allowed" : "bg-gray-300 hover:bg-gray-400"}`}
+          className={`flex items-center justify-center w-8 h-8 text-white transition-all duration-300 ${currentPage === 1 ? "bg-gray-200 cursor-not-allowed" : "bg-[#3a0e7b] hover:bg-[#280b5f]"}`}
           aria-label="Previous Page"
         >
           <FaArrowLeft />
@@ -49,7 +49,7 @@ function Pagination({
             key={page}
             onClick={() => onPageChange(page)}
             disabled={page === currentPage}
-            className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full transition-all duration-300 ${page === currentPage ? "bg-blue-500 text-white" : "bg-gray-300 hover:bg-gray-400"}`}
+            className={`flex items-center justify-center w-8 h-8  transition-all duration-300 ${page === currentPage ? "bg-[#fff24f] text-[#280b5f] font-bold w-9 h-9 " : "bg-[#3a0e7b] hover:bg-[#280b5f] text-white "}`}
             aria-label={`Page ${page}`}
           >
             {page}
@@ -58,7 +58,7 @@ function Pagination({
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className={`flex items-center justify-center w-8 h-8 text-gray-700 rounded-full transition-all duration-300 ${currentPage === totalPages ? "bg-gray-200 cursor-not-allowed" : "bg-gray-300 hover:bg-gray-400"}`}
+          className={`flex items-center justify-center w-8 h-8 text-white transition-all duration-300 ${currentPage === totalPages ? "bg-gray-200 cursor-not-allowed" : "bg-[#3a0e7b] hover:bg-[#280b5f]"}`}
           aria-label="Next Page"
         >
           <FaArrowRight />
