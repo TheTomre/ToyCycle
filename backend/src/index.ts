@@ -6,6 +6,7 @@ import { ENV, SECURE_PORT } from "./config";
 import app from "./app";
 import { initPassport } from "./providers";
 import logger from "./logger/logger";
+import { STATUS_MESSAGE } from "./consts/statusCodes";
 
 const PORT = process.env["PORT"] || 8000;
 const MONGO_URI = process.env["MONGO_URI"] || "your-mongodb-uri";
@@ -44,3 +45,10 @@ if (ENV === "development") {
     logger.info(`Server is running on http://localhost:${PORT}`);
   });
 }
+
+app.get("/health", async (_req, res) => {
+  res.send({
+    status: STATUS_MESSAGE.SUCCESS,
+    message: "Server is running, healthy and ready to accept connections."
+  });
+});
