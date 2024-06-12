@@ -45,12 +45,11 @@ paths:
             type: string
             default: name
           description: Sort order (asc or desc)
-        # - in: query
-        #   name: search
-        #   schema:
-        #     type: string
-            # default: name
-          # description: search by name, description or brand
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: search by name, description or brand
       responses:
         '200':
           description: A list of toys

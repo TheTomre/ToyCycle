@@ -34,9 +34,9 @@ export const fetchAllToys = async (req: Request) => {
     const excludeFields = [...EXCLUDED_QUERY_FIELDS];
     excludeFields.forEach(el => delete queryObj[el]);
 
-    let queryStr = JSON.stringify(queryObj);
-    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+    const queryStr = JSON.stringify(queryObj);
     logger.info(`Query string ${queryStr}`);
+
     let query = Toy.find({});
     const category = (req.query["category"] as string) || "";
     const ageCategory = (req.query["ageCategory"] as string) || "";
@@ -70,20 +70,20 @@ export const fetchAllToys = async (req: Request) => {
     }
 
     // SEARCHING;
-    // if (req.query["search"]) {
-    //   const search = (req.query["search"] as string) || "";
-    //   logger.info(`Search query ${search}`);
-    //   if (search) {
-    //     const rearchRegex = new RegExp(search, "i");
-    //     query = query.find({
-    //       $or: [
-    //         { name: rearchRegex },
-    //         { description: rearchRegex },
-    //         { brand: rearchRegex }
-    //       ]
-    //     });
-    //   }
-    // }
+    if (req.query["search"]) {
+      const search = (req.query["search"] as string) || "";
+      logger.info(`Search query ${search}`);
+      if (search) {
+        const rearchRegex = new RegExp(search, "i");
+        query = query.find({
+          $or: [
+            { name: rearchRegex },
+            { description: rearchRegex },
+            { brand: rearchRegex }
+          ]
+        });
+      }
+    }
 
     // SORTING
     if (req.query["sort"]) {
