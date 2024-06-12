@@ -83,9 +83,10 @@ function ToyList() {
               totalPages={totalPages}
               onPageChange={page => dispatch(setPage(page))}
               resultsPerPage={resultsPerPage}
-              onResultsPerPageChange={results =>
-                dispatch(setResultsPerPage(results))
-              }
+              onResultsPerPageChange={results => {
+                dispatch(setPage(1));
+                dispatch(setResultsPerPage(results));
+              }}
               totalResults={totalResults}
             />
             <div className="flex flex-wrap justify-center">

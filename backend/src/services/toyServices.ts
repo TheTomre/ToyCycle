@@ -36,15 +36,29 @@ export const fetchAllToys = async (req: Request) => {
 
     let queryStr = JSON.stringify(queryObj);
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, match => `$${match}`);
+    logger.info(`Query string ${queryStr}`);
+    let query = Toy.find({});
+    const category = (req.query["category"] as string) || "";
+    const ageCategory = (req.query["ageCategory"] as string) || "";
+    const brand = (req.query["brand"] as string) || "";
 
-    let query = Toy.find(JSON.parse(queryStr));
-
-    // SORTING
-    if (req.query["sort"]) {
-      const sortBy = (req.query["sort"] as string).split(",").join(" ");
-      query = query.sort(sortBy);
-    } else {
-      query = query.sort("-createdAt");
+    if (ageCategory) {
+      const ageCategoryArr = ageCategory
+        .split(",")
+        .map(categoryEl => new RegExp(categoryEl, "i"));
+      query = query.find({ ageCategory: { $in: ageCategoryArr } });
+    }
+    if (category) {
+      const caregoryArr = category
+        .split(",")
+        .map(categoryEl => new RegExp(categoryEl, "i"));
+      query = query.find({ category: { $in: caregoryArr } });
+    }
+    if (brand) {
+      const brandArr = category
+        .split(",")
+        .map(brandEl => new RegExp(brandEl, "i"));
+      query = query.find({ category: { $in: brandArr } });
     }
 
     // FIELD LIMITING
@@ -55,7 +69,33 @@ export const fetchAllToys = async (req: Request) => {
       query = query.select("-__v");
     }
 
+    // SEARCHING;
+    // if (req.query["search"]) {
+    //   const search = (req.query["search"] as string) || "";
+    //   logger.info(`Search query ${search}`);
+    //   if (search) {
+    //     const rearchRegex = new RegExp(search, "i");
+    //     query = query.find({
+    //       $or: [
+    //         { name: rearchRegex },
+    //         { description: rearchRegex },
+    //         { brand: rearchRegex }
+    //       ]
+    //     });
+    //   }
+    // }
+
+    // SORTING
+    if (req.query["sort"]) {
+      const sortBy = (req.query["sort"] as string).split(",").join(" ");
+      query = query.sort(sortBy);
+    } else {
+      query = query.sort("-createdAt");
+    }
+
+    // GET TOTAL COUNT MATCHING THE QUERY
     const total = await Toy.countDocuments(query);
+    logger.info(`Total toys ${total}`);
     // PAGINATION
     const page = Number(req.query["page"]) || PAGINATION.page;
     const limit = Number(req.query["limit"]) || PAGINATION.limit;
