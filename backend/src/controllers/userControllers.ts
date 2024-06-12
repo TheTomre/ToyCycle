@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
+
 import { STATUS, STATUS_MESSAGE } from "../consts/statusCodes";
-import usersServices from "../services/usersServices";
+import usersServices from "../services/userServices";
 
 const createNewUser = async (
   req: Request,
@@ -15,11 +16,30 @@ const createNewUser = async (
         message: "User not created"
       });
     }
-    await newUser.save();
     return res.status(STATUS.CREATED).json({
       status: STATUS_MESSAGE.SUCCESS,
       data: newUser
     });
+  } catch (err) {
+    next(err);
+    return undefined;
+  }
+};
+
+const getCurrentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const currentUser = await usersServices.fetchCurrentUser(req);
+    if (!currentUser) {
+      return res.status(STATUS.NOT_FOUND).json({
+        status: STATUS_MESSAGE.FAIL,
+        message: "User not found"
+      });
+    }
+    return res.status(STATUS.OK).send(currentUser);
   } catch (err) {
     next(err);
     return undefined;
@@ -65,6 +85,32 @@ const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
       data: users,
       status: STATUS_MESSAGE.SUCCESS
     });
+  } catch (err) {
+    next(err);
+    return undefined;
+  }
+};
+
+const updateCurrentUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  if (!req.userId)
+    return res.status(STATUS.BAD_REQUEST).json({
+      status: STATUS_MESSAGE.FAIL,
+      message: "Please provide a correct user id"
+    });
+
+  try {
+    const updatedUser = await usersServices.updateCurrentUserData(req);
+    if (!updatedUser) {
+      return res
+        .status(STATUS.NOT_FOUND)
+        .json({ status: STATUS_MESSAGE.FAIL, message: "User not found" });
+    }
+
+    return res.status(STATUS.OK).send(updatedUser);
   } catch (err) {
     next(err);
     return undefined;
@@ -160,5 +206,7 @@ export default {
   deleteUserById,
   getAllUsers,
   getUserById,
-  updateUserById
+  updateUserById,
+  getCurrentUser,
+  updateCurrentUser
 };

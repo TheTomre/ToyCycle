@@ -22,6 +22,18 @@ const createUser = async (data: Request) => {
   }
 };
 
+const fetchCurrentUser = async (req: Request) => {
+  try {
+    const currentUser = await User.findById({ _id: req.userId });
+
+    logger.info(`User ${currentUser?.email} fetched successfully`);
+    return currentUser;
+  } catch (err) {
+    logger.error((err as Error).message);
+    return null;
+  }
+};
+
 const fetchUserById = async (id: string) => {
   try {
     const user = await User.findById(id);
@@ -97,6 +109,20 @@ const updateUserById = async <T extends UserType>(id: string, userData: T) => {
   }
 };
 
+const updateCurrentUserData = async (req: Request) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.userId, req.body, {
+      new: true,
+      runValidators: true
+    });
+    logger.info(`User ${updatedUser?.email} updated successfully`);
+    return updatedUser;
+  } catch (err) {
+    logger.error((err as Error).message);
+    return null;
+  }
+};
+
 const addUserAvatar = async (id: string, avatar: string) => {
   try {
     const user = await User.findById(id);
@@ -144,5 +170,7 @@ export default {
   deleteUserById,
   fetchAllUsers,
   fetchUserById,
+  fetchCurrentUser,
+  updateCurrentUserData,
   updateUserById
 };

@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useNavigate } from "react-router-dom";
 
-import useCreateUserQuery from "./apiService/UserApi";
+import { useCreateUser } from "./apiService/UserApi";
 import Loader from "../../components/Loader";
 
 function AuthUserCallbackPage() {
@@ -10,7 +10,7 @@ function AuthUserCallbackPage() {
   const refCurrentUser = useRef(false);
 
   const { user } = useAuth0();
-  const { createUser } = useCreateUserQuery();
+  const { createUser } = useCreateUser();
 
   useEffect(() => {
     if (user?.sub && user?.email) {

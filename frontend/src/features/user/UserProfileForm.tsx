@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
   Form,
@@ -17,6 +18,7 @@ import {
   AvatarFallback,
   AvatarImage
 } from "../../components/UI/avatar";
+import { User } from "./userTypes";
 
 const fromUserSchema = z.object({
   email: z.string().optional(),
@@ -26,27 +28,43 @@ const fromUserSchema = z.object({
   avatar: z.string().optional(),
   lastActive: z.string().optional(),
   tokenBalance: z.number().positive().optional(),
-  address: z.object({
-    city: z.string().min(1, "City is required").max(120),
-    country: z.string().min(1, "Country is required").max(120),
-    street1: z.string().min(1, "Address is required").max(120),
-    street2: z.string().optional(),
-    zipcode: z.string().min(1, "Zipcode is required").max(50)
-  })
+  city: z.string().min(1, "City is required").max(120),
+  country: z.string().min(1, "Country is required").max(120),
+  street1: z.string().min(1, "Address is required").max(120),
+  street2: z.string().optional(),
+  zipcode: z.string().min(1, "Zipcode is required").max(50)
 });
 
 type UserFormSchema = z.infer<typeof fromUserSchema>;
 
 type UserProfileFormProps = {
-  onSave: (data: UserFormSchema) => void;
+  currentUser: User;
+  onSave: (userProfileData: UserFormSchema) => void;
   isLoading: boolean;
+  title?: string;
+  buttonText?: string;
 };
 
-function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
-  const { user } = useAuth0();
+function UserProfileForm({
+  onSave,
+  isLoading,
+  currentUser
+}: UserProfileFormProps) {
   const form = useForm<UserFormSchema>({
-    resolver: zodResolver(fromUserSchema)
+    resolver: zodResolver(fromUserSchema),
+    defaultValues: currentUser
   });
+  const { user } = useAuth0();
+
+  if (!currentUser.avatar) {
+    currentUser.avatar = user?.picture || "";
+  }
+
+  //! TODO DO TOT WORK WILL WORK WITH   form.reset({ currentUser });
+  useEffect(() => {
+    form.reset(currentUser);
+  }, [currentUser, form]);
+
   const inputStyles =
     "border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500";
   const lableStyles = "font-sans text-sm text-[#3a0e7b] relative top-1";
@@ -60,7 +78,7 @@ function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
         className="p-2 md:p:10 md:max-w-5xl mx-auto font-sans "
       >
         <div>
-          <h3>{user?.name ?? "Your"} profile</h3>
+          <h3>{currentUser?.firstName ?? "Your"} profile</h3>
           <h5>Upadate your personal information</h5>
         </div>
         <div className="flex justify-between items-center gap-4 sm:gap-6">
@@ -80,6 +98,7 @@ function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
                   <FormControl>
                     <Input {...field} disabled className={inputStyles} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -105,6 +124,7 @@ function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
                   <FormControl>
                     <Input {...field} className={inputStyles} />
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -121,6 +141,7 @@ function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
                 <FormControl>
                   <Input {...field} className={inputStyles} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -131,25 +152,27 @@ function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
         <div>
           <FormField
             control={form.control}
-            name="address.country"
+            name="country"
             render={({ field }) => (
               <FormItem className={paddingsY}>
                 <FormLabel className={lableStyles}>Country</FormLabel>
                 <FormControl>
                   <Input {...field} className={inputStyles} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="address.city"
+            name="city"
             render={({ field }) => (
               <FormItem className={paddingsY}>
                 <FormLabel className={lableStyles}>City</FormLabel>
                 <FormControl>
                   <Input {...field} className={inputStyles} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
@@ -157,47 +180,50 @@ function UserProfileForm({ isLoading, onSave }: UserProfileFormProps) {
         <div>
           <FormField
             control={form.control}
-            name="address.street1"
+            name="street1"
             render={({ field }) => (
               <FormItem className={paddingsY}>
                 <FormLabel className={lableStyles}>Address 1</FormLabel>
                 <FormControl>
                   <Input {...field} className={inputStyles} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
           <FormField
             control={form.control}
-            name="address.street2"
+            name="street2"
             render={({ field }) => (
               <FormItem className={paddingsY}>
                 <FormLabel className={lableStyles}>Address 2</FormLabel>
                 <FormControl>
                   <Input {...field} className={inputStyles} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
         </div>
         <FormField
           control={form.control}
-          name="address.zipcode"
+          name="zipcode"
           render={({ field }) => (
             <FormItem className={paddingsY}>
               <FormLabel className={lableStyles}>Zipcode</FormLabel>
               <FormControl>
                 <Input {...field} className={inputStyles} />
               </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
         <Button
           type="submit"
           disabled={isLoading}
-          className={`${isLoading ? "animate-spin" : ""} bg-[#3a0e7b] font-mono px-6 py-3 text-white hover:text-[#fff24f] hover:bg-[#280b5f]`}
+          className={`${isLoading ? "animate-spin" : ""} bg-[#3a0e7b] font-mono px-6 py-3 text-white ] hover:bg-[#4e2a85]`}
         >
-          {isLoading ? "Submit" : "Loading"}
+          {isLoading ? "Loading" : "Submit"}
         </Button>
       </form>
     </Form>

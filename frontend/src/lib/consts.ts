@@ -93,3 +93,18 @@ export const CATEGORIES_TYPE = [
     filterForApi: ""
   }
 ];
+
+export const FORM_INIT = {
+  email: "",
+  bio: "",
+  firstName: "",
+  lastName: "",
+  avatar: "",
+  lastActive: "",
+  tokenBalance: 0,
+  city: "Tel-Aviv",
+  country: "Israel",
+  street1: "",
+  street2: "",
+  zipcode: ""
+};
