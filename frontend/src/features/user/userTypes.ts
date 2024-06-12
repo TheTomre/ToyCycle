@@ -5,6 +5,7 @@ export type UserState = {
 };
 
 export type User = {
+  _id: string;
   city?: string;
   country?: string;
   street1?: string;
@@ -21,7 +22,3 @@ export type User = {
   tokenBalance: number;
   toyListings: Toy[];
 };
-
-export type UserUpdateBioDTO = Pick<User, "bio" | "lastName" | "firstName">;
-
-export type UserInputDTO = Omit<User, "id">;
