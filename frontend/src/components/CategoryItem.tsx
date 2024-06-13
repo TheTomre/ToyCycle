@@ -19,9 +19,10 @@ function CategoryItem({
   const dispatch = useAppDispatch();
 
   const hangleClick = () => {
-    dispatch(setAgeCategory(filterForApi));
+    dispatch(setAgeCategory([filterForApi]));
     if (link) navigate(`${link}`);
   };
+
   return (
     <Button
       onClick={hangleClick}

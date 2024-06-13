@@ -49,7 +49,7 @@ function Pagination({
             key={page}
             onClick={() => onPageChange(page)}
             disabled={page === currentPage}
-            className={`flex items-center justify-center w-8 h-8  transition-all duration-300 ${page === currentPage ? "bg-[#fff24f] text-[#280b5f] font-bold w-9 h-9 " : "bg-[#3a0e7b] hover:bg-[#280b5f] text-white "}`}
+            className={`flex items-center justify-center w-8 h-8  transition-all duration-300 ${page === currentPage ? "bg-[#70e2d2] text-[#280b5f] font-bold w-9 h-9 " : "bg-[#3a0e7b] hover:bg-[#280b5f] text-white "}`}
             aria-label={`Page ${page}`}
           >
             {page}

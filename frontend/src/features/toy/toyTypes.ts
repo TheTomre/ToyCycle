@@ -58,7 +58,8 @@ export type ToysState = {
   totalPages: number;
   totalResults: number;
   loading: boolean;
-  ageCategory: string;
-  brand: string;
-  category: string;
+  ageCategory: string[];
+  brand: string[];
+  category: string[];
+  searchQuery: string;
 };

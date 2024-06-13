@@ -4,8 +4,12 @@ import ToyList from "./ToyList";
 function ToysPage() {
   return (
     <>
-      <Search />
-      <ToyList />;
+      <Search
+        onSubmit={() => {}}
+        placeholder="Search for toys..."
+        onReset={() => {}}
+      />
+      <ToyList />
     </>
   );
 }

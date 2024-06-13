@@ -11,9 +11,10 @@ const initialState: ToysState = {
   totalPages: 1,
   totalResults: 0,
   loading: false,
-  ageCategory: "",
-  brand: "",
-  category: ""
+  ageCategory: [],
+  brand: [],
+  category: [],
+  searchQuery: ""
 };
 
 const axiosInstance = axios.create({
@@ -42,17 +43,25 @@ export const fetchToys = createAsyncThunk<
     category?: string;
     ageCategory?: string;
     brand?: string;
+    searchQuery?: string;
   },
   { rejectValue: string }
 >(
   "toys/fetchToys",
   async (
-    { page, limit, category, ageCategory, brand },
+    { page, limit, category, ageCategory, brand, searchQuery },
     { rejectWithValue }
   ) => {
     try {
       const response = await axiosInstance.get(`/toys`, {
-        params: getParams({ page, limit, category, ageCategory, brand })
+        params: getParams({
+          page,
+          limit,
+          category,
+          ageCategory,
+          brand,
+          searchQuery
+        })
       });
       const { data } = response;
       return {
@@ -97,27 +106,27 @@ const toySlice = createSlice({
     setResultsPerPage: (state, action: PayloadAction<number>) => {
       state.resultsPerPage = action.payload;
     },
-    setCategory: (state, action: PayloadAction<string>) => {
+    setCategory: (state, action: PayloadAction<string[]>) => {
       state.category = action.payload;
     },
-    setAgeCategory: (state, action: PayloadAction<string>) => {
+    setAgeCategory: (state, action: PayloadAction<string[]>) => {
       state.ageCategory = action.payload;
     },
-    setBrandCategory: (state, action: PayloadAction<string>) => {
+    setBrandCategory: (state, action: PayloadAction<string[]>) => {
       state.brand = action.payload;
     },
     resetToyList: state => {
       state.currentPage = 1;
       state.resultsPerPage = 10;
       state.totalPages = 1;
-      state.category = "";
-      state.ageCategory = "";
-      state.brand = "";
+      state.category = [];
+      state.ageCategory = [];
+      state.brand = [];
     },
     resetToysFilter: state => {
-      state.category = "";
-      state.ageCategory = "";
-      state.brand = "";
+      state.category = [];
+      state.ageCategory = [];
+      state.brand = [];
     }
   },
   extraReducers: builder => {
