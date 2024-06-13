@@ -2,10 +2,11 @@ import fs from "node:fs";
 import http from "node:http";
 import https from "node:https";
 import mongoose from "mongoose";
+import { v2 as cloudinary } from "cloudinary";
 import { ENV, SECURE_PORT } from "./config";
-import app from "./app";
 import { initPassport } from "./providers";
 import logger from "./logger/logger";
+import app from "./app";
 
 const PORT = process.env["PORT"] || 8000;
 const MONGO_URI = process.env["MONGO_URI"] || "your-mongodb-uri";
@@ -22,6 +23,12 @@ mongoose
   .catch((err: unknown) => {
     logger.error("MongoDB connection error:", err);
   });
+
+cloudinary.config({
+  cloud_name: process.env["CLOUDINARY_CLOUD_NAME"] || "",
+  api_key: process.env["CLOUDINARY_API_KEY"] || "",
+  api_secret: process.env["CLOUDINARY_API_SECRET"] || ""
+});
 
 // Use secure server in development (needed for auth0)
 if (ENV === "development") {

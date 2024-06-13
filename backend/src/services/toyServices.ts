@@ -1,9 +1,22 @@
+import { Request } from "express";
+import { v2 as cloudinary } from "cloudinary";
+import mongoose from "mongoose";
 import Toy, { PartialToyType, ToyType } from "../models/toyModel";
+
 import logger from "../logger/logger";
 
-export const createToy = async (data: PartialToyType) => {
+export const createToy = async (req: Request) => {
   try {
-    const newToy = await Toy.create(data);
+    const image = req.file as Express.Multer.File;
+    const base64 = Buffer.from(image.buffer).toString("base64");
+    const dataURI = `data:${image.mimetype};base64,${base64}`;
+
+    const uploadeResponce = await cloudinary.uploader.upload(dataURI);
+
+    const newToy = await Toy.create(req.body);
+    newToy.images = uploadeResponce.url;
+    newToy.user = new mongoose.Types.ObjectId(req.userId);
+
     await newToy.save();
     logger.info(`Toy ${newToy.name} created`);
     return newToy;

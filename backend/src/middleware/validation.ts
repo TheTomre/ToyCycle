@@ -2,7 +2,7 @@ import { body, validationResult } from "express-validator";
 import { NextFunction, Request, Response } from "express";
 import { STATUS_MESSAGE } from "../consts/statusCodes";
 
-const validateUserSchema = async (
+const validateSchema = async (
   req: Request,
   res: Response,
   next: NextFunction
@@ -39,37 +39,43 @@ export const validateUserMeRequest = [
   body("zipcode").isString().notEmpty().withMessage("Zipcode is required"),
   body("street1").isString().notEmpty().withMessage("Street is required"),
   body("street2").isString(),
-  validateUserSchema
+  validateSchema
 ];
 
-// export const validateUserSchema = Joi.object({
-//   bio: Joi.string().min(1).max(120).optional(),
-//   firstName: Joi.string().min(1).max(120).required(),
-//   lastName: Joi.string().min(1).max(120).required(),
-//   avatar: Joi.string().optional(),
-//   lastActive: Joi.string(),
-//   tokenBalance: Joi.number().positive(),
-//   address: Joi.object({
-//     city: Joi.string().min(1).max(120).required(),
-//     country: Joi.string().min(1).max(120).required(),
-//     street1: Joi.string().min(1).max(120).required(),
-//     street2: Joi.string().optional(),
-//     zipcode: Joi.string().min(1).max(50).required()
-//   })
-// });
-
-// export const handleValidationError = (
-//   req: Request,
-//   res: Response,
-//   next: NextFunction
-// ) => {
-//   const errors = validateUserSchema.validate(req.body);
-
-//   if (!errors.error) {
-//     return res.status(400).json({
-//       status: STATUS_MESSAGE.FAIL,
-//       message: errors.error
-//     });
-//   }
-//   return next();
-// };
+export const validateToyMeRequest = [
+  body("brand").isString().notEmpty().withMessage("Brand must be a string"),
+  body("description")
+    .isString()
+    .notEmpty()
+    .withMessage("Description must be a string"),
+  body("fullDescription").isString(),
+  body("name").isString().notEmpty().withMessage("Descriptionmust be a string"),
+  body("status").isString().notEmpty().withMessage("Status must be a string"),
+  body("condition")
+    .isString()
+    .notEmpty()
+    .withMessage("Condition must be a string"),
+  body("tokenValue")
+    .isNumeric()
+    .isInt({ min: 0 })
+    .withMessage("Token value must be a positive number"),
+  body("price")
+    .isNumeric()
+    .isInt({ min: 0 })
+    .withMessage("Price must be a positive number"),
+  body("quantity")
+    .isNumeric()
+    .isInt({ min: 1 })
+    .withMessage("quantity must be a positive number"),
+  body("ageCategory")
+    .isArray()
+    .withMessage("Age category must be an array")
+    .notEmpty()
+    .withMessage("Age category must not be empty"),
+  body("category")
+    .isArray()
+    .withMessage("Category must be an array")
+    .notEmpty()
+    .withMessage("Category must not be empty"),
+  validateSchema
+];

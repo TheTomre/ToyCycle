@@ -12,10 +12,11 @@ export const NAV_ITEMS = Object.keys(NAV);
 
 export const ENDPOINT = {
   users: "/users",
+  me: "/users/me",
   userEdit: "/users/edit",
   toys: "/toys",
-  toysEdit: "/toys/edit",
-  me: "/users/me"
+  toysMe: "/toys/me",
+  toysEdit: "/toys/edit"
 };
 
 export const CATEGORIES_AGE = [
@@ -65,31 +66,87 @@ export const CATEGORIES_TYPE = [
   {
     id: 1,
     title: "Books",
-    filterForApi: ""
+    filterForApi: "Books"
   },
   {
     id: 2,
     title: "Wooden Toys",
-    filterForApi: ""
+    filterForApi: "Wooden Toys"
   },
   {
     id: 3,
     title: "Cars | Trains",
-    filterForApi: ""
+    filterForApi: "Cars | Trains"
   },
   {
     id: 4,
     title: "Dolls | Playsets",
-    filterForApi: ""
+    filterForApi: "Dolls | Playsets"
   },
   {
     id: 5,
     title: "Pazzles and Games",
-    filterForApi: ""
+    filterForApi: "Pazzles and Games"
   },
   {
     id: 6,
     title: "Soft Toys",
-    filterForApi: ""
+    filterForApi: "Soft Toys"
   }
 ];
+
+export const CATEGORIES_BRAND = [
+  {
+    "id": 1,
+    "title": "Lego",
+    "filterForApi": "lego"
+  },
+  {
+    "id": 2,
+    "title": "Mattel",
+    "filterForApi": "mattel"
+  },
+  {
+    "id": 3,
+    "title": "Hasbro",
+    "filterForApi": "hasbro"
+  },
+  {
+    "id": 4,
+    "title": "Fisher-Price",
+    "filterForApi": "fisher_price"
+  },
+  {
+    "id": 5,
+    "title": "Playmobil",
+    "filterForApi": "playmobil"
+  },
+  {
+    "id": 6,
+    "title": "VTech",
+    "filterForApi": "vtech"
+  },
+  {
+    "id": 7,
+    "title": "Bandai",
+    "filterForApi": "bandai"
+  },
+  {
+    "id": 8,
+    "title": "Hot Wheels",
+    "filterForApi": "hot_wheels"
+  },
+  {
+    "id": 9,
+    "title": "Barbie",
+    "filterForApi": "barbie"
+  },
+  {
+    "id": 10,
+    "title": "Nerf",
+    "filterForApi": "nerf"
+  }
+];
+
+export const TOY_STATUS = ["available", "exchanged", "hold"];
+export const CONDITION = ["new", "good", "bad", "broken"];

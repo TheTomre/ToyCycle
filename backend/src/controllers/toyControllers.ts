@@ -15,7 +15,7 @@ export const createNewToy = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const newToy = await createToy(req.body);
+    const newToy = await createToy(req);
     if (!newToy) {
       res.status(STATUS.BAD_REQUEST).json({
         message: "Toy not created",
