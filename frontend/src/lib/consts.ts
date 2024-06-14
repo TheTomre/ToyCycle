@@ -53,32 +53,32 @@ export const CATEGORIES_AGE: CategoryType<AgeCategory>[] = [
   {
     id: 1,
     title: "0-3 months",
-    filterForApi: "0-3months"
+    filterForApi: "0-3 months"
   },
   {
     id: 2,
     title: "3-6 months",
-    filterForApi: "3-6months"
+    filterForApi: "3-6 months"
   },
   {
     id: 3,
     title: "6-9 months",
-    filterForApi: "6-9months"
+    filterForApi: "6-9 months"
   },
   {
     id: 4,
     title: "9-12 months",
-    filterForApi: "9-12months"
+    filterForApi: "9-12 months"
   },
   {
     id: 5,
     title: "1-2 years",
-    filterForApi: "1-2years"
+    filterForApi: "1-2 years"
   },
   {
     id: 6,
     title: "2-3 years",
-    filterForApi: "2-3years"
+    filterForApi: "2-3 years"
   },
   {
     id: 7,
@@ -88,7 +88,7 @@ export const CATEGORIES_AGE: CategoryType<AgeCategory>[] = [
   {
     id: 8,
     title: "4-6 years",
-    filterForApi: "4-6years"
+    filterForApi: "4-6 years"
   }
 ];
 

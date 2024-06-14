@@ -26,7 +26,7 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   return (
     <Link
       to={`/toys/${id}`}
-      className="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden m-4 border border-gray-200 transform transition-transform duration-300 hover:scale-105"
+      className="max-w-md sm:max-w-sm  w-full bg-white rounded-2xl shadow-lg overflow-hidden m-4 border border-gray-200 transform transition-transform duration-300 hover:scale-105"
     >
       <div
         onMouseEnter={handleMouseEnter}
