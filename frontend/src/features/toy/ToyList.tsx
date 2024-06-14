@@ -5,7 +5,7 @@ import { RootState } from "../../store/store";
 import { fetchToys, setPage, setResultsPerPage } from "./toySlice";
 import ToyCard from "./ToyCard";
 import Pagination from "../../components/Pagination";
-// import Error from "../../components/Error";
+import Error from "../../components/Error";
 import Loader from "../../components/Loader";
 import ToyFilterList from "./Filter/ToyFilterList";
 
@@ -13,7 +13,7 @@ function ToyList() {
   const dispatch = useAppDispatch();
   const toys = useAppSelector((state: RootState) => state.toys.toys);
   const {
-    // error,
+    error,
     loading,
     currentPage,
     totalPages,
@@ -21,7 +21,8 @@ function ToyList() {
     totalResults,
     ageCategory,
     brand,
-    category
+    category,
+    sort
   } = useAppSelector((state: RootState) => state.toys);
 
   const convertToString = (arr: string[]) => {
@@ -35,6 +36,7 @@ function ToyList() {
 
     dispatch(
       fetchToys({
+        sort,
         page: currentPage,
         limit: resultsPerPage,
         category: categoryStr,
@@ -42,11 +44,21 @@ function ToyList() {
         brand: brandStr
       })
     );
-  }, [dispatch, currentPage, resultsPerPage, category, ageCategory, brand]);
+  }, [
+    dispatch,
+    currentPage,
+    resultsPerPage,
+    category,
+    ageCategory,
+    brand,
+    sort
+  ]);
 
   return (
-    <div>
-      <section className="flex gap-5">
+    <div className="min-h-[100%] relative">
+      {loading && <Loader />}
+      {error && <Error errorMessage={error ?? "Something play wrong.."} />}
+      <section className="flex gap-5 px-4 sm:px-10">
         <ToyFilterList />
         <section>
           <Pagination
@@ -60,13 +72,7 @@ function ToyList() {
             }}
             totalResults={totalResults}
           />
-          <div className="flex flex-wrap justify-center">
-            {/* {loading && <Loader />}
-              {error ? (
-                <Error />
-              ) : (
-                <> */}
-            {loading && <Loader />}
+          <div className="flex flex-wrap justify-center ">
             {toys.map(toy => (
               <ToyCard
                 key={toy._id}
@@ -88,8 +94,6 @@ function ToyList() {
             }
             totalResults={totalResults}
           />
-          {/* </>
-        )} */}
         </section>
       </section>
     </div>

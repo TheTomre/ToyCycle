@@ -34,7 +34,7 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
         className="relative h-64 overflow-hidden flex items-center justify-center"
       >
         <img
-          className="w-full h-full object-contain transition-transform duration-300 transform hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110"
           src={images?.length > 0 ? images[currentImageIndex] : defaultImage}
           alt={name}
         />

@@ -27,6 +27,8 @@ function ToysFilter({
   toggleIsOpen
 }: ToysFilterProps) {
   const currentCategory = useAppSelector(state => state.toys[categoryName]);
+  const { loading } = useAppSelector(state => state.toys);
+
   const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const toyCategory = event.target.value;
 
@@ -36,14 +38,18 @@ function ToysFilter({
   return (
     <>
       <div className="flex justify-between items-center px-2">
-        <div className="text-md font-semibold mt-2">{title}</div>
+        <div className="text-md font-semibold mt-2 text-[#3a0e7b] font-sans uppercase tracking-tighter text-sm">
+          {title}
+        </div>
       </div>
 
       <div className="flex flex-col justify-start items-center ">
         {categoryList
           .slice(0, isOpen ? categoryList.length : 3)
           .map(category => {
-            const isSelected = currentCategory.includes(category.filterForApi);
+            const isSelected =
+              currentCategory.includes(category.filterForApi) ||
+              currentCategory.includes(category.title);
             return (
               <div className="flex space-y-1 w-full" key={category.id}>
                 <input
@@ -53,6 +59,7 @@ function ToysFilter({
                   value={category.title}
                   checked={isSelected}
                   onChange={handleCategoryChange}
+                  disabled={loading}
                 />
                 <Label
                   htmlFor={`category_${category.title}`}
@@ -60,7 +67,8 @@ function ToysFilter({
                     isSelected
                       ? "border border-[#70e2d2] text-[#3a0e7b]"
                       : "border border-[#280b5f] text-[#280b5f]"
-                  }`}
+                  }
+                    ${loading && "cursor-not-allowed border border-gray-300 text-gray-300"}`}
                 >
                   {isSelected && (
                     <ImCheckmark
@@ -75,7 +83,12 @@ function ToysFilter({
             );
           })}
 
-        <Button onClick={toggleIsOpen} variant="link" className="flex-1">
+        <Button
+          onClick={toggleIsOpen}
+          variant="link"
+          className="flex-1 disabled:cursor-not-allowed disabled:text-gray-300"
+          disabled={loading}
+        >
           {isOpen ? (
             <span className="flex flex-row items-center">
               <FaChevronUp className="mr-1" /> Less

@@ -503,7 +503,7 @@ components:
             type: string
         status:
           type: string
-          enum: [available, exchanged]
+          enum: [available, exchanged, hold]
         images:
           type: array
           items:
@@ -523,7 +523,7 @@ components:
             type: string
         status:
           type: string
-          enum: [available, exchanged]
+          enum: [available, exchanged, hold]
         images:
           type: array
           items:

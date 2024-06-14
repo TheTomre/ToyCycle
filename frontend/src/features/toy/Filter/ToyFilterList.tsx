@@ -1,16 +1,10 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import {
-  resetToysFilter,
-  setAgeCategory,
-  setBrandCategory,
-  setCategory
-} from "../toySlice";
+import { setAgeCategory, setBrandCategory, setCategory } from "../toySlice";
 
-import { Button } from "../../../components/UI/button";
 import ToysFilter from "./ToysFilter";
 
-import { CATEGORIES_AGE, CATEGORIES_TYPE } from "../../../lib/consts";
+import { BRANDS, CATEGORIES_AGE, CATEGORIES_TYPE } from "../../../lib/consts";
 
 function ToyFilterList() {
   const [isBrandOpen, setIsBrandOpen] = useState(false);
@@ -54,15 +48,7 @@ function ToyFilterList() {
   };
 
   return (
-    <aside className=" max-w-[20%]">
-      <div className="flex justify-between items-center px-2">
-        <Button
-          onClick={() => dispatch(resetToysFilter())}
-          className="text-sm font-semibold mb-2 underline cursor-pointer text-[#280b5f]"
-        >
-          Clear Filters
-        </Button>
-      </div>
+    <aside className="max-w-[25%] mim-w-[200px] mt-[75px] w-full">
       <ToysFilter
         isOpen={isAgeCategoryOpen}
         toggleIsOpen={() => setIsAgeCategoryOpen(!isAgeCategoryOpen)}
@@ -82,7 +68,7 @@ function ToyFilterList() {
       <ToysFilter
         isOpen={isBrandOpen}
         toggleIsOpen={() => setIsBrandOpen(!isBrandOpen)}
-        categoryList={CATEGORIES_TYPE}
+        categoryList={BRANDS}
         categoryName="brand"
         onSelect={toggleSelectedCategory}
         title="Brand"

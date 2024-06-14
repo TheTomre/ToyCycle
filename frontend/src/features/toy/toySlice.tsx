@@ -9,6 +9,7 @@ const initialState: ToysState = {
   currentPage: 1,
   resultsPerPage: 10,
   totalPages: 1,
+  sort: "name",
   totalResults: 0,
   loading: false,
   ageCategory: [],
@@ -38,6 +39,7 @@ const getParams = (params: Record<string, string | number | undefined>) => {
 export const fetchToys = createAsyncThunk<
   { toys: Toy[]; totalPages: number; totalResults: number },
   {
+    sort: string;
     page: number;
     limit: number;
     category?: string;
@@ -49,12 +51,13 @@ export const fetchToys = createAsyncThunk<
 >(
   "toys/fetchToys",
   async (
-    { page, limit, category, ageCategory, brand, searchQuery },
+    { page, limit, category, ageCategory, brand, searchQuery, sort },
     { rejectWithValue }
   ) => {
     try {
       const response = await axiosInstance.get(`/toys`, {
         params: getParams({
+          sort,
           page,
           limit,
           category,
@@ -115,6 +118,9 @@ const toySlice = createSlice({
     setBrandCategory: (state, action: PayloadAction<string[]>) => {
       state.brand = action.payload;
     },
+    setSort: (state, action: PayloadAction<string>) => {
+      state.sort = action.payload;
+    },
     resetToyList: state => {
       state.currentPage = 1;
       state.resultsPerPage = 10;
@@ -122,6 +128,8 @@ const toySlice = createSlice({
       state.category = [];
       state.ageCategory = [];
       state.brand = [];
+      state.searchQuery = "";
+      state.sort = "name";
     },
     resetToysFilter: state => {
       state.category = [];
@@ -184,6 +192,7 @@ const toySlice = createSlice({
 });
 
 export const {
+  setSort,
   setPage,
   setResultsPerPage,
   resetToyList,

@@ -41,7 +41,7 @@ export type Toy = {
   images: string[];
   name: string;
   price: number;
-  status: "available" | "exchanged";
+  status: "available" | "exchanged" | "hold";
   tokenValue: number;
   condition: string;
   origin: string;
@@ -62,4 +62,5 @@ export type ToysState = {
   brand: string[];
   category: string[];
   searchQuery: string;
+  sort: string;
 };

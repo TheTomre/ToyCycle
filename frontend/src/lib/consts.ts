@@ -12,6 +12,15 @@ export const NAV: { [key: string]: string } = {
 
 export const NAV_ITEMS = Object.keys(NAV);
 
+export const LIMITS_PER_PAGE = [10, 20, 30, 40, 50];
+
+export const SORT_RESULTS = {
+  "price": "Price: Low to High",
+  "-price": "Price: High to Low",
+  "name": "Name: A to Z",
+  "-name": "Name: Z to A"
+};
+
 export const ENDPOINT = {
   users: "/users",
   userEdit: "/users/edit",
