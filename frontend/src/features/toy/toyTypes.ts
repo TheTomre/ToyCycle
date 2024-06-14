@@ -20,15 +20,34 @@ export type Brand =
   | "Barbie"
   | "Nerf";
 
+export type Category =
+  | "stuffed"
+  | "toy"
+  | "electronic"
+  | "building"
+  | "educational"
+  | "outdoor"
+  | "creative"
+  | "musical"
+  | "puzzle"
+  | "vehicle"
+  | "construction";
+
+export type ToySuccessResponse = {
+  data: Toy;
+  status: string;
+};
+
 export type Toy = {
   ageCategory: AgeCategory[];
-  brand: Brand;
+  brand: string;
+  category: Category;
   description: string;
   _id: string;
   images: string[];
   name: string;
   price: number;
-  status: "available" | "exchanged";
+  status: "available" | "exchanged | hold";
   tokenValue: number;
   condition: string;
   origin: string;

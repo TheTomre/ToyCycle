@@ -21,7 +21,16 @@ module.exports = {
     // secondary: "[##70e2d2]",
     // tertiary: "[##fff24f]",
     // destructive: "[#ff4d4d]"
-    // },
+    // primary: "#3a0e7b",
+    // "primary-dark": "#280b5f",
+    // "primary-transparent": "#3a0e7b90",
+    // secondary: "#33EDD4",
+    // "secondary-transparent": "#33EDD490",
+    // "secondary-dark": "#00BCA5",
+    // tertiary: "#FFB74B",
+    // "tertiary-dark": "#FB744E",
+    // "tertiary-transparent": "#FFB74B90",
+    // destructive: "#D93161"
     extend: {
       colors: {
         border: "hsl(var(--border))",

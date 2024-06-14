@@ -26,7 +26,8 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   return (
     <Link
       to={`/toys/${id}`}
-      className="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden m-4 border border-gray-200 transform transition-transform duration-300 hover:scale-105"
+      className="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden m-4 border
+       border-gray-200 transform transition-transform duration-300 hover:scale-105"
     >
       <div
         onMouseEnter={handleMouseEnter}
@@ -34,7 +35,7 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
         className="relative h-64 overflow-hidden flex items-center justify-center"
       >
         <img
-          className="w-full h-full object-contain transition-transform duration-300 transform hover:scale-110"
+          className="w-full h-full object-cover transition-transform duration-300 transform hover:scale-110"
           src={images?.length > 0 ? images[currentImageIndex] : defaultImage}
           alt={name}
         />

@@ -14,7 +14,8 @@ export const createToy = async (req: Request) => {
     const uploadeResponce = await cloudinary.uploader.upload(dataURI);
 
     const newToy = await Toy.create(req.body);
-    newToy.images = uploadeResponce.url;
+    newToy.images.push(uploadeResponce.url);
+    // newToy.images.push(uploadeResponce.url);
     newToy.user = new mongoose.Types.ObjectId(req.userId);
 
     await newToy.save();

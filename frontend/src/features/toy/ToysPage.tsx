@@ -1,7 +1,7 @@
 import ToyList from "./ToyList";
 
-function Toys() {
+function ToysPage() {
   return <ToyList />;
 }
 
-export default Toys;
+export default ToysPage;

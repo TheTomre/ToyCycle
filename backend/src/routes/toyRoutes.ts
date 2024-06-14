@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import { jwtCheck, jwtParse, validateToyMeRequest } from "src/middleware";
+import { jwtCheck, jwtParse, validateToyMeRequest } from "../middleware";
 import {
   createNewToy,
   deleteToyById,

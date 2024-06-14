@@ -43,8 +43,7 @@ const ToySchema: Schema = new Schema(
     category: { type: [String], enum: categories, required: true },
     brand: { type: String, enum: brands, required: true },
     description: { required: true, type: String },
-    // images: { default: [], type: [String] },
-    images: { type: String },
+    images: { default: [], type: [String] },
     name: { required: true, type: String },
     price: { min: 0, required: true, type: Number },
     status: {
@@ -58,7 +57,7 @@ const ToySchema: Schema = new Schema(
       type: String
     },
     tokenValue: { default: 0, type: Number },
-    origin: { type: String },
+    origin: { type: String, required: true },
     quantity: { required: true, type: Number },
     fullDescription: { required: true, type: String },
     user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
@@ -68,16 +67,16 @@ const ToySchema: Schema = new Schema(
 
 export type ToyType = Document & {
   ageCategory: string[];
+  category: string[];
   brand: string;
   description: string;
-  // images: string[];
-  images: string;
+  images: string[];
   name: string;
   price: number;
   status: "available" | "exchanged" | "hold";
   tokenValue: number;
   condition: string;
-  origin?: string;
+  origin: string;
   quantity: number;
   fullDescription: string;
   user: mongoose.Types.ObjectId;
