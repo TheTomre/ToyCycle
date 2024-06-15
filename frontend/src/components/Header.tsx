@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
-import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import {
+  AiOutlineClose,
+  AiOutlineMenu,
+  AiOutlineSetting
+} from "react-icons/ai";
 
 import "../index.css";
 import Login from "./Login";
@@ -23,6 +27,11 @@ function Header() {
   const handleNavigateHome = () => {
     navigate("/");
   };
+
+  const handleNavigateSettings = () => {
+    navigate("/settings");
+  };
+
   return (
     <header className="bg-white shadow-md flex justify-between items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full">
       <nav className="w-full flex justify-between gap-3 px-3 py-4 sm:px-6 sm:py-6">
@@ -46,12 +55,18 @@ function Header() {
               </li>
             );
           })}
-          <li>
+          <li className="flex items-center">
+            <Button
+              onClick={handleNavigateSettings}
+              className="hover:bg-[#3a0e7b] hover:text-white mr-4"
+            >
+              <AiOutlineSetting size={20} />
+            </Button>
             <Login />
           </li>
         </ul>
-        {/* Modile Navigation Items */}
-        <ul className="w-full md:hidden flex  items-center justify-between">
+        {/* Mobile Navigation Items */}
+        <ul className="w-full md:hidden flex items-center justify-between">
           <li>
             <Button
               variant="destructive"
@@ -64,7 +79,13 @@ function Header() {
               Toys
             </NavLink>
           </li>
-          <li>
+          <li className="flex items-center">
+            <Button
+              onClick={handleNavigateSettings}
+              className="hover:bg-[#3a0e7b] hover:text-white mr-4"
+            >
+              <AiOutlineSetting size={20} />
+            </Button>
             <Login />
           </li>
         </ul>
