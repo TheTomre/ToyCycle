@@ -10,7 +10,7 @@
     "lint": "eslint --fix --max-warnings=0 .",
     "lint-profile": "set TIMING=1 && eslint --max-warnings=0 .",
     "start": "ts-node src/index.ts",
-    "start-dist": "node dist/index.ts",
+    "start-dist": "node dist/index.js",
     "type-check": "tsc --incremental false --noEmit",
     "test": "jest --config jest.config.ts"
   },

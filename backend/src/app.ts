@@ -9,7 +9,6 @@ import passport from "passport";
 import path from "node:path";
 import session from "express-session";
 import routes from "./routes";
-import { appendJwt } from "./middleware";
 import {
   AUTH0_CALLBACK_URL,
   AUTH0_CLIENT_ID,
@@ -51,10 +50,6 @@ passport.use(
     }
   )
 );
-
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(appendJwt);
 
 // Serve the OpenAPI specification
 app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));

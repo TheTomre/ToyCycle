@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 import passport from "passport";
 import zod from "zod";
 import logger from "../logger/logger";
-import { requireJwtAdmin, requireJwtUser } from "../middleware";
 import {
   AUTH0_SCOPE,
   AUTH_COOKIE_EXPIRATION_LIFETIME_MS,
@@ -141,12 +140,6 @@ auth0Router
     } catch (err) {
       next(err);
     }
-  })
-  .get("/test/admin", requireJwtAdmin, (_req, res) => {
-    res.send("Protected admin route");
-  })
-  .get("/test/private", requireJwtUser, (_req, res) => {
-    res.send("Protected route");
   })
   .get("/test/public", (_req, res) => {
     res.send("Public route");
