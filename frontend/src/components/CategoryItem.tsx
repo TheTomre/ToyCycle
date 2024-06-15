@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { Button } from "./UI/button";
 import { useAppDispatch } from "../hooks/redux";
-import { setAgeCategory } from "../features/toy/toySlice";
+import { resetToyList, setAgeCategory } from "../features/toy/toySlice";
 
 type CategoryItemProps = {
   title: string;
@@ -19,6 +19,7 @@ function CategoryItem({
   const dispatch = useAppDispatch();
 
   const hangleClick = () => {
+    dispatch(resetToyList());
     dispatch(setAgeCategory([filterForApi]));
     if (link) navigate(`${link}`);
   };
