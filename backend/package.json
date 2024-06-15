@@ -5,12 +5,12 @@
   "main": "./src/index.js",
   "scripts": {
     "dev": "nodemon",
-    "build": "yarn install && yarn tsc",
+    "build": "yarn install && yarn tsc --project tsconfig-build.json",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
     "lint": "eslint --fix --max-warnings=0 .",
     "lint-profile": "set TIMING=1 && eslint --max-warnings=0 .",
     "start": "ts-node src/index.ts",
-    "start-dist ": "node dist/index.ts",
+    "start-dist": "node dist/index.ts",
     "type-check": "tsc --incremental false --noEmit",
     "test": "jest --config jest.config.ts"
   },
@@ -39,7 +39,6 @@
     "express-validator": "^7.1.0",
     "handlebars": "^4.7.8",
     "http-status-codes": "^2.3.0",
-    "joi": "^17.13.1",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.4",
     "node-swagger-ui-express": "^1.0.3",
