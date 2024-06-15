@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
 import { fetchToys, setPage, setResultsPerPage } from "./toySlice";
@@ -11,8 +11,8 @@ import ToyFilterList from "./Filter/ToyFilterList";
 
 function ToyList() {
   const dispatch = useAppDispatch();
-  const toys = useAppSelector((state: RootState) => state.toys.toys);
   const {
+    toys,
     error,
     loading,
     currentPage,
@@ -26,56 +26,62 @@ function ToyList() {
     search
   } = useAppSelector((state: RootState) => state.toys);
 
-  const convertToString = (arr: string[]) => {
-    return arr.join(",");
-  };
+  const categoryStr = useMemo(() => category.join(","), [category]);
+  const ageCategoryStr = useMemo(() => ageCategory.join(","), [ageCategory]);
+  const brandStr = useMemo(() => brand.join(","), [brand]);
 
   useEffect(() => {
-    const categoryStr = convertToString(category);
-    const ageCategoryStr = convertToString(ageCategory);
-    const brandStr = convertToString(brand);
-
-    dispatch(
-      fetchToys({
-        sort,
+    const fetchToysData = () => {
+      const params = {
         page: currentPage,
         limit: resultsPerPage,
         category: categoryStr,
         ageCategory: ageCategoryStr,
         brand: brandStr,
+        sort,
         search
-      })
-    );
+      };
+      dispatch(fetchToys(params));
+    };
+
+    fetchToysData();
   }, [
     dispatch,
     currentPage,
     resultsPerPage,
-    category,
-    ageCategory,
-    brand,
+    categoryStr,
+    ageCategoryStr,
+    brandStr,
     sort,
     search
   ]);
 
+  if (loading) return <Loader />;
+  if (error) return <Error errorMessage={error ?? "Something went wrong..."} />;
+
+  const handlePageChange = (page: number) => {
+    dispatch(setPage(page));
+  };
+
+  const handleResultsPerPageChange = (results: number) => {
+    dispatch(setPage(1));
+    dispatch(setResultsPerPage(results));
+  };
+
   return (
     <div className="min-h-[100%] relative">
-      {loading && <Loader />}
-      {error && <Error errorMessage={error ?? "Something play wrong.."} />}
       <section className="flex gap-5 px-4 sm:px-10">
         <ToyFilterList />
         <section>
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={page => dispatch(setPage(page))}
+            onPageChange={handlePageChange}
             resultsPerPage={resultsPerPage}
-            onResultsPerPageChange={results => {
-              dispatch(setPage(1));
-              dispatch(setResultsPerPage(results));
-            }}
+            onResultsPerPageChange={handleResultsPerPageChange}
             totalResults={totalResults}
           />
-          <div className="flex flex-wrap justify-center ">
+          <div className="flex flex-wrap justify-center">
             {toys.map(toy => (
               <ToyCard
                 key={toy._id}
@@ -90,11 +96,9 @@ function ToyList() {
           <Pagination
             currentPage={currentPage}
             totalPages={totalPages}
-            onPageChange={page => dispatch(setPage(page))}
+            onPageChange={handlePageChange}
             resultsPerPage={resultsPerPage}
-            onResultsPerPageChange={results =>
-              dispatch(setResultsPerPage(results))
-            }
+            onResultsPerPageChange={handleResultsPerPageChange}
             totalResults={totalResults}
           />
         </section>
