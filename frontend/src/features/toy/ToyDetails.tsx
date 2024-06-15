@@ -9,9 +9,7 @@ function ToyDetails() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const toy = useAppSelector((state: RootState) => state.toys.selectedToy);
-  const loading = useAppSelector(
-    (state: RootState) => state.toys.status === "loading"
-  );
+  const { loading } = useAppSelector((state: RootState) => state.toys);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
 

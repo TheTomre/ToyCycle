@@ -34,7 +34,7 @@ const ToySchema: Schema = new Schema(
     price: { min: 0, required: true, type: Number },
     status: {
       default: "available",
-      enum: ["available", "exchanged"],
+      enum: ["available", "exchanged", "hold"],
       type: String
     },
     tokenValue: { default: 0, type: Number },
@@ -53,7 +53,7 @@ export type ToyType = Document & {
   images: string[];
   name: string;
   price: number;
-  status: "available" | "exchanged";
+  status: "available" | "exchanged" | "hold";
   tokenValue: number;
   condition: string;
   origin: string;

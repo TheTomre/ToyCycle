@@ -1,4 +1,8 @@
+import { Request } from "express";
+import { PAGINATION } from "../consts/pagination";
+import { EXCLUDED_QUERY_FIELDS } from "../consts/queryFields";
 import Toy, { PartialToyType, ToyType } from "../models/toyModel";
+
 import logger from "../logger/logger";
 
 export const createToy = async (data: PartialToyType) => {
@@ -23,15 +27,83 @@ export const fetchToyById = async (id: string) => {
   }
 };
 
-export const fetchAllToys = async (page: number, limit: number) => {
+export const fetchAllToys = async (req: Request) => {
   try {
-    const toys = await Toy.find({})
-      .skip((page - 1) * limit)
-      .limit(limit);
-    const total = await Toy.countDocuments({});
-    logger.info("Toys fetched successfully");
-    return { toys, total };
+    const { query } = req;
+    const queryObj = { ...query };
+
+    // FILTERING
+    EXCLUDED_QUERY_FIELDS.forEach(el => delete queryObj[el]);
+
+    const category = (query["category"] as string) || "";
+    const ageCategory = (query["ageCategory"] as string) || "";
+    const brand = (query["brand"] as string) || "";
+
+    const buildRegexArray = (input: string) =>
+      input.split(",").map(el => new RegExp(el, "i"));
+
+    const searchFilters = [];
+    if (category)
+      searchFilters.push({ category: { $in: buildRegexArray(category) } });
+    if (ageCategory)
+      searchFilters.push({
+        ageCategory: { $in: buildRegexArray(ageCategory) }
+      });
+    if (brand) searchFilters.push({ brand: { $in: buildRegexArray(brand) } });
+
+    let toyQuery = Toy.find(
+      searchFilters.length ? { $and: searchFilters } : {}
+    );
+
+    // FIELD LIMITING
+    if (query["fields"]) {
+      const fields = (query["fields"] as string).split(",").join(" ");
+      toyQuery = toyQuery.select(fields);
+    } else {
+      toyQuery = toyQuery.select("-__v");
+    }
+
+    // SEARCHING
+    if (query["search"]) {
+      const search = query["search"] as string;
+      const searchRegex = new RegExp(search, "i");
+      toyQuery = toyQuery.find({
+        $or: [
+          { name: searchRegex },
+          { description: searchRegex },
+          { brand: searchRegex }
+        ]
+      });
+    }
+
+    // SORTING
+    if (query["sort"]) {
+      const sortBy = (query["sort"] as string).split(",").join(" ");
+      toyQuery = toyQuery.sort(sortBy);
+    } else {
+      toyQuery = toyQuery.sort("-createdAt");
+    }
+
+    // GET TOTAL COUNT MATCHING THE QUERY
+    const total = await Toy.countDocuments(toyQuery);
+    logger.info(`Total toys: ${total}`);
+
+    // PAGINATION
+    const page = Number(query["page"]) || PAGINATION.page;
+    const limit = Number(query["limit"]) || PAGINATION.limit;
+    const skip = (page - 1) * limit;
+
+    const toys = await toyQuery.skip(skip).limit(limit);
+
+    if (!toys.length) {
+      logger.info("No toys found");
+      return { toys: [], total, page, limit };
+    }
+
+    logger.info(`Toys fetched successfully: ${toys.length}`);
+    return { toys, total, page, limit };
   } catch (err) {
+    logger.error(`Error fetching toys: ${(err as Error).message}`);
     throw new Error((err as Error).message);
   }
 };
