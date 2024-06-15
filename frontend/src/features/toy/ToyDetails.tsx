@@ -1,9 +1,24 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
+/* eslint-disable no-underscore-dangle */
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHeart,
+  faShoppingCart,
+  faBoxOpen,
+  faGlobe,
+  faArrowLeft,
+  faStore,
+  faChevronDown,
+  faChevronUp
+} from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
 import { fetchToyDetails } from "./toySlice";
 import FullscreenImageSlider from "./FullscreenImageSlider";
+import Modal from "../../components/Modal";
+import Reviews from "../../components/Reviews";
 
 function ToyDetails() {
   const { id } = useParams<{ id: string }>();
@@ -14,6 +29,9 @@ function ToyDetails() {
   );
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isContactModalOpen, setIsContactModalOpen] = useState(false);
+  const [isFullDescriptionOpen, setIsFullDescriptionOpen] = useState(false);
+  const [isReviewsOpen, setIsReviewsOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
@@ -41,35 +59,58 @@ function ToyDetails() {
     setIsFullscreen(false);
   };
 
+  const handleContactClick = () => {
+    setIsContactModalOpen(true);
+  };
+
+  const handleCloseContactModal = () => {
+    setIsContactModalOpen(false);
+  };
+
+  const toggleFullDescription = () => {
+    setIsFullDescriptionOpen(!isFullDescriptionOpen);
+  };
+
+  const toggleReviews = () => {
+    setIsReviewsOpen(!isReviewsOpen);
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white mt-6">
-      <button
-        onClick={() => window.history.back()}
-        className="text-purple-600 mb-4"
-      >
-        ← Back
-      </button>
-      <div className="flex flex-col md:flex-row items-start">
-        <div className="relative w-full md:w-1/2 bg-white p-4">
-          <div className="w-full h-96 flex items-center justify-center overflow-hidden">
+      <nav className="mb-4 text-purple-600">
+        <button onClick={() => window.history.back()} className="mr-2">
+          <FontAwesomeIcon icon={faArrowLeft} /> Back
+        </button>
+      </nav>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="space-y-4">
+          <div className="text-center mt-2 mb-6">
+            <h1 className="text-3xl font-bold text-gray-800">{toy.name}</h1>
+          </div>
+          <div className="relative w-full h-98 overflow-hidden mb-8">
             <button
+              className="relative w-full h-98 overflow-hidden mb-8"
               onClick={handleImageClick}
-              className="w-full h-full flex items-center justify-center bg-transparent border-none p-0 cursor-pointer"
-              style={{ outline: "none" }}
+              aria-label="View larger image"
             >
               <img
-                className="max-h-full max-w-full object-contain cursor-pointer"
+                className="object-cover w-full h-full cursor-pointer rounded-lg"
                 src={toy.images[currentImageIndex] || "../bear.webp"}
                 alt={toy.name}
               />
             </button>
           </div>
-          <div className="flex justify-center mt-2">
+          <div className="flex justify-center">
             {toy.images.map((image, index) => (
               <button
                 key={image}
                 onClick={() => handleThumbnailClick(index)}
-                className={`w-16 h-16 object-cover cursor-pointer rounded-lg m-1 border ${currentImageIndex === index ? "border-purple-600" : "border-transparent"}`}
+                className={`w-16 h-16 object-cover cursor-pointer rounded-lg m-1 border ${
+                  currentImageIndex === index
+                    ? "border-purple-600"
+                    : "border-transparent"
+                }`}
+                aria-label={`Thumbnail ${index}`}
               >
                 <img
                   src={image}
@@ -80,38 +121,176 @@ function ToyDetails() {
             ))}
           </div>
         </div>
-        <div className="md:ml-10 mt-6 md:mt-0">
-          <h1 className="text-3xl font-semibold text-gray-800">{toy.name}</h1>
-          <p className="text-xl text-purple-600 mt-2">
-            {toy.tokenValue} Tokens
-          </p>
-          <p className="mt-4 text-gray-600">{toy.description}</p>
-          <p className="mt-2 text-gray-600">Condition: {toy.condition}</p>
-          <p className="mt-2 text-gray-600">Made in: {toy.origin}</p>
-          <p className="mt-2 text-gray-600">
-            Available Quantity: {toy.quantity}
-          </p>
-          <button className="mt-6 bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300">
+        <div className="space-y-6 pt-10">
+          {" "}
+          <div className="shadow-lg rounded-lg p-6 bg-white">
+            <div className="flex items-center mb-2">
+              <FontAwesomeIcon
+                icon={faHeart}
+                className="text-purple-600 mr-2"
+              />
+              <h2
+                className="text-xl
+font-mono"
+              >
+                Description
+              </h2>
+            </div>
+            <p className="text-gray-600 font-sans">{toy.description}</p>
+          </div>
+          <div className="shadow-lg rounded-lg p-6 bg-white">
+            <div className="flex items-center mb-2">
+              <FontAwesomeIcon
+                icon={faStore}
+                className="text-purple-600 mr-2"
+              />
+              <h2 className="text-xl font-mono">Token Value</h2>
+            </div>
+            <p className="text-lg text-purple-600 font-bold">
+              {toy.tokenValue} Tokens
+            </p>
+          </div>
+          <div className="shadow-lg rounded-lg p-6 bg-white">
+            <div className="flex items-center mb-2">
+              <FontAwesomeIcon
+                icon={faBoxOpen}
+                className="text-purple-600 mr-2"
+              />
+              <h2 className="text-xl font-mono">Condition</h2>
+            </div>
+            <p className="text-lg text-gray-800 font-bold">{toy.condition}</p>
+          </div>
+          <div className="shadow-lg rounded-lg p-6 bg-white">
+            <div className="flex items-center mb-2">
+              <FontAwesomeIcon
+                icon={faShoppingCart}
+                className="text-purple-600 mr-2"
+              />
+              <h2 className="text-xl font-mono">Available Quantity</h2>
+            </div>
+            <p className="text-lg text-gray-800 font-bold">{toy.quantity}</p>
+          </div>
+          <div className="shadow-lg rounded-lg p-6 bg-white">
+            <div className="flex items-center mb-2">
+              <FontAwesomeIcon
+                icon={faGlobe}
+                className="text-purple-600 mr-2"
+              />
+              <h2 className="text-xl font-mono">Origin</h2>
+            </div>
+            <p className="text-lg text-gray-800 font-bold">{toy.origin}</p>
+          </div>
+          <button
+            className="mt-6 w-full bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-300 text-lg font-bold"
+            onClick={handleContactClick}
+          >
             Contact Owner
           </button>
         </div>
       </div>
       <div className="mt-6">
-        <h2 className="text-2xl font-semibold text-gray-800">
-          Full Description
-        </h2>
-        <p className="mt-4 text-gray-600">{toy.fullDescription}</p>
+        <div
+          className="cursor-pointer bg-gray-100 p-4 flex justify-between items-center"
+          onClick={toggleFullDescription}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              toggleFullDescription();
+            }
+          }}
+        >
+          <h2 className="text-xl font-mono text-gray-800">
+            PRODUCT DESCRIPTION
+          </h2>
+          <FontAwesomeIcon
+            icon={isFullDescriptionOpen ? faChevronUp : faChevronDown}
+            className="text-gray-800"
+          />
+        </div>
+        {isFullDescriptionOpen && (
+          <div className="p-6 text-gray-600 font-sans bg-white mt-2">
+            {toy.fullDescription}
+          </div>
+        )}
       </div>
       <div className="mt-6">
-        <h2 className="text-2xl font-semibold text-gray-800">Reviews</h2>
+        <div
+          className="cursor-pointer bg-gray-100 p-4 flex justify-between items-center"
+          onClick={toggleReviews}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              toggleReviews();
+            }
+          }}
+        >
+          <h2 className="text-xl font-mono text-gray-800">REVIEWS</h2>
+          <FontAwesomeIcon
+            icon={isReviewsOpen ? faChevronUp : faChevronDown}
+            className="text-gray-800"
+          />
+        </div>
+        {isReviewsOpen && (
+          <div className="p-6 text-gray-600 font-sans bg-white mt-2">
+            <Reviews />
+          </div>
+        )}
       </div>
-
       {isFullscreen && (
         <FullscreenImageSlider
           images={toy.images}
           currentIndex={currentImageIndex}
           onClose={handleCloseFullscreen}
         />
+      )}
+      {isContactModalOpen && (
+        <Modal onClose={handleCloseContactModal}>
+          <div className="p-6">
+            <h2 className="text-2xl font-semibold text-gray-800 font-mono">
+              Contact Owner
+            </h2>
+            <form className="mt-4 space-y-4">
+              <div>
+                <label className="block text-gray-600" htmlFor="yourName">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  id="yourName"
+                  className="w-full mt-1 p-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600" htmlFor="yourEmail">
+                  Your Email
+                </label>
+                <input
+                  type="email"
+                  id="yourEmail"
+                  className="w-full mt-1 p-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600" htmlFor="message">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  className="w-full mt-1 p-2 border rounded-lg"
+                  rows={4}
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300"
+              >
+                Send
+              </button>
+            </form>
+          </div>
+        </Modal>
       )}
     </div>
   );
