@@ -29,89 +29,81 @@ export const fetchToyById = async (id: string) => {
 
 export const fetchAllToys = async (req: Request) => {
   try {
-    const queryObj = { ...req.query };
+    const { query } = req;
+    const queryObj = { ...query };
+
     // FILTERING
-    const excludeFields = [...EXCLUDED_QUERY_FIELDS];
-    excludeFields.forEach(el => delete queryObj[el]);
+    EXCLUDED_QUERY_FIELDS.forEach(el => delete queryObj[el]);
 
-    const queryStr = JSON.stringify(queryObj);
-    logger.info(`Query string ${queryStr}`);
+    const category = (query["category"] as string) || "";
+    const ageCategory = (query["ageCategory"] as string) || "";
+    const brand = (query["brand"] as string) || "";
 
-    let query = Toy.find({});
-    const category = (req.query["category"] as string) || "";
-    const ageCategory = (req.query["ageCategory"] as string) || "";
-    const brand = (req.query["brand"] as string) || "";
+    const buildRegexArray = (input: string) =>
+      input.split(",").map(el => new RegExp(el, "i"));
 
-    if (ageCategory) {
-      const ageCategoryArr = ageCategory
-        .split(",")
-        .map(categoryEl => new RegExp(categoryEl, "i"));
-      query = query.find({ ageCategory: { $in: ageCategoryArr } });
-    }
-    if (category) {
-      const caregoryArr = category
-        .split(",")
-        .map(categoryEl => new RegExp(categoryEl, "i"));
-      query = query.find({ category: { $in: caregoryArr } });
-    }
-    if (brand) {
-      const brandArr = category
-        .split(",")
-        .map(brandEl => new RegExp(brandEl, "i"));
-      query = query.find({ category: { $in: brandArr } });
-    }
+    const searchFilters = [];
+    if (category)
+      searchFilters.push({ category: { $in: buildRegexArray(category) } });
+    if (ageCategory)
+      searchFilters.push({
+        ageCategory: { $in: buildRegexArray(ageCategory) }
+      });
+    if (brand) searchFilters.push({ brand: { $in: buildRegexArray(brand) } });
+
+    let toyQuery = Toy.find(
+      searchFilters.length ? { $and: searchFilters } : {}
+    );
 
     // FIELD LIMITING
-    if (req.query["fields"]) {
-      const fields = (req.query["fields"] as string).split(",").join(" ");
-      query = query.select(fields);
+    if (query["fields"]) {
+      const fields = (query["fields"] as string).split(",").join(" ");
+      toyQuery = toyQuery.select(fields);
     } else {
-      query = query.select("-__v");
+      toyQuery = toyQuery.select("-__v");
     }
 
-    // SEARCHING;
-    if (req.query["search"]) {
-      const search = (req.query["search"] as string) || "";
-      logger.info(`Search query ${search}`);
-      if (search) {
-        const rearchRegex = new RegExp(search, "i");
-        query = query.find({
-          $or: [
-            { name: rearchRegex },
-            { description: rearchRegex },
-            { brand: rearchRegex }
-          ]
-        });
-      }
+    // SEARCHING
+    if (query["search"]) {
+      const search = query["search"] as string;
+      const searchRegex = new RegExp(search, "i");
+      toyQuery = toyQuery.find({
+        $or: [
+          { name: searchRegex },
+          { description: searchRegex },
+          { brand: searchRegex }
+        ]
+      });
     }
 
     // SORTING
-    if (req.query["sort"]) {
-      const sortBy = (req.query["sort"] as string).split(",").join(" ");
-      query = query.sort(sortBy);
+    if (query["sort"]) {
+      const sortBy = (query["sort"] as string).split(",").join(" ");
+      toyQuery = toyQuery.sort(sortBy);
     } else {
-      query = query.sort("-createdAt");
+      toyQuery = toyQuery.sort("-createdAt");
     }
 
     // GET TOTAL COUNT MATCHING THE QUERY
-    const total = await Toy.countDocuments(query);
-    logger.info(`Total toys ${total}`);
+    const total = await Toy.countDocuments(toyQuery);
+    logger.info(`Total toys: ${total}`);
+
     // PAGINATION
-    const page = Number(req.query["page"]) || PAGINATION.page;
-    const limit = Number(req.query["limit"]) || PAGINATION.limit;
+    const page = Number(query["page"]) || PAGINATION.page;
+    const limit = Number(query["limit"]) || PAGINATION.limit;
     const skip = (page - 1) * limit;
 
-    query = query.skip(skip).limit(limit);
+    const toys = await toyQuery.skip(skip).limit(limit);
 
-    const toys = await query
-      .skip((Number(page) - 1) * Number(limit))
-      .limit(Number(limit));
+    if (!toys.length) {
+      logger.info("No toys found");
+      return { toys: [], total, page, limit };
+    }
 
-    if (!toys?.length) return undefined;
-
-    logger.info(`Toys fetched successfully ${toys}`);
+    logger.info(`Toys fetched successfully: ${toys.length}`);
     return { toys, total, page, limit };
   } catch (err) {
+    logger.error(`Error fetching toys: ${(err as Error).message}`);
     throw new Error((err as Error).message);
   }
 };
