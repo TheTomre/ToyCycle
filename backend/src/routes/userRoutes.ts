@@ -23,6 +23,8 @@ router.put(
 router.get("/:id", controller.getUserById);
 router.put("/:id", jwtCheck, jwtParse, controller.updateUserById);
 router.delete("/:id", controller.deleteUserById);
+
+router.get("/me/toys", jwtCheck, jwtParse, controller.getUserToys);
 /*
 // Route to create a new user
 router.post("/users", async (req, res) => {

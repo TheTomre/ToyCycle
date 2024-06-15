@@ -181,6 +181,27 @@ const deleteUserById = async (
   }
 };
 
+const getUserToys = async (req: Request, res: Response, next: NextFunction) => {
+  const { userId } = req;
+
+  try {
+    const toys = await usersServices.fetchUserToys(userId);
+    if (!toys.length) {
+      return res.status(STATUS.NOT_FOUND).json({
+        status: STATUS_MESSAGE.FAIL,
+        message: "No toys found for the user"
+      });
+    }
+    return res.status(STATUS.OK).json({
+      status: STATUS_MESSAGE.SUCCESS,
+      data: toys
+    });
+  } catch (err) {
+    next(err);
+    return undefined;
+  }
+};
+
 export default {
   createNewUser,
   deleteUserById,
@@ -188,5 +209,6 @@ export default {
   getUserById,
   updateUserById,
   getCurrentUser,
-  updateCurrentUser
+  updateCurrentUser,
+  getUserToys
 };

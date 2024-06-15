@@ -3,12 +3,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { toast } from "sonner";
 import { API_BASE_URL, ENDPOINT } from "../../../lib/consts";
 import { User } from "../../user/userTypes";
+import { Toy } from "../../toy/toyTypes";
 
 type CreateUserRequest = Pick<User, "email" | "auth0Id">;
 type UserSuccessResponse = {
   status: string;
   data: User;
 };
+type UserToysResponse = Toy[];
 
 export const useCreateUser = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -133,4 +135,27 @@ export const useGetUser = () => {
   }
 
   return { currentUser, isLoading };
+};
+
+export const useGetUserToys = () => {
+  const { getAccessTokenSilently } = useAuth0();
+
+  const getUserToysRequest = async (): Promise<UserToysResponse> => {
+    const accessToken = await getAccessTokenSilently();
+    const response = await fetch(`${API_BASE_URL}${ENDPOINT.me}/toys`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user toys");
+    }
+
+    const data: UserToysResponse = await response.json();
+    return data;
+  };
+
+  return useQuery("userToys", getUserToysRequest);
 };

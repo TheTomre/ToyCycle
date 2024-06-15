@@ -4,6 +4,7 @@ import User from "../models/userModel";
 import logger from "../logger/logger";
 import { PAGINATION } from "../consts/pagination";
 import { EXCLUDED_QUERY_FIELDS } from "../consts/queryFields";
+import Toy from "../models/toyModel";
 
 const createUser = async (data: Request) => {
   try {
@@ -163,6 +164,23 @@ const deleteUserById = async (id: string) => {
   }
 };
 
+const fetchUserToys = async (userId: string) => {
+  try {
+    const toys = await Toy.find({ userId });
+    if (!toys.length) {
+      logger.info(`No toys found for user ${userId}`);
+      return [];
+    }
+    logger.info(`Toys fetched successfully for user ${userId}`);
+    return toys;
+  } catch (err) {
+    logger.error(
+      `Error fetching toys for user ${userId}: ${(err as Error).message}`
+    );
+    throw new Error((err as Error).message);
+  }
+};
+
 export default {
   addUserAvatar,
   createUser,
@@ -172,5 +190,6 @@ export default {
   fetchUserById,
   fetchCurrentUser,
   updateCurrentUserData,
-  updateUserById
+  updateUserById,
+  fetchUserToys
 };
