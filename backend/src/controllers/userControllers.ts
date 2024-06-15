@@ -39,7 +39,10 @@ const getCurrentUser = async (
         message: "User not found"
       });
     }
-    return res.status(STATUS.OK).send(currentUser);
+    return res.status(STATUS.OK).json({
+      status: STATUS_MESSAGE.SUCCESS,
+      data: currentUser
+    });
   } catch (err) {
     next(err);
     return undefined;
@@ -110,7 +113,10 @@ const updateCurrentUser = async (
         .json({ status: STATUS_MESSAGE.FAIL, message: "User not found" });
     }
 
-    return res.status(STATUS.OK).send(updatedUser);
+    return res.status(STATUS.OK).json({
+      status: STATUS_MESSAGE.SUCCESS,
+      data: updatedUser
+    });
   } catch (err) {
     next(err);
     return undefined;
@@ -174,32 +180,6 @@ const deleteUserById = async (
     return undefined;
   }
 };
-
-// const addUserAvatar = async (id: string, avatar: string) => {
-//   try {
-//     const user = await User.findById(id);
-//     if (!user) return undefined;
-//     user.avatar = avatar;
-//     await user.save();
-//     logger.info(`Avatar added to user ${user.email}`);
-//     return user;
-//   } catch (err) {
-//     throw new Error((err as Error).message);
-//   }
-// };
-
-// const deleteUserAvatar = async (id: string) => {
-//   try {
-//     const user = await User.findById(id);
-//     if (!user) return undefined;
-//     user.avatar = "";
-//     await user.save();
-//     logger.info(`Avatar deleted from user ${user.email}`);
-//     return user;
-//   } catch (err) {
-//     throw new Error((err as Error).message);
-//   }
-// };
 
 export default {
   createNewUser,

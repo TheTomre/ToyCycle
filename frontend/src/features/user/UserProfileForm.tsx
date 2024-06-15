@@ -20,14 +20,11 @@ import {
 } from "../../components/UI/avatar";
 import { User } from "./userTypes";
 
-const fromUserSchema = z.object({
+const formUserSchema = z.object({
   email: z.string().optional(),
-  bio: z.string().min(1).max(120).optional(),
+  bio: z.string().min(1).max(120),
   firstName: z.string().min(1, "User first name is required").max(120),
   lastName: z.string().min(1, "User last name is required").max(120),
-  avatar: z.string().optional(),
-  lastActive: z.string().optional(),
-  tokenBalance: z.number().positive().optional(),
   city: z.string().min(1, "City is required").max(120),
   country: z.string().min(1, "Country is required").max(120),
   street1: z.string().min(1, "Address is required").max(120),
@@ -35,14 +32,12 @@ const fromUserSchema = z.object({
   zipcode: z.string().min(1, "Zipcode is required").max(50)
 });
 
-type UserFormSchema = z.infer<typeof fromUserSchema>;
+type UserFormSchema = z.infer<typeof formUserSchema>;
 
 type UserProfileFormProps = {
   currentUser: User;
   onSave: (userProfileData: UserFormSchema) => void;
   isLoading: boolean;
-  title?: string;
-  buttonText?: string;
 };
 
 function UserProfileForm({
@@ -51,19 +46,22 @@ function UserProfileForm({
   currentUser
 }: UserProfileFormProps) {
   const form = useForm<UserFormSchema>({
-    resolver: zodResolver(fromUserSchema),
+    resolver: zodResolver(formUserSchema),
     defaultValues: currentUser
   });
   const { user } = useAuth0();
 
-  if (!currentUser.avatar) {
-    currentUser.avatar = user?.picture || "";
-  }
-
-  //! TODO DO TOT WORK WILL WORK WITH   form.reset({ currentUser });
   useEffect(() => {
     form.reset(currentUser);
   }, [currentUser, form]);
+
+  const handlerSubmit = (formData: UserFormSchema) => {
+    const newFormData: UserFormSchema = {
+      email: currentUser.email,
+      ...formData
+    };
+    onSave(newFormData);
+  };
 
   const inputStyles =
     "border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500";
@@ -74,7 +72,7 @@ function UserProfileForm({
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSave)}
+        onSubmit={form.handleSubmit(handlerSubmit)}
         className="p-2 md:p:10 md:max-w-5xl mx-auto font-sans "
       >
         <div>

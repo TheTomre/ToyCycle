@@ -5,6 +5,10 @@ import { API_BASE_URL, ENDPOINT } from "../../../lib/consts";
 import { User } from "../../user/userTypes";
 
 type CreateUserRequest = Pick<User, "email" | "auth0Id">;
+type UserSuccessResponse = {
+  status: string;
+  data: User;
+};
 
 export const useCreateUser = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -42,12 +46,9 @@ export const useCreateUser = () => {
 
 type UpdateUserRequest = {
   email?: string | undefined;
-  bio?: string | undefined;
+  bio: string;
   firstName: string;
   lastName: string;
-  avatar?: string | undefined;
-  lastActive?: string | undefined;
-  tokenBalance?: number | undefined;
   city: string;
   country: string;
   street1: string;
@@ -58,7 +59,9 @@ type UpdateUserRequest = {
 export const useUpdateUser = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const updateUserRequest = async (formData: UpdateUserRequest) => {
+  const updateUserRequest = async (
+    formData: UpdateUserRequest
+  ): Promise<User> => {
     const accessToken = await getAccessTokenSilently();
 
     const response = await fetch(`${API_BASE_URL}${ENDPOINT.me}`, {
@@ -73,8 +76,8 @@ export const useUpdateUser = () => {
     if (!response.ok) {
       throw new Error("Failed to update user");
     }
-
-    return response.json();
+    const data: UserSuccessResponse = await response.json();
+    return data.data;
   };
 
   const {
@@ -115,7 +118,8 @@ export const useGetUser = () => {
       throw new Error("Failed to fetch user");
     }
 
-    return response.json();
+    const data: UserSuccessResponse = await response.json();
+    return data.data;
   };
 
   const {
