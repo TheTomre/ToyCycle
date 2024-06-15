@@ -22,12 +22,34 @@ paths:
             default: 10
           description: Number of items per page
         - in: query
+          name: category
+          allowReserved: true   
+          schema:
+            type: string
+          description: Category of toys
+        - in: query
+          name: ageCategory
+          allowReserved: true   
+          schema:
+            type: string
+          description: Age category of toys
+        - in: query
+          name: brand
+          allowReserved: true   
+          schema:
+            type: string
+          description: Brand of toys
+        - in: query
           name: sort
           schema:
             type: string
-            enum: [asc, desc]
-            default: asc
+            default: name
           description: Sort order (asc or desc)
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: search by name, description or brand
       responses:
         '200':
           description: A list of toys
@@ -48,6 +70,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+        '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'  
                  
     post:
       summary: Add a new toy

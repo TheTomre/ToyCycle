@@ -5,6 +5,6 @@ export interface Toy {
   images: string[];
   name: string;
   price: number;
-  status: "available" | "exchanged";
+  status: "available" | "exchanged" | "hold";
   tokenValue: number;
 }

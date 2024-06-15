@@ -1,7 +1,7 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./features/home/Home";
 import About from "./features/about/About";
-import Catalog from "./features/toy/Toys";
+import Catalog from "./features/toy/ToysPage";
 import ToyDetails from "./features/toy/ToyDetails";
 // import Users from "./features/user/Users";
 import UserProfilePage from "./features/user/UserProfilePage";

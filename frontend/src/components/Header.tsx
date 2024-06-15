@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
+import "../index.css";
 import Login from "./Login";
 import { NAV, NAV_ITEMS } from "../lib/consts";
 import { Button } from "./UI/button";
@@ -11,6 +12,7 @@ import { toggleNav } from "../store/uiSlice";
 function Header() {
   const [isNav, setIsNav] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useAppDispatch();
 
   const handleNav = () => {
@@ -21,9 +23,8 @@ function Header() {
   const handleNavigateHome = () => {
     navigate("/");
   };
-
   return (
-    <header className="bg-white flex justify-between items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full">
+    <header className="bg-white shadow-md flex justify-between items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full">
       <nav className="w-full flex justify-between gap-3 px-3 py-4 sm:px-6 sm:py-6">
         {/* Desktop Navigation Items */}
         <ul className="w-full hidden md:flex items-center justify-between">
@@ -34,11 +35,17 @@ function Header() {
               className="w-10 h-10 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/logo.svg')] hover:rotate-90 transition-all duration-300"
             />
           </li>
-          {NAV_ITEMS.map(navEl => (
-            <li key={navEl} className="font-mono uppercase">
-              <NavLink to={NAV[navEl] || "/"}>{navEl}</NavLink>
-            </li>
-          ))}
+          {NAV_ITEMS.map(navEl => {
+            const nav = navEl === "home" ? "/" : `/${navEl}`;
+            return (
+              <li
+                key={navEl}
+                className={`font-mono uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+              >
+                <NavLink to={NAV[navEl] || "/"}>{navEl}</NavLink>
+              </li>
+            );
+          })}
           <li>
             <Login />
           </li>
