@@ -4,11 +4,7 @@ import ToyList from "./ToyList";
 function ToysPage() {
   return (
     <>
-      <Search
-        onSubmit={() => {}}
-        placeholder="Search for toys..."
-        onReset={() => {}}
-      />
+      <Search />
       <ToyList />
     </>
   );

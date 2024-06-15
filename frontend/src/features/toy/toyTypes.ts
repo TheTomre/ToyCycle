@@ -61,6 +61,6 @@ export type ToysState = {
   ageCategory: string[];
   brand: string[];
   category: string[];
-  searchQuery: string;
+  search: string;
   sort: string;
 };

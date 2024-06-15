@@ -22,7 +22,8 @@ function ToyList() {
     ageCategory,
     brand,
     category,
-    sort
+    sort,
+    search
   } = useAppSelector((state: RootState) => state.toys);
 
   const convertToString = (arr: string[]) => {
@@ -41,7 +42,8 @@ function ToyList() {
         limit: resultsPerPage,
         category: categoryStr,
         ageCategory: ageCategoryStr,
-        brand: brandStr
+        brand: brandStr,
+        search
       })
     );
   }, [
@@ -51,7 +53,8 @@ function ToyList() {
     category,
     ageCategory,
     brand,
-    sort
+    sort,
+    search
   ]);
 
   return (

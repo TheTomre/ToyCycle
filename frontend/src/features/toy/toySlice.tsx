@@ -15,7 +15,7 @@ const initialState: ToysState = {
   ageCategory: [],
   brand: [],
   category: [],
-  searchQuery: ""
+  search: ""
 };
 
 const axiosInstance = axios.create({
@@ -45,13 +45,13 @@ export const fetchToys = createAsyncThunk<
     category?: string;
     ageCategory?: string;
     brand?: string;
-    searchQuery?: string;
+    search?: string;
   },
   { rejectValue: string }
 >(
   "toys/fetchToys",
   async (
-    { page, limit, category, ageCategory, brand, searchQuery, sort },
+    { page, limit, category, ageCategory, brand, search, sort },
     { rejectWithValue }
   ) => {
     try {
@@ -63,7 +63,7 @@ export const fetchToys = createAsyncThunk<
           category,
           ageCategory,
           brand,
-          searchQuery
+          search
         })
       });
       const { data } = response;
@@ -121,6 +121,9 @@ const toySlice = createSlice({
     setSort: (state, action: PayloadAction<string>) => {
       state.sort = action.payload;
     },
+    setSearchQuery: (state, action: PayloadAction<string>) => {
+      state.search = action.payload;
+    },
     resetToyList: state => {
       state.currentPage = 1;
       state.resultsPerPage = 10;
@@ -128,7 +131,7 @@ const toySlice = createSlice({
       state.category = [];
       state.ageCategory = [];
       state.brand = [];
-      state.searchQuery = "";
+      state.search = "";
       state.sort = "name";
     },
     resetToysFilter: state => {
@@ -199,7 +202,8 @@ export const {
   setCategory,
   setAgeCategory,
   setBrandCategory,
-  resetToysFilter
+  resetToysFilter,
+  setSearchQuery
 } = toySlice.actions;
 
 export default toySlice.reducer;
