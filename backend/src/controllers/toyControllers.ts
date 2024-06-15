@@ -73,12 +73,9 @@ export const getAllToys = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  const page = parseInt(req.query["page"] as string, 10) || 1;
-  const limit = parseInt(req.query["limit"] as string, 10) || 10;
-
   try {
-    const { toys, total } = await fetchAllToys(page, limit);
-    if (!toys.length) {
+    const result = await fetchAllToys(req);
+    if (!result?.toys || !result?.total) {
       res
         .status(STATUS.NOT_FOUND)
         .json({ message: "No toys found", status: STATUS_MESSAGE.FAIL });
@@ -87,10 +84,10 @@ export const getAllToys = async (
 
     res.status(STATUS.OK).json({
       status: STATUS_MESSAGE.SUCCESS,
-      data: toys,
-      total,
-      page,
-      totalPages: Math.ceil(total / limit)
+      data: result.toys,
+      totalResults: result.total,
+      page: result.page,
+      totalPages: Math.ceil(result.total / result.limit)
     });
     logger.info("Toys fetched successfully");
   } catch (err) {

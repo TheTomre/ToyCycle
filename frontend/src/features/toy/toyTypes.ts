@@ -33,11 +33,6 @@ export type Category =
   | "vehicle"
   | "construction";
 
-export type ToySuccessResponse = {
-  data: Toy;
-  status: string;
-};
-
 export type Toy = {
   ageCategory: AgeCategory[];
   brand: string;
@@ -47,7 +42,7 @@ export type Toy = {
   images: string[];
   name: string;
   price: number;
-  status: "available" | "exchanged | hold";
+  status: "available" | "exchanged" | "hold";
   tokenValue: number;
   condition: string;
   origin: string;
@@ -58,11 +53,20 @@ export type Toy = {
 export type ToysState = {
   toys: Toy[];
   selectedToy: Toy | null;
-  status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
   currentPage: number;
   resultsPerPage: number;
   totalPages: number;
   totalResults: number;
   loading: boolean;
+  ageCategory: string[];
+  brand: string[];
+  category: string[];
+  search: string;
+  sort: string;
+};
+
+export type ToySuccessResponse = {
+  status: string;
+  data: Toy;
 };

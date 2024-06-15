@@ -1,3 +1,5 @@
+import { AgeCategory, Brand, Category } from "../features/toy/toyTypes";
+
 export const API_BASE_URL = import.meta.env["VITE_API_BASE_URL"];
 
 export const NAV: { [key: string]: string } = {
@@ -10,6 +12,15 @@ export const NAV: { [key: string]: string } = {
 
 export const NAV_ITEMS = Object.keys(NAV);
 
+export const LIMITS_PER_PAGE = [10, 20, 30, 40, 50];
+
+export const SORT_RESULTS = {
+  "price": "Price: Low to High",
+  "-price": "Price: High to Low",
+  "name": "Name: A to Z",
+  "-name": "Name: Z to A"
+};
+
 export const ENDPOINT = {
   users: "/users",
   me: "/users/me",
@@ -19,79 +30,176 @@ export const ENDPOINT = {
   toysEdit: "/toys/edit"
 };
 
-export const CATEGORIES_AGE = [
+export const CATEGORIES = [
+  "stuffed",
+  "toy",
+  "electronic",
+  "building",
+  "educational",
+  "outdoor",
+  "creative",
+  "musical",
+  "puzzle",
+  "vehicle",
+  "construction"
+];
+
+type CategoryType<T> = {
+  id: number;
+  title: T;
+  filterForApi: string;
+};
+
+export const CATEGORIES_AGE: CategoryType<AgeCategory>[] = [
   {
     id: 1,
-    title: "0-3 mounts",
-    filterForApi: ""
+    title: "0-3 months",
+    filterForApi: "0-3 months"
   },
   {
     id: 2,
-    title: "3-6 mounts",
-    filterForApi: ""
+    title: "3-6 months",
+    filterForApi: "3-6 months"
   },
   {
     id: 3,
-    title: "6-9 mounts",
-    filterForApi: ""
+    title: "6-9 months",
+    filterForApi: "6-9 months"
   },
   {
     id: 4,
-    title: "9-12 mounts",
-    filterForApi: ""
+    title: "9-12 months",
+    filterForApi: "9-12 months"
   },
   {
     id: 5,
     title: "1-2 years",
-    filterForApi: ""
+    filterForApi: "1-2 years"
   },
   {
     id: 6,
     title: "2-3 years",
-    filterForApi: ""
+    filterForApi: "2-3 years"
   },
   {
     id: 7,
     title: "3-4 years",
-    filterForApi: ""
+    filterForApi: "3-4years"
   },
   {
     id: 8,
     title: "4-6 years",
-    filterForApi: ""
+    filterForApi: "4-6 years"
   }
 ];
 
-export const CATEGORIES_TYPE = [
+export const BRANDS: CategoryType<Brand>[] = [
   {
     id: 1,
-    title: "Books",
-    filterForApi: "Books"
+    title: "Lego",
+    filterForApi: "Lego"
   },
   {
     id: 2,
-    title: "Wooden Toys",
-    filterForApi: "Wooden Toys"
+    title: "Mattel",
+    filterForApi: "Mattel"
   },
   {
     id: 3,
-    title: "Cars | Trains",
-    filterForApi: "Cars | Trains"
+    title: "Hasbro",
+    filterForApi: "Hasbro"
   },
   {
     id: 4,
-    title: "Dolls | Playsets",
-    filterForApi: "Dolls | Playsets"
+    title: "Fisher-Price",
+    filterForApi: "Fisher-Price"
   },
   {
     id: 5,
-    title: "Pazzles and Games",
-    filterForApi: "Pazzles and Games"
+    title: "Playmobil",
+    filterForApi: "Playmobil"
   },
   {
     id: 6,
-    title: "Soft Toys",
-    filterForApi: "Soft Toys"
+    title: "VTech",
+    filterForApi: "VTech"
+  },
+  {
+    id: 7,
+    title: "Bandai",
+    filterForApi: "Bandai"
+  },
+  {
+    id: 8,
+    title: "Hot Wheels",
+    filterForApi: "Hot Wheels"
+  },
+  {
+    id: 9,
+    title: "Barbie",
+    filterForApi: "Barbie"
+  },
+  {
+    id: 10,
+    title: "Nerf",
+    filterForApi: "Nerf"
+  }
+];
+export const CATEGORIES_TYPE: CategoryType<Category>[] = [
+  {
+    id: 1,
+    title: "stuffed",
+    filterForApi: "stuffed"
+  },
+  {
+    id: 2,
+    title: "toy",
+    filterForApi: "toy"
+  },
+  {
+    id: 3,
+    title: "electronic",
+    filterForApi: "electronic"
+  },
+  {
+    id: 4,
+    title: "building",
+    filterForApi: "building"
+  },
+  {
+    id: 5,
+    title: "educational",
+    filterForApi: "educational"
+  },
+  {
+    id: 6,
+    title: "outdoor",
+    filterForApi: "outdoor"
+  },
+  {
+    id: 7,
+    title: "creative",
+    filterForApi: "creative"
+  },
+  {
+    id: 8,
+    title: "musical",
+    filterForApi: "musical"
+  },
+  {
+    id: 9,
+    title: "puzzle",
+    filterForApi: "puzzle"
+  },
+  {
+    id: 10,
+    title: "vehicle",
+    filterForApi: "vehicle"
+  },
+  {
+    id: 11,
+    title: "construction",
+    filterForApi: "construction"
   }
 ];
 

@@ -51,11 +51,6 @@ const ToySchema: Schema = new Schema(
       enum: ["available", "exchanged", "hold"],
       type: String
     },
-    condition: {
-      default: "available",
-      enum: ["new", "good", "bad", "broken"],
-      type: String
-    },
     tokenValue: { default: 0, type: Number },
     origin: { type: String, required: true },
     quantity: { required: true, type: Number },

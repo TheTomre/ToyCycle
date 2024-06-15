@@ -48,7 +48,7 @@ export type Toy = {
   // images: string[];
   name: string;
   price: number;
-  status: "available" | "exchanged | hold";
+  status: "available" | "exchanged" | "hold";
   tokenValue: number;
   condition: string;
   origin: string;
