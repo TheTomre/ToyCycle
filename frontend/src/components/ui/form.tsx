@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import * as React from "react";
 import * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
@@ -42,7 +43,6 @@ function FormField<
 
 const useFormField = () => {
   const fieldContext = React.useContext(FormFieldContext);
-  // eslint-disable-next-line @typescript-eslint/no-use-before-define
   const itemContext = React.useContext(FormItemContext);
   const { getFieldState, formState } = useFormContext();
 

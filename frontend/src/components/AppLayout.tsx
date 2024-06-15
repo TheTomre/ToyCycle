@@ -8,7 +8,7 @@ function AppLayout() {
   const { isNavOpen } = useAppSelector(state => state.ui);
   return (
     <div
-      className={`${isNavOpen ? "overflow-y-hidden" : ""} flex-col h-screen w-full`}
+      className={`${isNavOpen ? "overflow-y-hidden" : ""} flex-col min-h-full w-full`}
     >
       <Header />
       <Main className="overflow-scroll mt-[78px] sm:mt-[96px]">
