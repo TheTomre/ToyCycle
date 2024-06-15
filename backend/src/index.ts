@@ -4,14 +4,11 @@ import https from "node:https";
 import mongoose from "mongoose";
 import { ENV, SECURE_PORT } from "./config";
 import app from "./app";
-import { initPassport } from "./providers";
 import logger from "./logger/logger";
 import { STATUS_MESSAGE } from "./consts/statusCodes";
 
 const PORT = process.env["PORT"] || 8000;
 const MONGO_URI = process.env["MONGO_URI"] || "your-mongodb-uri";
-
-initPassport();
 
 // TODO: Suggestion: Move mongoose initialization to providers folder
 // Database connection
