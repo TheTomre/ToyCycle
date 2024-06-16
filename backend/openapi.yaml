@@ -222,7 +222,7 @@ paths:
                     origin:
                       type: string
                     price:
-                      type: string
+                      type: number
                      
                     quantity:
                       type: string
@@ -238,8 +238,8 @@ paths:
                       items:
                         type: string
                     images:
-                      # type: array
-                      # items:
+                      type: array
+                      items:
                         type: string
                         # format: binary
                   required:
@@ -577,15 +577,15 @@ components:
           type: string
           enum: [available, exchanged, hold]
         images:
-          # type: array
-          # items:
+          type: array
+          items:
             type: string
         tokenValue:
-          type: string
+          type: integer
         price:
+          type: number
+        fullDescription: 
           type: string
-        # fullDescription: 
-        #   type: string
         brand:
           type: string
         condition:
@@ -613,8 +613,8 @@ components:
           type: string
           enum: [available, exchanged, hold]
         images:
-          # type: array
-          # items:
+          type: array
+          items:
             type: string
         tokenValue:
           type: integer
