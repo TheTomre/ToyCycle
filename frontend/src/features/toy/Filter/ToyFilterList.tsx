@@ -1,18 +1,14 @@
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { setAgeCategory, setBrandCategory, setCategory } from "../toySlice";
-
 import ToysFilter from "./ToysFilter";
-
 import { BRANDS, CATEGORIES_AGE, CATEGORIES_TYPE } from "../../../lib/consts";
 
-function ToyFilterList() {
+function ToyFilterList({ className }: { className?: string }) {
   const [isBrandOpen, setIsBrandOpen] = useState(false);
   const [isCategoryOpen, setIsCategoryOpen] = useState(false);
   const [isAgeCategoryOpen, setIsAgeCategoryOpen] = useState(false);
-
   const { ageCategory, brand, category } = useAppSelector(state => state.toys);
-
   const dispatch = useAppDispatch();
 
   const toggleSelectedCategory = (
@@ -34,7 +30,6 @@ function ToyFilterList() {
         dispatch(setAgeCategory(newCategories));
         break;
       }
-
       case "brand": {
         const newCategories = brand.includes(selected)
           ? brand.filter(cat => cat !== selected)
@@ -48,7 +43,7 @@ function ToyFilterList() {
   };
 
   return (
-    <aside className="max-w-[25%] mim-w-[200px] mt-[75px] w-full">
+    <aside className={`max-w-[25%] min-w-[200px] ${className}`}>
       <ToysFilter
         isOpen={isAgeCategoryOpen}
         toggleIsOpen={() => setIsAgeCategoryOpen(!isAgeCategoryOpen)}

@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { CategoryType } from "types/shared";
 import { ImCheckmark } from "react-icons/im";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa6";
+import { FaChevronDown, FaChevronUp } from "react-icons/fa";
 import { Label } from "../../../components/UI/label";
 import { Button } from "../../../components/UI/button";
 import { useAppSelector } from "../../../hooks/redux";
@@ -31,7 +31,6 @@ function ToysFilter({
 
   const handleCategoryChange = (event: ChangeEvent<HTMLInputElement>) => {
     const toyCategory = event.target.value;
-
     onSelect(toyCategory, categoryName);
   };
 
@@ -42,8 +41,7 @@ function ToysFilter({
           {title}
         </div>
       </div>
-
-      <div className="flex flex-col justify-start items-center ">
+      <div className="flex flex-col justify-start items-center">
         {categoryList
           .slice(0, isOpen ? categoryList.length : 3)
           .map(category => {
@@ -82,7 +80,6 @@ function ToysFilter({
               </div>
             );
           })}
-
         <Button
           onClick={toggleIsOpen}
           variant="link"
