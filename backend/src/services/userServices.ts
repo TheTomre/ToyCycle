@@ -166,7 +166,8 @@ const deleteUserById = async (id: string) => {
 
 const fetchUserToys = async (userId: string) => {
   try {
-    const toys = await Toy.find({ userId });
+    const toys = await Toy.find({ user: userId });
+    logger.info(`Toys fetched successfully for user ${toys}`);
     if (!toys.length) {
       logger.info(`No toys found for user ${userId}`);
       return [];
