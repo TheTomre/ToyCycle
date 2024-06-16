@@ -1,63 +1,128 @@
 /* eslint-disable no-underscore-dangle */
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { RootState } from "../../store/store";
 import { fetchToys, setPage, setResultsPerPage } from "./toySlice";
 import ToyCard from "./ToyCard";
 import Pagination from "../../components/Pagination";
+import Error from "../../components/Error";
+import Loader from "../../components/Loader";
+import ToyFilterList from "./Filter/ToyFilterList";
+import Slider from "../../components/Slider";
 
 function ToyList() {
   const dispatch = useAppDispatch();
-  const toys = useAppSelector((state: RootState) => state.toys.toys);
-  const status = useAppSelector((state: RootState) => state.toys.status);
-  const error = useAppSelector((state: RootState) => state.toys.error);
-  const currentPage = useAppSelector(
-    (state: RootState) => state.toys.currentPage
-  );
-  const totalPages = useAppSelector(
-    (state: RootState) => state.toys.totalPages
-  );
-  const resultsPerPage = useAppSelector(
-    (state: RootState) => state.toys.resultsPerPage
-  );
-  const totalResults = useAppSelector(
-    (state: RootState) => state.toys.totalResults
-  );
+  const [isFilterOpen, setFilterOpen] = useState(false);
+  const {
+    toys,
+    error,
+    loading,
+    currentPage,
+    totalPages,
+    resultsPerPage,
+    totalResults,
+    ageCategory,
+    brand,
+    category,
+    sort,
+    search
+  } = useAppSelector((state: RootState) => state.toys);
+
+  const categoryStr = useMemo(() => category.join(","), [category]);
+  const ageCategoryStr = useMemo(() => ageCategory.join(","), [ageCategory]);
+  const brandStr = useMemo(() => brand.join(","), [brand]);
 
   useEffect(() => {
-    dispatch(fetchToys({ page: currentPage, limit: resultsPerPage }));
-  }, [dispatch, currentPage, resultsPerPage]);
+    const fetchToysData = () => {
+      const params = {
+        page: currentPage,
+        limit: resultsPerPage,
+        category: categoryStr,
+        ageCategory: ageCategoryStr,
+        brand: brandStr,
+        sort,
+        search
+      };
+      dispatch(fetchToys(params));
+    };
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
+    fetchToysData();
+  }, [
+    dispatch,
+    currentPage,
+    resultsPerPage,
+    categoryStr,
+    ageCategoryStr,
+    brandStr,
+    sort,
+    search
+  ]);
 
-  if (status === "failed") {
-    return <div>Failed to load toys. Error: {error}</div>;
-  }
+  // if (loading) return <Loader />;
+  if (error) return <Error errorMessage={error ?? "Something went wrong..."} />;
+
+  const handlePageChange = (page: number) => {
+    dispatch(setPage(page));
+  };
+
+  const handleResultsPerPageChange = (results: number) => {
+    dispatch(setPage(1));
+    dispatch(setResultsPerPage(results));
+  };
 
   return (
-    <div>
-      <div className="flex flex-wrap justify-center">
-        {toys.map(toy => (
-          <ToyCard
-            key={toy._id}
-            id={toy._id}
-            name={toy.name}
-            description={toy.description}
-            images={toy.images.length > 0 ? toy.images : ["../bear.webp"]}
-            tokens={toy.tokenValue}
-          />
-        ))}
+    <div className="min-h-screen bg-gray-100 py-5">
+      <div className="container mx-auto px-4 sm:px-10">
+        <div className="flex justify-between items-center">
+          <button
+            className="lg:hidden bg-[#3a0e7b] text-white px-4 py-2 rounded-lg"
+            onClick={() => setFilterOpen(true)}
+          >
+            Filters
+          </button>
+        </div>
+        <section className="flex flex-col lg:flex-row gap-5">
+          <Slider isOpen={isFilterOpen} onClose={() => setFilterOpen(false)}>
+            <ToyFilterList />
+          </Slider>
+          {/* <Loader /> */}
+          {loading && <Loader />}
+          <div className="hidden lg:block lg:w-1/4 ">
+            <ToyFilterList className="mt-14 " />
+          </div>
+
+          <section className="flex-1">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              resultsPerPage={resultsPerPage}
+              onResultsPerPageChange={handleResultsPerPageChange}
+              totalResults={totalResults}
+            />
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 justify-items-center">
+              {toys.map(toy => (
+                <ToyCard
+                  key={toy._id}
+                  id={toy._id}
+                  name={toy.name}
+                  description={toy.description}
+                  images={toy.images.length > 0 ? toy.images : ["../bear.webp"]}
+                  tokens={toy.tokenValue}
+                />
+              ))}
+            </div>
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={handlePageChange}
+              resultsPerPage={resultsPerPage}
+              onResultsPerPageChange={handleResultsPerPageChange}
+              totalResults={totalResults}
+            />
+          </section>
+        </section>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={page => dispatch(setPage(page))}
-        resultsPerPage={resultsPerPage}
-        onResultsPerPageChange={results => dispatch(setResultsPerPage(results))}
-        totalResults={totalResults}
-      />
     </div>
   );
 }

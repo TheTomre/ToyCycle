@@ -3,8 +3,8 @@
 @tailwind utilities;
 
 .loader {
-  width: 48px;
-  height: 48px;
+  width: 56px;
+  height: 56px;
   display: flex;
   transform-origin: 50% 125%;
   animation: mov-y 1s infinite linear;
@@ -13,7 +13,7 @@
 .loader:after {
   content: "";
   flex: 1;
-  background: #fff;
+  background: #3a0e7b;
   transform-origin: 0% 100%;
   animation: rtr-x 1s infinite linear;
 }
@@ -61,4 +61,38 @@
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+.menu-item {
+  @apply text-[#280b5f] hover:text-[#3a0e7b] px-4 py-2  transition duration-300;
+}
+.menu-item.active {
+  @apply bg-[#3a0e7b] text-white px-4 py-2;
+}
+.menu-item::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #3a0e7b;
+  transition: width 0.3s;
+}
+.menu-item:hover::after {
+  width: 100%;
+  transition: width 0.3s;
+}
+.menu-item.active::after {
+  width: 100%;
+}
+.active {
+  animation: bounce 1s infinite;
+}
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
