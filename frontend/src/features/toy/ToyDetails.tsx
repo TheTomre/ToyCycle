@@ -77,24 +77,24 @@ function ToyDetails() {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white mt-6">
-      <nav className="mb-4 text-purple-600">
+      <nav className="mb-4 text-purple-700">
         <button onClick={() => window.history.back()} className="mr-2">
           <FontAwesomeIcon icon={faArrowLeft} /> Back
         </button>
       </nav>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <h1 className="text-3xl font-bold text-gray-800 pb-4 font-mono tracking-tight">
+        {toy.name}
+      </h1>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
         <div className="space-y-4">
-          <div className="text-center mt-2 mb-6">
-            <h1 className="text-3xl font-bold text-gray-800">{toy.name}</h1>
-          </div>
-          <div className="relative w-full h-98 overflow-hidden mb-8">
+          <div className="relative w-full h-98 overflow-hidden mb-4">
             <button
-              className="relative w-full h-98 overflow-hidden mb-8"
+              className="relative w-full h-98 overflow-hidden mb-4"
               onClick={handleImageClick}
               aria-label="View larger image"
             >
               <img
-                className="object-cover w-full h-full cursor-pointer rounded-lg"
+                className="object-cover w-full h-[300px] sm:h-[350px] md:h-[554px] cursor-pointer"
                 src={toy.images[currentImageIndex] || "../bear.webp"}
                 alt={toy.name}
               />
@@ -121,13 +121,12 @@ function ToyDetails() {
             ))}
           </div>
         </div>
-        <div className="space-y-6 pt-10">
-          {" "}
-          <div className="shadow-lg rounded-lg p-6 bg-white">
+        <div className="space-y-4">
+          <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faHeart}
-                className="text-purple-600 mr-2"
+                className="text-purple-700 mr-2"
               />
               <h2
                 className="text-xl
@@ -138,43 +137,43 @@ font-mono"
             </div>
             <p className="text-gray-600 font-sans">{toy.description}</p>
           </div>
-          <div className="shadow-lg rounded-lg p-6 bg-white">
+          <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faStore}
-                className="text-purple-600 mr-2"
+                className="text-purple-700 mr-2"
               />
               <h2 className="text-xl font-mono">Token Value</h2>
             </div>
-            <p className="text-lg text-purple-600 font-bold">
+            <p className="text-lg text-purple-700 font-bold">
               {toy.tokenValue} Tokens
             </p>
           </div>
-          <div className="shadow-lg rounded-lg p-6 bg-white">
+          <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faBoxOpen}
-                className="text-purple-600 mr-2"
+                className="text-purple-700 mr-2"
               />
               <h2 className="text-xl font-mono">Condition</h2>
             </div>
             <p className="text-lg text-gray-800 font-bold">{toy.condition}</p>
           </div>
-          <div className="shadow-lg rounded-lg p-6 bg-white">
+          <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faShoppingCart}
-                className="text-purple-600 mr-2"
+                className="text-purple-700 mr-2"
               />
               <h2 className="text-xl font-mono">Available Quantity</h2>
             </div>
             <p className="text-lg text-gray-800 font-bold">{toy.quantity}</p>
           </div>
-          <div className="shadow-lg rounded-lg p-6 bg-white">
+          <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faGlobe}
-                className="text-purple-600 mr-2"
+                className="text-purple-700 mr-2"
               />
               <h2 className="text-xl font-mono">Origin</h2>
             </div>
