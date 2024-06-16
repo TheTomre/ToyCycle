@@ -12,7 +12,10 @@ import {
 import { Input } from "../../../components/UI/input";
 
 function ToyFormImage() {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors }
+  } = useFormContext();
 
   const handlerAddImage = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -24,7 +27,7 @@ function ToyFormImage() {
   return (
     <div>
       <div>
-        <h3 className="text-xl sm:tex-2xl font-sans text-[#3a0e7b]">
+        <h3 className="text-xl sm:text-2xl font-sans text-[#3a0e7b]">
           Toy images
         </h3>
       </div>
@@ -43,7 +46,11 @@ function ToyFormImage() {
                   onChange={e => handlerAddImage(e, field)}
                 />
               </FormControl>
-              <FormMessage className="text-[#ff4d4d] text-xs" />
+              {errors["images"] && (
+                <FormMessage className="text-[#ff4d4d] text-xs">
+                  {errors["images"].message?.toString() ?? ""}
+                </FormMessage>
+              )}
             </FormItem>
           )}
         />
