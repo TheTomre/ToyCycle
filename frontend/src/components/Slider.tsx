@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 
 interface SliderProps {
   isOpen: boolean;
@@ -10,7 +9,7 @@ interface SliderProps {
 function Slider({ isOpen, onClose, children }: SliderProps) {
   return (
     <div
-      className={`fixed inset-0 z-50 transform ${
+      className={`fixed inset-0 z-[60] transform ${
         isOpen ? "translate-x-0" : "translate-x-full"
       } transition-transform duration-300 ease-in-out`}
     >
@@ -41,11 +40,5 @@ function Slider({ isOpen, onClose, children }: SliderProps) {
     </div>
   );
 }
-
-Slider.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
-};
 
 export default Slider;

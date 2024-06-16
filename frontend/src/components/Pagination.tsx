@@ -32,10 +32,12 @@ function Pagination({
     <div className="flex flex-col items-center mt-4 space-y-6 pb-4">
       <div className="flex items-center relative gap-2 self-end">
         <span className="text-gray-700 text-sm">{`${start}-${end} of ${totalResults}`}</span>
-
         <div className="flex items-center space-x-2">
-          <label htmlFor="resultsPerPage" className="text-gray-700 text-sm">
-            Results per page
+          <label
+            htmlFor="resultsPerPage"
+            className="text-gray-700 text-sm flex items-center"
+          >
+            <span className="hidden sm:block">Results per page</span>
             <select
               name="resultsPerPage"
               disabled={totalResults <= 10}

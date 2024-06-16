@@ -58,7 +58,7 @@ function ToyList() {
     search
   ]);
 
-  if (loading) return <Loader />;
+  // if (loading) return <Loader />;
   if (error) return <Error errorMessage={error ?? "Something went wrong..."} />;
 
   const handlePageChange = (page: number) => {
@@ -71,9 +71,9 @@ function ToyList() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-10">
+    <div className="min-h-screen bg-gray-100 py-5">
       <div className="container mx-auto px-4 sm:px-10">
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center">
           <button
             className="lg:hidden bg-[#3a0e7b] text-white px-4 py-2 rounded-lg"
             onClick={() => setFilterOpen(true)}
@@ -82,12 +82,15 @@ function ToyList() {
           </button>
         </div>
         <section className="flex flex-col lg:flex-row gap-5">
-          <div className="hidden lg:block lg:w-1/4">
-            <ToyFilterList className="mt-10" />
-          </div>
           <Slider isOpen={isFilterOpen} onClose={() => setFilterOpen(false)}>
             <ToyFilterList />
           </Slider>
+          {/* <Loader /> */}
+          {loading && <Loader />}
+          <div className="hidden lg:block lg:w-1/4 ">
+            <ToyFilterList className="mt-14 " />
+          </div>
+
           <section className="flex-1">
             <Pagination
               currentPage={currentPage}
@@ -97,7 +100,7 @@ function ToyList() {
               onResultsPerPageChange={handleResultsPerPageChange}
               totalResults={totalResults}
             />
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 mt-6 justify-items-center">
               {toys.map(toy => (
                 <ToyCard
                   key={toy._id}
