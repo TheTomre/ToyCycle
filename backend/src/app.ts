@@ -1,12 +1,12 @@
 import { Strategy as Auth0Strategy } from "passport-auth0";
-import { middleware as OpenApiValidator } from "express-openapi-validator";
+// import { middleware as OpenApiValidator } from "express-openapi-validator";
 import { StatusCodes } from "http-status-codes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { ErrorRequestHandler } from "express";
 import passport from "passport";
-import path from "node:path";
+// import path from "node:path";
 import session from "express-session";
 import routes from "./routes";
 import { appendJwt } from "./middleware";
@@ -57,16 +57,16 @@ app.use(passport.session());
 app.use(appendJwt);
 
 // Serve the OpenAPI specification
-app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));
+// app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));
 
 // Install the OpenAPI validator
-app.use(
-  OpenApiValidator({
-    apiSpec: path.join(__dirname, "../openapi.yaml"),
-    validateRequests: true,
-    validateResponses: true
-  })
-);
+// app.use(
+//   OpenApiValidator({
+//     apiSpec: path.join(__dirname, "../openapi.yaml"),
+//     validateRequests: true,
+//     validateResponses: true
+//   })
+// );
 
 // Routes
 app.use("/api/v1", routes);

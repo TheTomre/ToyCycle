@@ -54,7 +54,6 @@ export const validateToyMeRequest = [
     .notEmpty()
     .withMessage("Description must be a string"),
   body("origin").isString().notEmpty().withMessage("origin be a string"),
-  body("status").isString().notEmpty().withMessage("Status must be a string"),
   body("condition")
     .isString()
     .notEmpty()

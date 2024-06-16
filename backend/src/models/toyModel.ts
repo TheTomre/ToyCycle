@@ -25,23 +25,10 @@ const categories = [
   "construction"
 ];
 
-const brands = [
-  "Lego",
-  "Mattel",
-  "Hasbro",
-  "Fisher-Price",
-  "Playmobil",
-  "VTech",
-  "Bandai",
-  "Hot Wheels",
-  "Barbie",
-  "Nerf"
-];
-
 const ToySchema: Schema = new Schema<Toy>({
   ageCategory: { type: [String], enum: ageCategories, required: true },
   category: { type: [String], enum: categories, required: true },
-  brand: { type: String, enum: brands, required: true },
+  brand: { type: String, required: true },
   description: { required: true, type: String },
   images: { default: [], type: [String] },
   name: { required: true, type: String },

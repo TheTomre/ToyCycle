@@ -1,13 +1,14 @@
 import { Route, Routes } from "react-router-dom";
 import Home from "./features/home/Home";
 import About from "./features/about/About";
-import Catalog from "./features/toy/ToysPage";
+import ToysPage from "./features/toy/ToysPage";
 import ToyCreatePage from "./features/toy/ToyCreatePage";
 // import Users from "./features/user/Users";
 import UserProfilePage from "./features/user/UserProfilePage";
 import ContactUs from "./features/about/ContactUs";
 import AppLayout from "./components/AppLayout";
 import AuthUserCallbackPage from "./features/auth/AuthUserCallbackPage";
+import ToyDetails from "./features/toy/ToyDetails";
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
       <Route path="/" element={<AppLayout />}>
         <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
-        <Route path="/toys" element={<Catalog />} />
+        <Route path="/toys" element={<ToysPage />} />
+        <Route path="/toys/:id" element={<ToyDetails />} />
         <Route path="/toys/create" element={<ToyCreatePage />} />
         <Route path="/auth-user" element={<AuthUserCallbackPage />} />
         <Route path="/users" element={<UserProfilePage />} />

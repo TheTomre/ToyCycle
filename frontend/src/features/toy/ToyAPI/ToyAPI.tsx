@@ -1,6 +1,6 @@
-/* eslint-disable no-console */
 import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation } from "react-query";
+import { toast } from "sonner";
 import { API_BASE_URL, ENDPOINT } from "../../../lib/consts";
 import { Toy, ToySuccessResponse } from "../toyTypes";
 
@@ -34,11 +34,12 @@ export const useCreateToy = () => {
   } = useMutation(createToyRequest);
 
   if (isSuccess) {
-    console.log("Toy created successfully");
+    toast.success("Toy created successfully");
   }
 
   if (error) {
-    console.error("Failed to create toy", error);
+    toast.error("Failed to create toy");
   }
+
   return { createToy, isLoading };
 };

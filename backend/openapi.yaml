@@ -195,79 +195,82 @@ paths:
         '500':
           description: Internal server error
   /api/v1/toys/me:
-        post:
-          summary: Add a new toy for the current user
-          tags:
-           - Toys
-          requestBody:
-            required: true
+      summary: Create a new toy
+      post:
+        requestBody:
+          required: true
+          content:
+            multipart/form-data:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: "Name of the toy"
+                  brand:
+                    type: string
+                    description: "Brand of the toy"
+                  description:
+                    type: string
+                    description: "Short description of the toy"
+                  fullDescription:
+                    type: string
+                    description: "Full description of the toy"
+                  condition:
+                    type: string
+                    description: "Condition of the toy"
+                  origin:
+                    type: string
+                    description: "Origin of the toy"
+                  price:
+                    type: string
+                    description: "Price of the toy"
+                  quantity:
+                    type: string
+                    description: "Quantity available"
+                  tokenValue:
+                    type: string
+                    description: "Token value of the toy"
+                  ageCategory:
+                    type: array
+                    items:
+                      type: string
+                    description: "Age categories for the toy"
+                  category:
+                    type: array
+                    items:
+                      type: string
+                    description: "Categories of the toy"
+                  images:
+                     type: object
+                     additionalProperties: true
+                required:
+                  - name
+                  - brand
+                  - description
+                  - fullDescription
+                  - condition
+                  - origin
+                  - price
+                  - quantity
+                  - tokenValue
+                  - ageCategory
+                  - category
+                  - images
+        responses:
+          '201':
+            description: Toy created
             content:
-              multipart/form-data:
+              application/json:
                 schema:
                   type: object
                   properties:
-                    name:
-                      type: string
-                    brand:
-                      type: string
-                    description:
-                      type: string
-                    # fullDescription:
-                    #   type: string
+                    data:
+                      type: object
+                      items:
+                        $ref: '#/components/schemas/Toy'
                     status:
                       type: string
-                      enum: [available, exchanged, 'hold']
-                    condition:
-                      type: string
-                    origin:
-                      type: string
-                    price:
-                      type: number
-                     
-                    quantity:
-                      type: string
-                     
-                    tokenValue:
-                      type: string
-                    ageCategory:
-                      type: array
-                      items:
-                        type: string
-                    category:
-                      type: array
-                      items:
-                        type: string
-                    images:
-                      type: array
-                      items:
-                        type: string
-                        # format: binary
-                  required:
-                    - name
-                    - brand
-                    - description
-                    - status
-                    - condition
-                    - origin
-                    - price
-                    - quantity
-                    - tokenValue
-                    - ageCategory
-                    - category
-          responses:
-            '201':
-              description: Toy created
-              content:
-                application/json:
-                  schema:
-                    type: object
-                    properties:
-                      data:
-                        type: object
-                        items:
-                          $ref: '#/components/schemas/Toy'
-                      status:
-                        type: string
   /api/v1/users:
       get:
         summary: Get list of users
@@ -573,17 +576,15 @@ components:
           type: array
           items:
             type: string
-        status:
-          type: string
-          enum: [available, exchanged, hold]
         images:
           type: array
           items:
-            type: string
+            
+                        format: binary
         tokenValue:
           type: integer
         price:
-          type: number
+          type: string
         fullDescription: 
           type: string
         brand:
@@ -609,13 +610,11 @@ components:
           type: array
           items:
             type: string
-        status:
-          type: string
-          enum: [available, exchanged, hold]
         images:
           type: array
           items:
-            type: string
+            
+                        format: binary
         tokenValue:
           type: integer
     Toys:

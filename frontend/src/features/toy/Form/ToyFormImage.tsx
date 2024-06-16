@@ -18,7 +18,7 @@ function ToyFormImage() {
     e: React.ChangeEvent<HTMLInputElement>,
     field: ControllerRenderProps<FieldValues, "images">
   ) => {
-    field.onChange(e.target.files?.length ? [e.target.files[0]] : []);
+    field.onChange(e.target.files?.length ? [...e.target.files] : []);
   };
 
   return (
@@ -36,7 +36,8 @@ function ToyFormImage() {
                 <Input
                   className="border-gray-400 border rounded placeholder:text-gray-300"
                   type="file"
-                  accept=".jpg, .jpeg, .png"
+                  multiple
+                  accept=".jpg, .jpeg, .png, .webp"
                   onChange={e => handlerAddImage(e, field)}
                 />
               </FormControl>

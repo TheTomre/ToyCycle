@@ -7,39 +7,43 @@ import ToyFormCategories from "./ToyFormCategories";
 import ToyFormImage from "./ToyFormImage";
 import { Button } from "../../../components/UI/button";
 
+const initData = {
+  name: "",
+  brand: "",
+  description: "",
+  fullDescription: "",
+  condition: "",
+  origin: "",
+  price: 0,
+  quantity: 0,
+  tokenValue: 0,
+  ageCategory: [],
+  category: [],
+  images: []
+};
+
 const formToySchema = z.object({
-  name: z.string({
-    required_error: "toy name is required"
-  }),
-  brand: z.string({
-    required_error: "brand is required"
-  }),
-  description: z.string({
-    required_error: "description is required"
-  }),
-  fullDescription: z.string({
-    required_error: "full description is required"
-  }),
-  condition: z.string({
-    required_error: "condition is required"
-  }),
-  origin: z.string({
-    required_error: "Origin is required"
-  }),
-  price: z.coerce.number({
-    required_error: "price is required",
-    invalid_type_error: "must be a valid number"
-  }),
+  name: z.string().min(1, "name is required").max(120),
+  brand: z.string().min(1, "brand is required").max(120),
+  description: z.string().min(10, "description is required").max(220),
+  fullDescription: z.string().min(50, "fullDescription is required").max(500),
+  condition: z.string().min(1, "condition is required"),
+  origin: z.string().min(1, "origin is required").max(120),
+  price: z.coerce
+    .number({
+      required_error: "price is required"
+    })
+    .positive({ message: "must be a positive number" }),
   quantity: z.coerce
     .number({
-      required_error: "quantity is required",
-      invalid_type_error: "must be a valid number"
+      required_error: "quantity is required"
     })
-    .positive(),
-  tokenValue: z.coerce.number({
-    required_error: "token value time is required",
-    invalid_type_error: "must be a valid number"
-  }),
+    .positive({ message: "must be a positive number" }),
+  tokenValue: z.coerce
+    .number({
+      required_error: "token value time is required"
+    })
+    .positive({ message: "must be a positive number" }),
   ageCategory: z.array(z.string()).nonempty({
     message: "please select at least one item"
   }),
@@ -48,6 +52,8 @@ const formToySchema = z.object({
   }),
   images: z
     .array(z.instanceof(File, { message: "image is required" }))
+    .min(1, { message: "please select at least one item" })
+    .max(3, { message: "max 3 images" })
     .nonempty({
       message: "please select at least one item"
     })
@@ -56,42 +62,40 @@ const formToySchema = z.object({
 type ToyFormData = z.infer<typeof formToySchema>;
 
 type Props = {
-  // toy?: ToyFormData;
   onSave: (toyFormData: FormData) => void;
-  // isLoading: boolean;
 };
 
 function ToyCreateForm({ onSave }: Props) {
   const form = useForm<ToyFormData>({
     resolver: zodResolver(formToySchema),
     defaultValues: {
-      ageCategory: [],
-      category: []
+      ...initData
     }
   });
+
   const onSubmit = (formDataJson: ToyFormData) => {
     const formData = new FormData();
-
     formData.append("name", formDataJson.name);
     formData.append("quantity", formDataJson.quantity.toString());
     formData.append("description", formDataJson.description);
     formData.append("brand", formDataJson.brand);
-    formData.append("status", "available");
     formData.append("condition", formDataJson.condition);
     formData.append("origin", formDataJson.origin);
     formData.append("price", formDataJson.price.toString());
     formData.append("tokenValue", formDataJson.tokenValue.toString());
     formData.append("fullDescription", formDataJson.fullDescription);
 
-    formDataJson.images.forEach((image, index) => {
-      formData.append(`images[${index}]`, image);
-    });
     formDataJson.ageCategory.forEach((ageCategory, index) => {
       formData.append(`ageCategory[${index}]`, ageCategory);
     });
     formDataJson.category.forEach((category, index) => {
       formData.append(`category[${index}]`, category);
     });
+
+    Array.from(formDataJson.images).forEach(imageFile => {
+      formData.append(`images`, imageFile);
+    });
+
     onSave(formData);
   };
 
@@ -104,7 +108,7 @@ function ToyCreateForm({ onSave }: Props) {
         <ToyFormDetails />
         <ToyFormCategories />
         <ToyFormImage />
-        <Button type="submit">sd</Button>
+        <Button type="submit">Submit</Button>
       </form>
     </Form>
   );

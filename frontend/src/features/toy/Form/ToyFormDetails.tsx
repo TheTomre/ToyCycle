@@ -193,19 +193,6 @@ function ToyFormDetails() {
               </FormItem>
             )}
           />
-          <FormField
-            control={control}
-            name="status"
-            render={field => (
-              <FormItem className="w-1/2">
-                <FormLabel htmlFor="tokenValue">Tokens</FormLabel>
-                <FormControl>
-                  <Input disabled {...field} value="available" />
-                </FormControl>
-                <FormMessage className="text-[#ff4d4d] text-xs" />
-              </FormItem>
-            )}
-          />
         </div>
       </div>
 
