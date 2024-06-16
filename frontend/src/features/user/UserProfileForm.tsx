@@ -2,7 +2,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect } from "react";
-// import { useAuth0 } from "@auth0/auth0-react";
 import {
   Form,
   FormControl,
@@ -14,6 +13,7 @@ import {
 import { Input } from "../../components/UI/input";
 import { Button } from "../../components/UI/button";
 import { User } from "./userTypes";
+import { Textarea } from "../../components/UI/textarea";
 
 const formUserSchema = z.object({
   email: z.string().optional(),
@@ -44,7 +44,6 @@ function UserProfileForm({
     resolver: zodResolver(formUserSchema),
     defaultValues: currentUser
   });
-  // const { user } = useAuth0();
 
   useEffect(() => {
     form.reset(currentUser);
@@ -70,20 +69,20 @@ function UserProfileForm({
           </h3>
           <h5 className="text-sm">Update your personal information</h5>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 md:gap-4 mt-4">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
-              <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+              <FormItem className="py-2 relative col-span-2 md:col-span-1 ">
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
                   Email
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     disabled
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
                 <FormMessage />
@@ -94,14 +93,15 @@ function UserProfileForm({
             control={form.control}
             name="firstName"
             render={({ field }) => (
-              <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+              <FormItem className="py-2 md:col-start-1 md:col-end-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b]">
                   First Name
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    placeholder="First Name"
+                    className="border  bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
                 <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
@@ -112,17 +112,18 @@ function UserProfileForm({
             control={form.control}
             name="lastName"
             render={({ field }) => (
-              <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+              <FormItem className="py-2 relative col-span-2 md:col-span-1">
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
                   Last Name
                 </FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="Last Name"
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />
@@ -130,17 +131,18 @@ function UserProfileForm({
             control={form.control}
             name="bio"
             render={({ field }) => (
-              <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+              <FormItem className="py-2 relative col-span-2">
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
                   Bio
                 </FormLabel>
                 <FormControl>
-                  <Input
+                  <Textarea
+                    placeholder="Tell us about yourself"
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />
@@ -152,16 +154,17 @@ function UserProfileForm({
             name="country"
             render={({ field }) => (
               <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
                   Country
                 </FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="Country"
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />
@@ -170,16 +173,17 @@ function UserProfileForm({
             name="city"
             render={({ field }) => (
               <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
                   City
                 </FormLabel>
                 <FormControl>
                   <Input
+                    placeholder="City"
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />
@@ -188,16 +192,17 @@ function UserProfileForm({
             name="street1"
             render={({ field }) => (
               <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
-                  Address 1
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
+                  Street
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    placeholder="Street"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />
@@ -206,16 +211,16 @@ function UserProfileForm({
             name="street2"
             render={({ field }) => (
               <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
-                  Address 2
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
+                  Apt
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />
@@ -224,16 +229,16 @@ function UserProfileForm({
             name="zipcode"
             render={({ field }) => (
               <FormItem className="py-2 relative">
-                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                <FormLabel className="font-sans  text-sm sm:text-base text-[#3a0e7b] pb-2">
                   Zipcode
                 </FormLabel>
                 <FormControl>
                   <Input
                     {...field}
-                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                    className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   />
                 </FormControl>
-                <FormMessage />
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
               </FormItem>
             )}
           />

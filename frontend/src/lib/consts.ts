@@ -23,10 +23,11 @@ export const SORT_RESULTS = {
 
 export const ENDPOINT = {
   users: "/users",
+  me: "/users/me",
   userEdit: "/users/edit",
   toys: "/toys",
+  toysMe: "/toys/me",
   toysEdit: "/toys/edit",
-  me: "/users/me",
   meToys: "/users/me/toys"
 };
 
@@ -202,6 +203,62 @@ export const CATEGORIES_TYPE: CategoryType<Category>[] = [
     filterForApi: "construction"
   }
 ];
+
+export const CATEGORIES_BRAND = [
+  {
+    "id": 1,
+    "title": "Lego",
+    "filterForApi": "lego"
+  },
+  {
+    "id": 2,
+    "title": "Mattel",
+    "filterForApi": "mattel"
+  },
+  {
+    "id": 3,
+    "title": "Hasbro",
+    "filterForApi": "hasbro"
+  },
+  {
+    "id": 4,
+    "title": "Fisher-Price",
+    "filterForApi": "fisher_price"
+  },
+  {
+    "id": 5,
+    "title": "Playmobil",
+    "filterForApi": "playmobil"
+  },
+  {
+    "id": 6,
+    "title": "VTech",
+    "filterForApi": "vtech"
+  },
+  {
+    "id": 7,
+    "title": "Bandai",
+    "filterForApi": "bandai"
+  },
+  {
+    "id": 8,
+    "title": "Hot Wheels",
+    "filterForApi": "hot_wheels"
+  },
+  {
+    "id": 9,
+    "title": "Barbie",
+    "filterForApi": "barbie"
+  },
+  {
+    "id": 10,
+    "title": "Nerf",
+    "filterForApi": "nerf"
+  }
+];
+
+export const TOY_STATUS = ["available", "exchanged", "hold"];
+export const CONDITION = ["new", "good", "bad", "broken"];
 
 export const FORM_INIT = {
   email: "",

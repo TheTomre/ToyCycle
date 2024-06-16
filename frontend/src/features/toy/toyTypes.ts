@@ -35,7 +35,8 @@ export type Category =
 
 export type Toy = {
   ageCategory: AgeCategory[];
-  brand: Brand;
+  brand: string;
+  category: Category[];
   description: string;
   _id: string;
   images: string[];
@@ -63,4 +64,9 @@ export type ToysState = {
   category: string[];
   search: string;
   sort: string;
+};
+
+export type ToySuccessResponse = {
+  status: string;
+  data: Toy;
 };

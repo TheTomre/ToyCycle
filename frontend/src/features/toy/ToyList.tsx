@@ -91,7 +91,7 @@ function ToyList() {
             <ToyFilterList className="mt-14 " />
           </div>
 
-          <section className="flex-1">
+          <section className="flex-1 min-h-[100vh]">
             <Pagination
               currentPage={currentPage}
               totalPages={totalPages}

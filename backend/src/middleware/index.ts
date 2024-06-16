@@ -3,4 +3,4 @@
 // export { requireJwtUser } from "./require-jwt-user";
 export { jwtCheck } from "./authUser";
 export { jwtParse } from "./authUser";
-export { validateUserMeRequest } from "./userValidation";
+export { validateUserMeRequest, validateToyMeRequest } from "./validation";

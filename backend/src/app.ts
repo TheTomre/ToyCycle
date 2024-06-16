@@ -1,13 +1,11 @@
 // import { Strategy as Auth0Strategy } from "passport-auth0";
-import { middleware as OpenApiValidator } from "express-openapi-validator";
 import { StatusCodes } from "http-status-codes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { ErrorRequestHandler } from "express";
-// import passport from "passport";
-import path from "node:path";
 import session from "express-session";
+import bodyParser from "body-parser";
 import routes from "./routes";
 // import { appendJwt } from "./middleware";
 import {
@@ -22,10 +20,11 @@ import { STATUS_MESSAGE } from "./consts/statusCodes";
 dotenv.config();
 
 const app = express();
-
+app.use(express.static(`${__dirname}/public`));
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Auth0
 app.use(cookieParser());
@@ -58,16 +57,17 @@ app.use(
 // app.use(appendJwt);
 
 // Serve the OpenAPI specification
-app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));
+// app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));
 
 // Install the OpenAPI validator
-app.use(
-  OpenApiValidator({
-    apiSpec: path.join(__dirname, "../openapi.yaml"),
-    validateRequests: true,
-    validateResponses: true
-  })
-);
+// app.use(
+//   OpenApiValidator({
+//     apiSpec: path.join(__dirname, "../openapi.yaml"),
+//     validateRequests: true,
+//     validateResponses: true,
+//     fileUploader: true
+//   })
+// );
 
 // Routes
 app.use("/api/v1", routes);
@@ -88,7 +88,7 @@ const errorHandler: ErrorRequestHandler = (
     message: err.message
   });
 };
-
 app.use(errorHandler);
 
 export default app;
+// ("Error: Unexpected end of form\n    at Multipart._final (/Users/lerka/Documents/ToyCycle/backend/node_modules/busboy/lib/types/multipart.js:588:17)\n    at callFinal (node:internal/streams/writable:757:12)\n    at prefinish (node:internal/streams/writable:769:7)\n    at finishMaybe (node:internal/streams/writable:779:5)\n    at Multipart.Writable.end (node:internal/streams/writable:687:5)\n    at onend (node:internal/streams/readable:756:10)\n    at processTicksAndRejections (node:internal/process/task_queues:77:11)");
