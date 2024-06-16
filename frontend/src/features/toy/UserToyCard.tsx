@@ -1,7 +1,8 @@
 /* eslint-disable no-underscore-dangle */
-import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { Toy } from "./toyTypes";
+import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
 
 type ToyProps = {
   toy: Toy;
@@ -21,11 +22,23 @@ function UserToyCard({ toy }: ToyProps) {
     setCurrentImageIndex(0);
   };
 
+  const handleDelete = async (id: string) => {
+    const response = await fetch(`${API_BASE_URL}${ENDPOINT.toys}/${id}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      }
+    });
+
+    if (response.ok) {
+      // Handle successful deletion (e.g., show a success message, remove the toy from the list, etc.)
+    } else {
+      // Handle error
+    }
+  };
+
   return (
-    <Link
-      to={`/toys/${toy._id}`}
-      className="flex-col sm:flex-row flex w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-transform duration-300 hover:scale-[1.02]"
-    >
+    <div className="flex-col sm:flex-row flex w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-transform duration-300 hover:scale-[1.02]">
       <div
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -51,12 +64,23 @@ function UserToyCard({ toy }: ToyProps) {
             {toy.tokenValue} Tokens
           </span>
           <span className="text-[#3a0e7b] font-semibold">{toy.price}$</span>
-          <button className="bg-[#3a0e7b] text-white px-4 py-2 rounded-lg hover:bg-[#280b5f] transition duration-300">
-            Edit
-          </button>
+          <div className="flex space-x-2">
+            <Link
+              to={`/toys/edit/${toy._id}`}
+              className="bg-[#3a0e7b] text-white px-4 py-2 rounded-lg hover:bg-[#280b5f] transition duration-300"
+            >
+              Edit
+            </Link>
+            <button
+              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+              onClick={() => handleDelete(toy._id)}
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 
