@@ -1,22 +1,23 @@
-import { Strategy as Auth0Strategy } from "passport-auth0";
+// import { Strategy as Auth0Strategy } from "passport-auth0";
 import { middleware as OpenApiValidator } from "express-openapi-validator";
 import { StatusCodes } from "http-status-codes";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { ErrorRequestHandler } from "express";
-import passport from "passport";
+// import passport from "passport";
 import path from "node:path";
 import session from "express-session";
 import routes from "./routes";
-import { appendJwt } from "./middleware";
+// import { appendJwt } from "./middleware";
 import {
-  AUTH0_CALLBACK_URL,
-  AUTH0_CLIENT_ID,
-  AUTH0_CLIENT_SECRET,
-  AUTH0_DOMAIN,
+  // AUTH0_CALLBACK_URL,
+  // AUTH0_CLIENT_ID,
+  // AUTH0_CLIENT_SECRET,
+  // AUTH0_DOMAIN,
   SESSION_SECRET
 } from "./config";
+import { STATUS_MESSAGE } from "./consts/statusCodes";
 
 dotenv.config();
 
@@ -37,24 +38,24 @@ app.use(
   })
 );
 
-passport.use(
-  new Auth0Strategy(
-    {
-      callbackURL: AUTH0_CALLBACK_URL,
-      clientID: AUTH0_CLIENT_ID,
-      clientSecret: AUTH0_CLIENT_SECRET,
-      domain: AUTH0_DOMAIN
-    },
-    (_accessToken, _refreshToken, _extraParams, profile, done) => {
-      // Remove unused parameters
-      done(null, profile);
-    }
-  )
-);
+// passport.use(
+//   new Auth0Strategy(
+//     {
+//       callbackURL: AUTH0_CALLBACK_URL,
+//       clientID: AUTH0_CLIENT_ID,
+//       clientSecret: AUTH0_CLIENT_SECRET,
+//       domain: AUTH0_DOMAIN
+//     },
+//     (_accessToken, _refreshToken, _extraParams, profile, done) => {
+//       // Remove unused parameters
+//       done(null, profile);
+//     }
+//   )
+// );
 
-app.use(passport.initialize());
-app.use(passport.session());
-app.use(appendJwt);
+// app.use(passport.initialize());
+// app.use(passport.session());
+// app.use(appendJwt);
 
 // Serve the OpenAPI specification
 app.use("/api-docs", express.static(path.join(__dirname, "../openapi.yaml")));
@@ -82,6 +83,7 @@ const errorHandler: ErrorRequestHandler = (
   next
 ) => {
   res.status(err.status ?? StatusCodes.INTERNAL_SERVER_ERROR).json({
+    status: STATUS_MESSAGE.FAIL,
     errors: err.errors,
     message: err.message
   });

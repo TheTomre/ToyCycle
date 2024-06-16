@@ -9,17 +9,22 @@ import controller from "../controllers/userControllers";
 const router = express.Router();
 
 router.get("/", controller.getAllUsers);
+
 router.post("/me", jwtCheck, controller.createNewUser);
-router.get("/:id", controller.getUserById);
+router.get("/me", jwtCheck, jwtParse, controller.getCurrentUser);
 router.put(
   "/me",
   jwtCheck,
   jwtParse,
   validateUserMeRequest,
-  controller.updateUserById
+  controller.updateCurrentUser
 );
-// router.put("/:id", jwtCheck, jwtParse, controller.updateUserById);
+
+router.get("/:id", controller.getUserById);
+router.put("/:id", jwtCheck, jwtParse, controller.updateUserById);
 router.delete("/:id", controller.deleteUserById);
+
+router.get("/me/toys", jwtCheck, jwtParse, controller.getUserToys);
 /*
 // Route to create a new user
 router.post("/users", async (req, res) => {

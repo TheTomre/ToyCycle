@@ -1,6 +1,7 @@
 import { body, validationResult } from "express-validator";
 import { NextFunction, Request, Response } from "express";
 import { STATUS_MESSAGE } from "../consts/statusCodes";
+import logger from "../logger/logger";
 
 const validateUserSchema = async (
   req: Request,
@@ -9,9 +10,11 @@ const validateUserSchema = async (
 ) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
+    logger.error(errors.array());
+
     return res.status(400).json({
       status: STATUS_MESSAGE.FAIL,
-      message: errors.array()
+      message: "Invalid request data "
     });
   }
   return next();
@@ -27,9 +30,9 @@ export const validateUserMeRequest = [
     .notEmpty()
     .withMessage("Last name must be a string"),
   body("bio").isString(),
-  body("avatar").isString(),
-  body("lastActive").isString(),
-  body("tokenBalance").isNumeric(),
+  // body("avatar").isString().default(""),
+  // body("lastActive").isString().default(new Date().toISOString()),
+  // body("tokenBalance").isNumeric().default(0),
   body("city").isString().notEmpty().withMessage("City name must be a string"),
   body("country")
     .isString()

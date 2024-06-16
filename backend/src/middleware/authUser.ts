@@ -29,7 +29,7 @@ export const jwtParse = async (
   const { authorization } = req.headers;
   logger.info(authorization);
   if (!authorization || !authorization.startsWith("Bearer ")) {
-    return res.sendStatus(STATUS.UNAUTHORIZED).json({
+    return res.status(STATUS.UNAUTHORIZED).json({
       status: STATUS_MESSAGE.FAIL,
       message: "Unauthorized user"
     });

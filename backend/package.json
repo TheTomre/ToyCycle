@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "nodemon",
     "format": "prettier --write \"**/*.{css,html,json,less,postcss,scss}\"",
+    "build": "yarn install && yarn tsc --project tsconfig-build.json",
     "lint": "eslint --fix --max-warnings=0 .",
     "lint-profile": "set TIMING=1 && eslint --max-warnings=0 .",
     "start": "ts-node src/index.ts",
