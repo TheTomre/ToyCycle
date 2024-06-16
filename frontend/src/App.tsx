@@ -8,6 +8,7 @@ import UserProfilePage from "./features/user/UserProfilePage";
 import ContactUs from "./features/about/ContactUs";
 import AppLayout from "./components/AppLayout";
 import AuthUserCallbackPage from "./features/auth/AuthUserCallbackPage";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
 import ToyDetails from "./features/toy/ToyDetails";
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
         <Route path="/users" element={<UserProfilePage />} />
         <Route path="/users/:id" element={<UserProfilePage />} />
         <Route path="/contactus" element={<ContactUs />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/profile" element={<UserProfilePage />} />
+        </Route>
       </Route>
       <Route path="*" element={<div>Not Found</div>} />
     </Routes>

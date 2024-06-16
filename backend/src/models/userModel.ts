@@ -10,12 +10,10 @@ const userSchema = new Schema({
   },
 
   city: {
-    default: "Tel Aviv",
     trim: true,
     type: String
   },
   country: {
-    default: "Israel",
     trim: true,
     type: String
   },
@@ -45,46 +43,23 @@ const userSchema = new Schema({
     unique: true
   },
   firstName: {
-    minlength: 1,
     type: String
   },
   lastActive: {
     default: new Date().toISOString(),
-    required: true,
     type: String
   },
   lastName: {
     minlength: 1,
     type: String
   },
-  password: {
-    minlength: 8,
-    select: false,
-    trim: true,
-    type: String
-  },
-  //! TODO: Add password encryption
-  // passwordChangedAt: Date,
-  // passwordConfirm: {
-  //   required: [true, "Please confirm your password"],
-  //   type: String
-  // },
-  // passwordResetExpires: Date,
-  // passwordResetToken: String,
-
   tokenBalance: {
     default: 0,
-    required: true,
     type: Number
   },
   toyListings: {
-    required: true,
-    type: [
-      {
-        ref: "Toy",
-        type: Schema.ObjectId
-      }
-    ]
+    type: Array,
+    default: []
   }
 });
 

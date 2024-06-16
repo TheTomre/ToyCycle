@@ -61,8 +61,12 @@ export const appendJwt: RequestHandler = (req, _res, next) => {
       else {
         const parsed = JwtValidationSchema.safeParse(decoded);
 
-        if (parsed.success) req.jwt = parsed.data;
-        else logger.warn("Jwt verification failed", parsed.error);
+        if (parsed.success) {
+          req.jwt = parsed.data;
+          req.userId = parsed.data.email; // Ensure req.userId is set
+        } else {
+          logger.warn("Jwt verification failed", parsed.error);
+        }
       }
     });
 

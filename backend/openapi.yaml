@@ -64,6 +64,12 @@ paths:
                         $ref: '#/components/schemas/Toy'
                     status:
                       type: string
+        '404': 
+          description: Toys not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         '400':
             description: Bad request
             content:
@@ -76,12 +82,6 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error'  
-        '404':
-            description: Unauthorized
-            content:
-              application/json:
-                schema:
-                  $ref: '#/components/schemas/Error' 
                  
     post:
       summary: Add a new toy
@@ -328,6 +328,39 @@ paths:
                 schema:
                   $ref: '#/components/schemas/Error'
   /api/v1/users/me:
+      get:
+        summary: Get current user
+        operationId: getUserById
+        tags: 
+          - Users
+        responses:
+          '200':
+            description: An user of user objects
+            content:
+              application/json:
+                 schema:
+                  type: object
+                  items:
+                        $ref: '#/components/schemas/UserResponse'
+                
+          '404':
+            description: User not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
       post:
         summary: Create a new user
         tags: 
@@ -344,6 +377,38 @@ paths:
             content:
               application/json:
                  schema:
+                  type: object
+                  items:
+                        $ref: '#/components/schemas/UserResponse'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      put:
+        summary: Update a user's profile
+        operationId: updateCurrentUser
+        tags: 
+          - Users
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        responses:
+          "200":
+            description: A current user updated
+            content:
+              application/json:
+                schema:
                   type: object
                   properties:
                     data:
@@ -363,7 +428,49 @@ paths:
             content:
               application/json:
                 schema:
-                  $ref: '#/components/schemas/Error'  
+                  $ref: '#/components/schemas/Error' 
+          "404":
+            description: User not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+      
+  /api/v1/users/me/toys:
+      get:
+        summary: Get current user toys
+        operationId: getUserById
+        tags: 
+          - Users
+        responses:
+          '200':
+            description: An user of user objects
+            content:
+              application/json:
+                 schema:
+                  type: object
+                  items:
+                        $ref: '#/components/schemas/Toys'
+                
+          '404':
+            description: User's toys not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      
   /api/v1/users/{user_id}:
       get:
         summary: Get user by id

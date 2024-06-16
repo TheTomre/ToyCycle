@@ -5,28 +5,20 @@ export type UserState = {
 };
 
 export type User = {
-  address?: Address;
+  _id: string;
+  city?: string;
+  country?: string;
+  street1?: string;
+  street2?: string;
+  zipcode: string;
   avatar?: string;
   bio?: string;
   email: string;
   firstName?: string;
   auth0Id: string;
-  lastActive: Date;
+  lastActive: string;
   lastName?: string;
   password?: string;
   tokenBalance: number;
   toyListings: Toy[];
 };
-
-type Address = {
-  city: string;
-  country: string;
-  street1: string;
-  street2?: string;
-  zipcode: string;
-};
-
-export type UserUpdateBioDTO = Pick<User, "bio" | "lastName" | "firstName">;
-export type UserUpdateAddressDTO = Pick<User, "address">;
-
-export type UserInputDTO = Omit<User, "id">;

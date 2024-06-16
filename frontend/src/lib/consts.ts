@@ -27,7 +27,8 @@ export const ENDPOINT = {
   userEdit: "/users/edit",
   toys: "/toys",
   toysMe: "/toys/me",
-  toysEdit: "/toys/edit"
+  toysEdit: "/toys/edit",
+  meToys: "/users/me/toys"
 };
 
 export const CATEGORIES = [
@@ -258,3 +259,18 @@ export const CATEGORIES_BRAND = [
 
 export const TOY_STATUS = ["available", "exchanged", "hold"];
 export const CONDITION = ["new", "good", "bad", "broken"];
+
+export const FORM_INIT = {
+  email: "",
+  bio: "",
+  firstName: "",
+  lastName: "",
+  avatar: "",
+  lastActive: "",
+  tokenBalance: 0,
+  city: "Tel-Aviv",
+  country: "Israel",
+  street1: "",
+  street2: "",
+  zipcode: ""
+};
