@@ -39,13 +39,12 @@ export type ToySuccessResponse = {
 };
 
 export type Toy = {
+  _id: string;
   ageCategory: AgeCategory[];
   brand: string;
-  category: Category;
+  category: Category[];
   description: string;
-  _id: string;
-  images: string;
-  // images: string[];
+  images: string[];
   name: string;
   price: number;
   status: "available" | "exchanged" | "hold";
@@ -53,7 +52,9 @@ export type Toy = {
   condition: string;
   origin: string;
   quantity: number;
-  // fullDescription: string;
+  fullDescription: string;
+  user: string;
+  lastUpadated: Date;
 };
 
 export type ToysState = {

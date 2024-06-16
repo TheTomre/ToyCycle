@@ -1,26 +1,33 @@
 import { Request } from "express";
-import mongoose from "mongoose";
 import { v2 as cloudinary } from "cloudinary";
 import { PAGINATION } from "../consts/pagination";
 import { EXCLUDED_QUERY_FIELDS } from "../consts/queryFields";
 import Toy, { PartialToyType, ToyType } from "../models/toyModel";
+import { Toy as ToeElType } from "../types/toys";
 
 import logger from "../logger/logger";
 
 export const createToy = async (req: Request) => {
   try {
-    const image = req.file as Express.Multer.File;
-    const base64 = Buffer.from(image.buffer).toString("base64");
-    const dataURI = `data:${image.mimetype};base64,${base64}`;
+    const imageFiles = req.files as Express.Multer.File[];
+    const newToy: ToeElType = req.body;
 
-    const uploadeResponce = await cloudinary.uploader.upload(dataURI);
+    const uploadImages = imageFiles.map(async img => {
+      const base64 = Buffer.from(img.buffer).toString("base64");
+      const dataURI = `data:${img.mimetype};base64,${base64}`;
+      const res = await cloudinary.uploader.upload(dataURI);
+      return res.url;
+    });
 
-    const newToy = await Toy.create(req.body);
-    newToy.images.push(uploadeResponce.url);
-    // newToy.images.push(uploadeResponce.url);
-    newToy.user = new mongoose.Types.ObjectId(req.userId);
+    const imagesURL = await Promise.all(uploadImages);
+    newToy.images = imagesURL;
+    newToy.status = "available";
+    newToy.lastUpadated = new Date();
+    newToy.user = req.userId;
 
-    await newToy.save();
+    const toy = new Toy(newToy);
+    await toy.save();
+
     logger.info(`Toy ${newToy.name} created`);
     return newToy;
   } catch (err) {

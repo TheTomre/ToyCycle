@@ -11,18 +11,15 @@ const userSchema = new Schema({
 
   city: {
     default: "Tel Aviv",
-    // required: [true, "A city is required"],
     trim: true,
     type: String
   },
   country: {
     default: "Israel",
-    // required: [true, "A country is required"],
     trim: true,
     type: String
   },
   street1: {
-    // required: [true, "A street1 is required"],
     trim: true,
     type: String
   },
@@ -31,7 +28,6 @@ const userSchema = new Schema({
     type: String
   },
   zipcode: {
-    // required: [true, "A zipcode is required"],
     trim: true,
     type: String
   },
@@ -50,7 +46,6 @@ const userSchema = new Schema({
   },
   firstName: {
     minlength: 1,
-    // required: [true, "A first name is required"],
     type: String
   },
   lastActive: {
@@ -60,12 +55,10 @@ const userSchema = new Schema({
   },
   lastName: {
     minlength: 1,
-    // required: [true, "A last name is required"],
     type: String
   },
   password: {
     minlength: 8,
-    // required: [true, "A password is required"],
     select: false,
     trim: true,
     type: String

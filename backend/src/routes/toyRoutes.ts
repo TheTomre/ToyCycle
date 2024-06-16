@@ -27,7 +27,7 @@ router.delete("/:id", deleteToyById);
 
 router.post(
   "/me",
-  uplode.single("imageFile"),
+  uplode.array("images", 3), // 5 images max
   validateToyMeRequest,
   jwtCheck,
   jwtParse,

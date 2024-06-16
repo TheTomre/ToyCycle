@@ -1,4 +1,5 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { Toy } from "../types/toys";
 
 const ageCategories = [
   "0-3 months",
@@ -37,28 +38,26 @@ const brands = [
   "Nerf"
 ];
 
-const ToySchema: Schema = new Schema(
-  {
-    ageCategory: { type: [String], enum: ageCategories, required: true },
-    category: { type: [String], enum: categories, required: true },
-    brand: { type: String, enum: brands, required: true },
-    description: { required: true, type: String },
-    images: { default: [], type: [String] },
-    name: { required: true, type: String },
-    price: { min: 0, required: true, type: Number },
-    status: {
-      default: "available",
-      enum: ["available", "exchanged", "hold"],
-      type: String
-    },
-    tokenValue: { default: 0, type: Number },
-    origin: { type: String, required: true },
-    quantity: { required: true, type: Number },
-    fullDescription: { required: true, type: String },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }
+const ToySchema: Schema = new Schema<Toy>({
+  ageCategory: { type: [String], enum: ageCategories, required: true },
+  category: { type: [String], enum: categories, required: true },
+  brand: { type: String, enum: brands, required: true },
+  description: { required: true, type: String },
+  images: { default: [], type: [String] },
+  name: { required: true, type: String },
+  price: { min: 0, required: true, type: Number },
+  status: {
+    default: "available",
+    enum: ["available", "exchanged", "hold"],
+    type: String
   },
-  { timestamps: true }
-);
+  tokenValue: { default: 0, type: Number },
+  origin: { type: String, required: true },
+  quantity: { required: true, type: Number },
+  fullDescription: { required: true, type: String },
+  user: { type: String, required: true },
+  lastUpadated: { type: Date, default: Date.now }
+});
 
 export type ToyType = Document & {
   ageCategory: string[];
@@ -74,6 +73,7 @@ export type ToyType = Document & {
   origin: string;
   quantity: number;
   fullDescription: string;
+  lastUpadated: Date;
   user: mongoose.Types.ObjectId;
 };
 
