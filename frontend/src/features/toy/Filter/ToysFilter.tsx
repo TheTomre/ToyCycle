@@ -61,11 +61,13 @@ function ToysFilter({
                 />
                 <Label
                   htmlFor={`category_${category.title}`}
-                  className={`flex flex-1 font-sans items-center cursor-pointer text-s px-4 py-2 font-semibold ${
-                    isSelected
-                      ? "border border-[#70e2d2] text-[#3a0e7b]"
-                      : "border border-[#280b5f] text-[#280b5f]"
-                  }
+                  className={`flex flex-1 font-sans items-center cursor-pointer text-s px-4 py-2 font-semibold hover:bg-[#3a0e7b] hover:rounded
+                    hover:text-white transition duration-300 
+                    ${
+                      isSelected
+                        ? "border-2 border-[#70e2d2] text-[#3a0e7b]"
+                        : "border-2 border-[#280b5f] text-[#280b5f]"
+                    }
                     ${loading && "cursor-not-allowed border border-gray-300 text-gray-300"}`}
                 >
                   {isSelected && (
