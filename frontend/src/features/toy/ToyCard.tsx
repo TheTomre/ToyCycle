@@ -26,7 +26,7 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   return (
     <Link
       to={`/toys/${id}`}
-      className="max-w-md sm:max-w-sm  w-full bg-white rounded-2xl shadow-lg overflow-hidden m-4 border border-gray-200 transform transition-transform duration-300 hover:scale-105"
+      className="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-transform duration-300 hover:scale-105"
     >
       <div
         onMouseEnter={handleMouseEnter}
@@ -41,7 +41,11 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
       </div>
       <div className="p-6">
         <h3 className="text-xl font-semibold mb-2">{name}</h3>
-        {description && <p className="text-gray-600 mb-4">{description}</p>}
+        {description && (
+          <p className="text-gray-600 mb-4 h-12 overflow-hidden text-ellipsis">
+            {description}
+          </p>
+        )}
         <div className="flex items-center justify-between mt-4">
           <span className="text-[#3a0e7b] font-semibold">{tokens} Tokens</span>
           <button className="bg-[#3a0e7b] text-white px-4 py-2 rounded-lg hover:bg-[#280b5f] transition duration-300">
