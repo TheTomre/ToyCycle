@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "../../../components/UI/form";
+import { Button } from "../../../components/UI/button";
 import ToyFormDetails from "./ToyFormDetails";
 import ToyFormCategories from "./ToyFormCategories";
 import ToyFormImage from "./ToyFormImage";
-import { Button } from "../../../components/UI/button";
 
 const initData = {
   name: "",
@@ -23,40 +23,50 @@ const initData = {
 };
 
 const formToySchema = z.object({
-  name: z.string().min(1, "name is required").max(120),
-  brand: z.string().min(1, "brand is required").max(120),
-  description: z.string().min(10, "description is required").max(220),
-  fullDescription: z.string().min(50, "fullDescription is required").max(500),
-  condition: z.string().min(1, "condition is required"),
-  origin: z.string().min(1, "origin is required").max(120),
+  name: z
+    .string()
+    .min(1, "Name is required")
+    .max(120, "Name must be less than 120 characters"),
+  brand: z
+    .string()
+    .min(1, "Brand is required")
+    .max(120, "Brand must be less than 120 characters"),
+  description: z
+    .string()
+    .min(10, "Description is required")
+    .max(220, "Description must be less than 220 characters"),
+  fullDescription: z
+    .string()
+    .min(50, "Full Description is required")
+    .max(500, "Full Description must be less than 500 characters"),
+  condition: z.string().min(1, "Condition is required"),
+  origin: z
+    .string()
+    .min(1, "Origin is required")
+    .max(120, "Origin must be less than 120 characters"),
   price: z.coerce
-    .number({
-      required_error: "price is required"
-    })
-    .positive({ message: "must be a positive number" }),
+    .number({ required_error: "Price is required" })
+    .positive({ message: "Price must be a positive number" })
+    .min(0, "Price cannot be negative"),
   quantity: z.coerce
-    .number({
-      required_error: "quantity is required"
-    })
-    .positive({ message: "must be a positive number" }),
+    .number({ required_error: "Quantity is required" })
+    .positive({ message: "Quantity must be a positive number" })
+    .min(0, "Quantity cannot be negative"),
   tokenValue: z.coerce
-    .number({
-      required_error: "token value time is required"
-    })
-    .positive({ message: "must be a positive number" }),
-  ageCategory: z.array(z.string()).nonempty({
-    message: "please select at least one item"
-  }),
-  category: z.array(z.string()).nonempty({
-    message: "please select at least one item"
-  }),
+    .number({ required_error: "Token value is required" })
+    .positive({ message: "Token value must be a positive number" })
+    .min(0, "Token value cannot be negative"),
+  ageCategory: z
+    .array(z.string())
+    .nonempty({ message: "Please select at least one age category" }),
+  category: z
+    .array(z.string())
+    .nonempty({ message: "Please select at least one category" }),
   images: z
-    .array(z.instanceof(File, { message: "image is required" }))
-    .min(1, { message: "please select at least one item" })
-    .max(3, { message: "max 3 images" })
-    .nonempty({
-      message: "please select at least one item"
-    })
+    .array(z.instanceof(File, { message: "Image is required" }))
+    .min(1, { message: "Please select at least one image" })
+    .max(3, { message: "Max 3 images allowed" })
+    .nonempty({ message: "Please select at least one image" })
 });
 
 type ToyFormData = z.infer<typeof formToySchema>;
@@ -68,9 +78,7 @@ type Props = {
 function ToyCreateForm({ onSave }: Props) {
   const form = useForm<ToyFormData>({
     resolver: zodResolver(formToySchema),
-    defaultValues: {
-      ...initData
-    }
+    defaultValues: { ...initData }
   });
 
   const onSubmit = (formDataJson: ToyFormData) => {
@@ -103,12 +111,25 @@ function ToyCreateForm({ onSave }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-6 bg-gray-50 py-10 px-4 sm:px-8 md:px-10 rounded-lg"
+        className="bg-white shadow-md rounded-lg p-4 md:max-w-3xl mx-auto space-y-6"
       >
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
+          <h3 className="text-xl font-bold">Toy Details</h3>
+          <h5 className="text-sm">
+            Add details about the toy you want to add to your inventory.
+          </h5>
+        </div>
         <ToyFormDetails />
         <ToyFormCategories />
         <ToyFormImage />
-        <Button type="submit">Submit</Button>
+        <div className="flex justify-center">
+          <Button
+            type="submit"
+            className="bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-transform duration-300 ease-in-out transform hover:scale-105"
+          >
+            Submit
+          </Button>
+        </div>
       </form>
     </Form>
   );

@@ -4,9 +4,9 @@ import {
   FieldValues
 } from "react-hook-form";
 import {
-  FormControl,
   FormField,
   FormItem,
+  FormControl,
   FormMessage
 } from "../../../components/UI/form";
 import { Input } from "../../../components/UI/input";
@@ -24,17 +24,19 @@ function ToyFormImage() {
   return (
     <div>
       <div>
-        <h3 className="text-xl sm:tex-2xl">Toy images</h3>
+        <h3 className="text-xl sm:tex-2xl font-sans text-[#3a0e7b]">
+          Toy images
+        </h3>
       </div>
-      <div className="flex flex-col gap-10 w-full sm:w-1/2">
+      <div className="flex flex-col gap-4 w-full">
         <FormField
           control={control}
           name="images"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="py-2 relative">
               <FormControl>
                 <Input
-                  className="border-gray-400 border rounded placeholder:text-gray-300"
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   type="file"
                   multiple
                   accept=".jpg, .jpeg, .png, .webp"

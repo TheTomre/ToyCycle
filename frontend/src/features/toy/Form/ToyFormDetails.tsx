@@ -1,12 +1,13 @@
 import { useFormContext } from "react-hook-form";
 import {
-  FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage
+  FormMessage,
+  FormControl
 } from "../../../components/UI/form";
 import { Input } from "../../../components/UI/input";
+import { Textarea } from "../../../components/UI/textarea";
 import {
   Select,
   SelectContent,
@@ -14,7 +15,6 @@ import {
   SelectTrigger,
   SelectValue
 } from "../../../components/UI/select";
-import { Textarea } from "../../../components/UI/textarea";
 import { CONDITION } from "../../../lib/consts";
 
 function ToyFormDetails() {
@@ -22,22 +22,23 @@ function ToyFormDetails() {
   return (
     <div className="font-sans">
       <div>
-        <h2 className="text-xl sm:tex-2xl font-sans">Toy Details</h2>
-
-        <h3 className=" font-sans">
+        <h2 className="text-xl sm:text-2xl font-sans">Toy Details</h2>
+        <h3 className="font-sans">
           Add details about the toy you want to add to your inventory.
         </h3>
       </div>
-      <div className="flex-col sm:flex-row flex sm:justify-between sm:items-center w-full gap-2 sm:gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormField
           control={control}
           name="name"
           render={({ field }) => (
-            <FormItem className="w-full sm:w-2/3">
-              <FormLabel htmlFor="name">Name</FormLabel>
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Name
+              </FormLabel>
               <FormControl>
                 <Input
-                  className="border-gray-400 border rounded placeholder:text-gray-300"
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   placeholder="Ex: Barbie Doll"
                   {...field}
                 />
@@ -50,11 +51,13 @@ function ToyFormDetails() {
           control={control}
           name="quantity"
           render={({ field }) => (
-            <FormItem className=" w-3/4 sm:w-1/3">
-              <FormLabel htmlFor="quantity">Quantity</FormLabel>
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Quantity
+              </FormLabel>
               <FormControl>
                 <Input
-                  className="border-gray-400 border rounded placeholder:text-gray-300"
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   placeholder="Ex: 1"
                   type="number"
                   {...field}
@@ -65,17 +68,18 @@ function ToyFormDetails() {
           )}
         />
       </div>
-
-      <div className="flex-col sm:flex-row flex sm:justify-between sm:items-center w-full gap-2 sm:gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormField
           control={control}
           name="description"
           render={({ field }) => (
-            <FormItem className="w-full sm:w-1/2">
-              <FormLabel htmlFor="description">Description</FormLabel>
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Description
+              </FormLabel>
               <FormControl>
                 <Input
-                  className="border-gray-400 border rounded placeholder:text-gray-300"
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                   placeholder="Ex: Barbie Doll in pink dress"
                   {...field}
                 />
@@ -84,127 +88,133 @@ function ToyFormDetails() {
             </FormItem>
           )}
         />
-        <div className="sm:w-1/2 flex-row flex  w-full gap-2 sm:gap-5">
-          <FormField
-            control={control}
-            name="brand"
-            render={({ field }) => (
-              <FormItem className="w-1/2">
-                <FormLabel htmlFor="brand">Brand</FormLabel>
-                <FormControl>
-                  <Input
-                    className="border-gray-400 border rounded placeholder:text-gray-300"
-                    placeholder="Ex: Barbie"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-[#ff4d4d] text-xs" />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name="origin"
-            render={({ field }) => (
-              <FormItem className="w-1/2">
-                <FormLabel htmlFor="origin">Made in</FormLabel>
-                <FormControl>
-                  <Input
-                    className="border-gray-400 border rounded placeholder:text-gray-300"
-                    placeholder="Ex: USA"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-[#ff4d4d] text-xs" />
-              </FormItem>
-            )}
-          />
-        </div>
-      </div>
-
-      <div className="flex-col sm:flex-row flex sm:justify-between sm:items-center w-full gap-2 sm:gap-5">
         <FormField
           control={control}
-          name="condition"
+          name="brand"
           render={({ field }) => (
-            <FormItem className="w-full sm:w-1/3">
-              <FormLabel>Condition</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl className="border-gray-400 border rounded ">
-                  <SelectTrigger>
-                    <SelectValue
-                      className="placeholder:text-gray-300 "
-                      placeholder="Toy condition"
-                    />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="bg-gray-100 rounded">
-                  {CONDITION.map(item => (
-                    <SelectItem
-                      className="bg-gray-50 w-full"
-                      key={item}
-                      value={item}
-                    >
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Brand
+              </FormLabel>
+              <FormControl>
+                <Input
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  placeholder="Ex: Barbie"
+                  {...field}
+                />
+              </FormControl>
               <FormMessage className="text-[#ff4d4d] text-xs" />
             </FormItem>
           )}
         />
-
-        <div className="sm:w-2/3 flex-row flex  w-full gap-2 sm:gap-5">
-          <FormField
-            control={control}
-            name="price"
-            render={({ field }) => (
-              <FormItem className="w-1/2 ">
-                <FormLabel htmlFor="price">Price</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    className="border-gray-400 border rounded placeholder:text-gray-300"
-                    placeholder="Ex: 30"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-[#ff4d4d] text-xs" />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={control}
-            name="tokenValue"
-            render={({ field }) => (
-              <FormItem className="w-1/2">
-                <FormLabel htmlFor="tokenValue">Tokens</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    className="border-gray-400 border rounded placeholder:text-gray-300"
-                    placeholder="Ex: 10"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage className="text-[#ff4d4d] text-xs" />
-              </FormItem>
-            )}
-          />
-        </div>
       </div>
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <FormField
+          control={control}
+          name="origin"
+          render={({ field }) => (
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Made in
+              </FormLabel>
+              <FormControl>
+                <Input
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  placeholder="Ex: USA"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-[#ff4d4d] text-xs" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="condition"
+          render={({ field }) => (
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Condition
+              </FormLabel>
+              <FormControl>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <SelectTrigger className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out">
+                    <SelectValue placeholder="Toy condition" />
+                  </SelectTrigger>
+                  <SelectContent className="bg-white">
+                    {CONDITION.map(item => (
+                      <SelectItem
+                        key={item}
+                        value={item}
+                        className="px-2 py-2 hover:bg-indigo-100"
+                      >
+                        {item}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </FormControl>
+              <FormMessage className="text-[#ff4d4d] text-xs" />
+            </FormItem>
+          )}
+        />
+      </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <FormField
+          control={control}
+          name="price"
+          render={({ field }) => (
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Price
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  placeholder="Ex: 30"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-[#ff4d4d] text-xs" />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={control}
+          name="tokenValue"
+          render={({ field }) => (
+            <FormItem className="py-2 relative">
+              <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+                Tokens
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="number"
+                  className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  placeholder="Ex: 10"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage className="text-[#ff4d4d] text-xs" />
+            </FormItem>
+          )}
+        />
+      </div>
       <FormField
         control={control}
         name="fullDescription"
         render={({ field }) => (
-          <FormItem>
-            <FormLabel htmlFor="fullDescription">Full Description</FormLabel>
+          <FormItem className="py-2 relative">
+            <FormLabel className="font-sans text-sm sm:text-base text-[#3a0e7b] pb-2">
+              Full Description
+            </FormLabel>
             <FormControl>
               <Textarea
-                className="border-gray-400 border rounded placeholder:text-gray-300"
+                className="border bg-indigo-100 px-2 py-2 m-0 text-base text-indigo-900 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
                 placeholder="Ex: Barbie Doll in pink dress with matching shoes. Comes with a comb and a purse."
                 {...field}
               />
