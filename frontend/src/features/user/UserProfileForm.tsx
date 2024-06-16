@@ -1,8 +1,8 @@
-import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { useEffect } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 import {
   Form,
   FormControl,
@@ -13,11 +13,6 @@ import {
 } from "../../components/UI/form";
 import { Input } from "../../components/UI/input";
 import { Button } from "../../components/UI/button";
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage
-} from "../../components/UI/avatar";
 import { User } from "./userTypes";
 
 const formUserSchema = z.object({
@@ -49,7 +44,7 @@ function UserProfileForm({
     resolver: zodResolver(formUserSchema),
     defaultValues: currentUser
   });
-  const { user } = useAuth0();
+  // const { user } = useAuth0();
 
   useEffect(() => {
     form.reset(currentUser);
@@ -63,99 +58,108 @@ function UserProfileForm({
     onSave(newFormData);
   };
 
-  const inputStyles =
-    "border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500";
-  const lableStyles = "font-sans text-sm text-[#3a0e7b] relative top-1";
-  const paddingsY = "py-2 relative";
-  const errorValidation = "text-[#ff4d4d] absolute -bottom-2";
-
   return (
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handlerSubmit)}
-        className="p-2 md:p:10 md:max-w-5xl mx-auto font-sans "
+        className="p-4 md:max-w-3xl mx-auto"
       >
-        <div>
-          <h3>{currentUser?.firstName ?? "Your"} profile</h3>
-          <h5>Upadate your personal information</h5>
+        <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
+          <h3 className="text-xl font-bold">
+            {currentUser?.firstName ?? "Your"} profile
+          </h3>
+          <h5 className="text-sm">Update your personal information</h5>
         </div>
-        <div className="flex justify-between items-center gap-4 sm:gap-6">
-          <Avatar className="hidden sm:block sm:flex-[1_1_0%] w-10 h-full sm:w-24 md:w-32  ">
-            <AvatarImage src={user?.picture || "./assets/icons/avatar.svg"} />
-            <AvatarFallback>
-              <span className="block w-10 h-hull sm:w-24 md:w-32 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
-            </AvatarFallback>
-          </Avatar>
-          <div className="flex-col flex-[3_1_0%]">
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem className={paddingsY}>
-                  <FormLabel className={lableStyles}>Email</FormLabel>
-                  <FormControl>
-                    <Input {...field} disabled className={inputStyles} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="firstName"
-              render={({ field }) => (
-                <FormItem className={paddingsY}>
-                  <FormLabel className={lableStyles}>First name</FormLabel>
-                  <FormControl>
-                    <Input {...field} className={inputStyles} />
-                  </FormControl>
-                  <FormMessage className={errorValidation} />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="lastName"
-              render={({ field }) => (
-                <FormItem className={paddingsY}>
-                  <FormLabel className={lableStyles}>Last Name</FormLabel>
-                  <FormControl>
-                    <Input {...field} className={inputStyles} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Email
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    disabled
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="firstName"
+            render={({ field }) => (
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  First Name
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
+                </FormControl>
+                <FormMessage className="text-[#ff4d4d] absolute -bottom-2" />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="lastName"
+            render={({ field }) => (
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Last Name
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name="bio"
             render={({ field }) => (
-              <FormItem className={paddingsY}>
-                <FormLabel className={lableStyles}>Bio</FormLabel>
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Bio
+                </FormLabel>
                 <FormControl>
-                  <Input {...field} className={inputStyles} />
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <h5 className="uppercase font-semibold text-[#3a0e7b] pt-4 ">
-          Address
-        </h5>
-        <div>
+        <h5 className="uppercase font-semibold text-[#3a0e7b] pt-4">Address</h5>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FormField
             control={form.control}
             name="country"
             render={({ field }) => (
-              <FormItem className={paddingsY}>
-                <FormLabel className={lableStyles}>Country</FormLabel>
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Country
+                </FormLabel>
                 <FormControl>
-                  <Input {...field} className={inputStyles} />
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -165,25 +169,33 @@ function UserProfileForm({
             control={form.control}
             name="city"
             render={({ field }) => (
-              <FormItem className={paddingsY}>
-                <FormLabel className={lableStyles}>City</FormLabel>
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  City
+                </FormLabel>
                 <FormControl>
-                  <Input {...field} className={inputStyles} />
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
-        </div>
-        <div>
           <FormField
             control={form.control}
             name="street1"
             render={({ field }) => (
-              <FormItem className={paddingsY}>
-                <FormLabel className={lableStyles}>Address 1</FormLabel>
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Address 1
+                </FormLabel>
                 <FormControl>
-                  <Input {...field} className={inputStyles} />
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -193,36 +205,50 @@ function UserProfileForm({
             control={form.control}
             name="street2"
             render={({ field }) => (
-              <FormItem className={paddingsY}>
-                <FormLabel className={lableStyles}>Address 2</FormLabel>
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Address 2
+                </FormLabel>
                 <FormControl>
-                  <Input {...field} className={inputStyles} />
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="zipcode"
+            render={({ field }) => (
+              <FormItem className="py-2 relative">
+                <FormLabel className="font-sans text-sm text-[#3a0e7b] relative top-1">
+                  Zipcode
+                </FormLabel>
+                <FormControl>
+                  <Input
+                    {...field}
+                    className="border bg-indigo-100 px-2 py-2 m-0 border-indigo-200 focus:border-indigo-500 rounded transition-all duration-300 ease-in-out"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
-        <FormField
-          control={form.control}
-          name="zipcode"
-          render={({ field }) => (
-            <FormItem className={paddingsY}>
-              <FormLabel className={lableStyles}>Zipcode</FormLabel>
-              <FormControl>
-                <Input {...field} className={inputStyles} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <Button
-          type="submit"
-          disabled={isLoading}
-          className={`${isLoading ? "animate-spin" : ""} bg-[#3a0e7b] font-mono px-6 py-3 text-white ] hover:bg-[#4e2a85]`}
-        >
-          {isLoading ? "Loading" : "Submit"}
-        </Button>
+        <div className="flex justify-center mt-6">
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className={`${
+              isLoading ? "animate-spin" : ""
+            } bg-[#3a0e7b] font-mono px-6 py-3 text-white hover:bg-[#4e2a85] transition-transform duration-300 ease-in-out transform hover:scale-105`}
+          >
+            {isLoading ? "Loading" : "Submit"}
+          </Button>
+        </div>
       </form>
     </Form>
   );

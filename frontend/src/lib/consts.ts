@@ -26,7 +26,8 @@ export const ENDPOINT = {
   userEdit: "/users/edit",
   toys: "/toys",
   toysEdit: "/toys/edit",
-  me: "/users/me"
+  me: "/users/me",
+  meToys: "/users/me/toys"
 };
 
 export const CATEGORIES = [

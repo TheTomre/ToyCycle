@@ -358,6 +358,42 @@ paths:
               application/json:
                 schema:
                   $ref: '#/components/schemas/Error' 
+      
+  /api/v1/users/me/toys:
+      get:
+        summary: Get current user toys
+        operationId: getUserById
+        tags: 
+          - Users
+        responses:
+          '200':
+            description: An user of user objects
+            content:
+              application/json:
+                 schema:
+                  type: object
+                  items:
+                        $ref: '#/components/schemas/Toys'
+                
+          '404':
+            description: User's toys not found
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '400':
+            description: Bad request
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+          '401':
+            description: Unauthorized
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      
   /api/v1/users/{user_id}:
       get:
         summary: Get user by id
