@@ -18,21 +18,20 @@ const uplode = multer({
 });
 
 const router = express.Router();
-
+router.post(
+  "/me",
+  uplode.array("images", 3),
+  validateToyMeRequest,
+  jwtCheck,
+  jwtParse,
+  createNewToy
+);
 router.post("/", createNewToy);
 router.get("/", getAllToys);
 router.get("/:id", getToyById);
 router.put("/:id", updateToyById);
 router.delete("/:id", deleteToyById);
 
-router.post(
-  "/me",
-  uplode.array("images", 3), // 5 images max
-  validateToyMeRequest,
-  jwtCheck,
-  jwtParse,
-  createNewToy
-);
 router.get("/me", getToyById);
 router.put("/me", updateToyById);
 router.delete("/me", deleteToyById);

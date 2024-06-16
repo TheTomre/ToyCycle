@@ -242,8 +242,10 @@ paths:
                       type: string
                     description: "Categories of the toy"
                   images:
-                     type: object
-                     additionalProperties: true
+                   type: array
+                   items:
+                    type: object
+
                 required:
                   - name
                   - brand
