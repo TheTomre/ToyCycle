@@ -27,9 +27,6 @@ export const validateUserMeRequest = [
     .notEmpty()
     .withMessage("Last name must be a string"),
   body("bio").isString(),
-  body("avatar").isString(),
-  body("lastActive").isString(),
-  body("tokenBalance").isNumeric(),
   body("city").isString().notEmpty().withMessage("City name must be a string"),
   body("country")
     .isString()
