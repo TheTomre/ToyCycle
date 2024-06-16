@@ -1,7 +1,13 @@
+import Search from "../../components/Search";
 import ToyList from "./ToyList";
 
 function ToysPage() {
-  return <ToyList />;
+  return (
+    <>
+      <Search />
+      <ToyList />;
+    </>
+  );
 }
 
 export default ToysPage;
