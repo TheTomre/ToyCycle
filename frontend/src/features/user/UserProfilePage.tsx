@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useUpdateUser, useGetUser } from "../auth/apiService/UserApi";
 import UserProfileForm from "./UserProfileForm";
 import UserToys from "./UserToys";
+import Loader from "../../components/Loader";
 
 function UserProfilePage() {
   const { currentUser, isLoading: isGetLoading } = useGetUser();
@@ -9,7 +10,7 @@ function UserProfilePage() {
   const [activeTab, setActiveTab] = useState("profile");
 
   if (isGetLoading) {
-    return <span>Loading...</span>;
+    return <Loader />;
   }
 
   if (!currentUser) {

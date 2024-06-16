@@ -10,7 +10,10 @@ type UserSuccessResponse = {
   status: string;
   data: User;
 };
-type UserToysResponse = Toy[];
+type UserToysResponse = {
+  status: string;
+  data: Toy[];
+};
 
 export const useCreateUser = () => {
   const { getAccessTokenSilently } = useAuth0();
@@ -140,7 +143,7 @@ export const useGetUser = () => {
 export const useGetUserToys = () => {
   const { getAccessTokenSilently } = useAuth0();
 
-  const getUserToysRequest = async (): Promise<UserToysResponse> => {
+  const getUserToysRequest = async (): Promise<Toy[]> => {
     const accessToken = await getAccessTokenSilently();
     const response = await fetch(`${API_BASE_URL}${ENDPOINT.me}/toys`, {
       method: "GET",
@@ -154,7 +157,7 @@ export const useGetUserToys = () => {
     }
 
     const data: UserToysResponse = await response.json();
-    return data;
+    return data.data;
   };
 
   return useQuery("userToys", getUserToysRequest);
