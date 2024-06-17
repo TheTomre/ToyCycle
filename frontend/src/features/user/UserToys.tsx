@@ -18,7 +18,13 @@ function UserToys() {
   };
 
   if (error) {
-    return <span>Unable to load toys</span>;
+    return (
+      <div className="flex items-center h-full mt-16">
+        <span className="text-[#3a0e7b] font-mono text-2xl">
+          No toys found. Start to share 🧸
+        </span>
+      </div>
+    );
   }
 
   return (

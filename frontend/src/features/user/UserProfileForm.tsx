@@ -15,6 +15,18 @@ import { Button } from "../../components/UI/button";
 import { User } from "./userTypes";
 import { Textarea } from "../../components/UI/textarea";
 
+const initValues = {
+  email: "",
+  bio: "",
+  firstName: "",
+  lastName: "",
+  city: "",
+  country: "",
+  street1: "",
+  street2: "",
+  zipcode: ""
+};
+
 const formUserSchema = z.object({
   email: z.string().optional(),
   bio: z.string().min(1).max(120),
@@ -42,7 +54,7 @@ function UserProfileForm({
 }: UserProfileFormProps) {
   const form = useForm<UserFormSchema>({
     resolver: zodResolver(formUserSchema),
-    defaultValues: currentUser
+    defaultValues: { ...initValues, ...currentUser }
   });
 
   useEffect(() => {

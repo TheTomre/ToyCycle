@@ -29,10 +29,10 @@ function Footer({ className }: Props) {
                   Home
                 </Link>
                 <div className="hidden md:flex flex-col text-sm md:text-base">
-                  <li>To Our Community</li>
-                  <li>Blog</li>
-                  <li>FAQs</li>
-                  <li>Contact Us</li>
+                  <div>To Our Community</div>
+                  <div>Blog</div>
+                  <div>FAQs</div>
+                  <div>Contact Us</div>
                 </div>
               </li>
               <li className="cursor-pointer uppercase font-mono ">
@@ -41,21 +41,25 @@ function Footer({ className }: Props) {
                 </Link>
 
                 <div className="hidden md:flex  flex-col">
-                  <Link className="inline-block" to="/toys">
-                    All toys
-                  </Link>
-                  <li>Toys for Young Toddlers</li>
-                  <li>Toys for Older Toddlers</li>
+                  <div>
+                    <Link className="inline-block" to="/toys">
+                      All toys
+                    </Link>
+                  </div>
+                  <div>Toys for Young Toddlers</div>
+                  <div>Toys for Older Toddlers</div>
                 </div>
               </li>
               <li className="cursor-pointer uppercase font-mono">
-                <Link className="block font-semibold" to="/about">
-                  About
-                </Link>
+                <div>
+                  <Link className="block font-semibold" to="/about">
+                    About
+                  </Link>
+                </div>
                 <div className="hidden md:flex  flex-col">
-                  <li>Our Story</li>
-                  <li>Our Team</li>
-                  <li>Eco-Friendly</li>
+                  <div>Our Story</div>
+                  <div>Our Team</div>
+                  <div>Eco-Friendly</div>
                 </div>
               </li>
               <li className="uppercase font-mono">
@@ -63,8 +67,8 @@ function Footer({ className }: Props) {
                   POLICIES
                 </Link>
                 <div className="hidden md:flex sm:flex-col">
-                  <li>Privacy Policy</li>
-                  <li>Terms of Service</li>
+                  <div>Privacy Policy</div>
+                  <div>Terms of Service</div>
                 </div>
               </li>
             </ul>

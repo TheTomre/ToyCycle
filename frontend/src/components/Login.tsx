@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { GrLogout, GrLogin } from "react-icons/gr";
+import { Link } from "react-router-dom";
 import { AvatarImage, Avatar, AvatarFallback } from "./UI/avatar";
 import { Button } from "./UI/button";
 
@@ -17,7 +18,7 @@ function Login() {
   return (
     <span className="flex gap-6 sm:gap-4">
       {isAuthenticated ? (
-        <>
+        <Link to="/profile" className="flex gap-2 sm:gap-4">
           <Avatar className="w-12 h-12">
             <AvatarImage src={user?.picture || "./assets/icons/avatar.svg"} />
 
@@ -31,7 +32,7 @@ function Login() {
           >
             <GrLogout size={24} />
           </Button>
-        </>
+        </Link>
       ) : (
         <>
           <Avatar className="w-12 h-12">

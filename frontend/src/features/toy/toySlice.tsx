@@ -141,18 +141,24 @@ const toySlice = createSlice({
     },
     setCategory: (state, action: PayloadAction<string[]>) => {
       state.category = action.payload;
+      state.currentPage = 1;
     },
     setAgeCategory: (state, action: PayloadAction<string[]>) => {
       state.ageCategory = action.payload;
+      state.currentPage = 1;
     },
     setBrandCategory: (state, action: PayloadAction<string[]>) => {
       state.brand = action.payload;
+
+      state.currentPage = 1;
     },
     setSort: (state, action: PayloadAction<string>) => {
       state.sort = action.payload;
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
+
+      state.currentPage = 1;
     },
     resetToyList: state => {
       state.currentPage = 1;

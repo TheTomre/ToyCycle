@@ -3,6 +3,7 @@ import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 import "../index.css";
+import { useAuth0 } from "@auth0/auth0-react";
 import Login from "./Login";
 import { NAV, NAV_ITEMS } from "../lib/consts";
 import { Button } from "./UI/button";
@@ -19,6 +20,12 @@ function Header({ className }: Props) {
   const location = useLocation();
   const dispatch = useAppDispatch();
 
+  const { loginWithRedirect, isAuthenticated } = useAuth0();
+
+  const handleLogin = async () => {
+    await loginWithRedirect();
+  };
+
   const handleNav = () => {
     setIsNav(prev => !prev);
     dispatch(toggleNav());
@@ -29,9 +36,9 @@ function Header({ className }: Props) {
   };
   return (
     <header
-      className={`bg-white shadow-b-md flex justify-between self-center items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full  text-center   ${className}`}
+      className={`bg-white shadow-b-md flex  justify-between self-center items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full  text-center   ${className}`}
     >
-      <nav className="w-full flex justify-between mx-auto gap-3 px-3 py-2 sm:px-6 sm:py-6 max-w-[1440px]">
+      <nav className="w-full flex justify-between items-center mx-auto gap-3 px-3 py-2 sm:px-6 sm:py-6 max-w-[1440px]">
         {/* Desktop Navigation Items */}
         <ul className="w-full hidden md:flex items-center justify-between">
           <li>
@@ -43,6 +50,21 @@ function Header({ className }: Props) {
           </li>
           {NAV_ITEMS.map(navEl => {
             const nav = navEl === "home" ? "/" : `/${navEl}`;
+            if (navEl === "exchange" && !isAuthenticated) {
+              return (
+                <li
+                  key={navEl}
+                  className={`font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+                >
+                  <Button
+                    className={`border-0 shadow-none font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+                    onClick={handleLogin}
+                  >
+                    {navEl}
+                  </Button>
+                </li>
+              );
+            }
             return (
               <li
                 key={navEl}
@@ -87,8 +109,8 @@ function Header({ className }: Props) {
       <ul
         className={
           isNav
-            ? "fixed md:hidden left-0 top-[78px] w-full h-full bg-white ease-in-out duration-500"
-            : "ease-in-out w-full duration-500 fixed top-[78px] bottom-0 left-[-100%]"
+            ? "fixed md:hidden left-0 top-[118px] w-full h-full bg-white ease-in-out duration-500"
+            : "ease-in-out w-full duration-500 fixed top-[118px] bottom-0 left-[-100%]"
         }
       >
         {/* Mobile drawer Navigation Items */}

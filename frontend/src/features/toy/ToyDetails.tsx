@@ -84,7 +84,7 @@ function ToyDetails() {
           <Error errorMessage={error} />
         ) : (
           <>
-            <nav className="mb-4 text-purple-700">
+            <nav className="mb-4 text-purple-700 font-mono text-xl">
               <button onClick={() => window.history.back()} className="mr-2">
                 <FontAwesomeIcon icon={faArrowLeft} /> Back
               </button>
@@ -198,7 +198,7 @@ function ToyDetails() {
             <div className="mt-6">
               <div
                 className="cursor-pointer bg-white p-4 flex justify-between items-center"
-                onClick={() => toggleFullDescription}
+                onClick={toggleFullDescription}
                 role="button"
                 tabIndex={0}
                 onKeyDown={e => {
@@ -216,7 +216,7 @@ function ToyDetails() {
                 />
               </div>
               {isFullDescriptionOpen && (
-                <div className="p-6 text-gray-600 font-sans  bg-white mt-2">
+                <div className="p-6 text-gray-600 font-sans text-md bg-white mt-2">
                   {toy?.fullDescription}
                 </div>
               )}
@@ -242,7 +242,7 @@ function ToyDetails() {
                 />
               </div>
               {isRelatedToysOpen && (
-                <div className="p-6 text-gray-600 font-sans  mt-2">
+                <div className="p-6 text-gray-600 font-sans text-md mt-2">
                   <ul className="space-y-2">
                     {relatedToys.map((relatedToy: Toy) => (
                       <li key={relatedToy._id} className="border-b pb-2">
@@ -291,7 +291,7 @@ function ToyDetails() {
                 />
               </div>
               {isReviewsOpen && (
-                <div className="p-6 text-gray-600 font-sans mt-2">
+                <div className="p-6 text-gray-600 text-md font-sans mt-2">
                   <Reviews />
                 </div>
               )}

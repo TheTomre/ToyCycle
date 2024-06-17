@@ -111,7 +111,7 @@ function ToyCreateForm({ onSave }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="bg-white shadow-md rounded-lg p-4 md:max-w-3xl mx-auto space-y-6"
+        className="bg-transporent  rounded-lg p-4 md:max-w-3xl mx-auto space-y-6"
       >
         <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
           <h3 className="text-xl font-bold">Toy Details</h3>
