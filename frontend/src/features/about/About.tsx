@@ -1,7 +1,7 @@
 function About() {
   return (
-    <div className="px-8 w-full max-w-[1440px] mx-auto pt-20 pb-32 space-y-10">
-      <div className="flex gap-8 font-sans w-full justify-between min-h-44">
+    <div className="px-36 w-full max-w-[1440px] mx-auto pt-20 pb-32 space-y-10">
+      <div className="flex gap-8 font-sans w-full min-h-44">
         <div className="bg-contain bg-[url('./assets/icons/we.svg')] flex-[1_1_0] bg-no-repeat" />
         <div className="flex-[5_1_0]">
           <h3 className="font-mono tracking-tight text-2xl text-[#3a0e7b] pb-4">
@@ -12,8 +12,8 @@ function About() {
             and unwanted toys and get an instant cash valuation. We strive to
             offer the most competitive prices while also offering a great
             customer experience. We were shocked about the amount of working but
-            unwanted toys that get sent to landfill each year in the UK. We know
-            we can all do better to give a new life to your unwanted toys,
+            unwanted toys that get sent to landfill each year in the Israel. We
+            know we can all do better to give a new life to your unwanted toys,
             toy-exchange offers you a hassle free way to sell your toys to us,
             and we deal with the hassle of finding them a new home.
           </p>
@@ -68,11 +68,11 @@ function About() {
               Unfortunately, most of the toys manufactured in the past 40 years
               have contained lots of plastic. Many of which do not degrade and
               end up in landfill. It is estimated that over 8 million working
-              toys enter landfill every year in the UK. Our aim is to take these
-              unwanted toys and give them a new home and to avoid landfill. In
-              the rare circumstance where a toy cannot be resold or donated, we
-              strip it for spare parts to help repair other toys and dispose of
-              the remaining parts responsibly.
+              toys enter landfill every year in the Israel. Our aim is to take
+              these unwanted toys and give them a new home and to avoid
+              landfill. In the rare circumstance where a toy cannot be resold or
+              donated, we strip it for spare parts to help repair other toys and
+              dispose of the remaining parts responsibly.
             </p>
           </div>
         </div>
