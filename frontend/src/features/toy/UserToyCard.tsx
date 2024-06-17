@@ -3,7 +3,7 @@ import { useState, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Toy } from "./toyTypes";
 import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
-import SlideButton from "../../components/buttons/SlideButton";
+import EditButton from "../../components/buttons/EditButton";
 import DeleteButton from "../../components/buttons/DeleteButton";
 
 type ToyProps = {
@@ -84,7 +84,7 @@ function UserToyCard({ toy, onDelete }: ToyProps) {
           </span>
           <span className="text-[#3a0e7b] font-semibold">{toy.price}$</span>
           <div className="flex space-x-2">
-            <SlideButton onClick={handleEdit} label="Edit" />
+            <EditButton onClick={handleEdit} />
             <DeleteButton onDelete={() => handleDelete(toy._id)} />
           </div>
         </div>

@@ -1,16 +1,16 @@
-import "./blobButton.css";
+import styles from "./blobButton.module.css";
 
 function BlobButton({ text }: { text: string }) {
   return (
-    <div className="buttons">
-      <button className="blob-btn">
+    <div className={styles["buttons"]}>
+      <button className={styles["blob-btn"]}>
         {text}
-        <span className="blob-btn__inner">
-          <span className="blob-btn__blobs">
-            <span className="blob-btn__blob" />
-            <span className="blob-btn__blob" />
-            <span className="blob-btn__blob" />
-            <span className="blob-btn__blob" />
+        <span className={styles["blob-btn__inner"]}>
+          <span className={styles["blob-btn__blobs"]}>
+            <span className={styles["blob-btn__blob"]} />
+            <span className={styles["blob-btn__blob"]} />
+            <span className={styles["blob-btn__blob"]} />
+            <span className={styles["blob-btn__blob"]} />
           </span>
         </span>
       </button>
