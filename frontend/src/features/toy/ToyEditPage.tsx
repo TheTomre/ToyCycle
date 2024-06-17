@@ -7,9 +7,9 @@ import ToyFormDetails from "./Form/ToyFormDetails";
 import ToyFormCategories from "./Form/ToyFormCategories";
 import ToyFormImage from "./Form/ToyFormImage";
 import { Form } from "../../components/UI/form";
-import { Button } from "../../components/UI/button";
 import { Toy } from "./toyTypes";
 import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
+import BlobButton from "../../components/BlobButton";
 
 const initData = {
   name: "",
@@ -168,12 +168,7 @@ function ToyEditPage() {
         <ToyFormCategories />
         <ToyFormImage />
         <div className="flex justify-center">
-          <Button
-            type="submit"
-            className="bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-transform duration-300 ease-in-out transform hover:scale-105"
-          >
-            {isEdit ? "Save Changes" : "Create Toy"}
-          </Button>
+          <BlobButton text={isEdit ? "Save Changes" : "Create Toy"} />
         </div>
       </form>
     </Form>

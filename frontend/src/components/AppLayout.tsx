@@ -11,7 +11,7 @@ function AppLayout() {
       className={`${isNavOpen ? "overflow-y-hidden" : ""} flex-col min-h-full w-full`}
     >
       <Header />
-      <Main className="overflow-scroll mt-[78px] sm:mt-[96px]">
+      <Main className="overflow-scroll mt-[78px] sm:mt-[96px] light-background">
         <Outlet />
       </Main>
       <Footer />

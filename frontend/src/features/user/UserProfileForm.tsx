@@ -11,9 +11,9 @@ import {
   FormMessage
 } from "../../components/UI/form";
 import { Input } from "../../components/UI/input";
-import { Button } from "../../components/UI/button";
 import { User } from "./userTypes";
 import { Textarea } from "../../components/UI/textarea";
+import BlobButton from "../../components/BlobButton";
 
 const formUserSchema = z.object({
   email: z.string().optional(),
@@ -244,15 +244,7 @@ function UserProfileForm({
           />
         </div>
         <div className="flex justify-center mt-6">
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className={`${
-              isLoading ? "animate-spin" : ""
-            } bg-[#3a0e7b] font-mono px-6 py-3 text-white hover:bg-[#4e2a85] transition-transform duration-300 ease-in-out transform hover:scale-105`}
-          >
-            {isLoading ? "Loading" : "Submit"}
-          </Button>
+          <BlobButton text={isLoading ? "Loading" : "Submit"} />
         </div>
       </form>
     </Form>
