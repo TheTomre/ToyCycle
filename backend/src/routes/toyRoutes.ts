@@ -5,6 +5,7 @@ import {
   createNewToy,
   deleteToyById,
   getAllToys,
+  getRelatedToys,
   getToyById,
   updateToyById
 } from "../controllers/toyControllers";
@@ -29,6 +30,7 @@ router.post(
 router.post("/", createNewToy);
 router.get("/", getAllToys);
 router.get("/:id", getToyById);
+router.get("/related/:ownerId", getRelatedToys);
 router.put("/:id", updateToyById);
 router.delete("/:id", deleteToyById);
 

@@ -48,10 +48,12 @@ export type Toy = {
   origin: string;
   quantity: number;
   fullDescription: string;
+  ownerId: string;
 };
 
 export type ToysState = {
   toys: Toy[];
+  relatedToys: Toy[];
   selectedToy: Toy | null;
   error: string | null;
   currentPage: number;

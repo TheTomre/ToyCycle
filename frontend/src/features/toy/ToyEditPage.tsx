@@ -1,11 +1,15 @@
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Form } from "../../../components/UI/form";
-import { Button } from "../../../components/UI/button";
-import ToyFormDetails from "./ToyFormDetails";
-import ToyFormCategories from "./ToyFormCategories";
-import ToyFormImage from "./ToyFormImage";
+import { zodResolver } from "@hookform/resolvers/zod";
+import ToyFormDetails from "./Form/ToyFormDetails";
+import ToyFormCategories from "./Form/ToyFormCategories";
+import ToyFormImage from "./Form/ToyFormImage";
+import { Form } from "../../components/UI/form";
+import { Button } from "../../components/UI/button";
+import { Toy } from "./toyTypes";
+import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
 
 const initData = {
   name: "",
@@ -22,7 +26,7 @@ const initData = {
   images: []
 };
 
-const formToySchema = z.object({
+const createToySchema = z.object({
   name: z
     .string()
     .min(1, "Name is required")
@@ -69,42 +73,79 @@ const formToySchema = z.object({
     .nonempty({ message: "Please select at least one image" })
 });
 
-type ToyFormData = z.infer<typeof formToySchema>;
+const editToySchema = createToySchema
+  .partial({
+    images: true
+  })
+  .refine(data => {
+    if (!data.images || data.images.length === 0) {
+      delete data.images;
+    }
+    return true;
+  });
 
-type Props = {
-  onSave: (toyFormData: FormData) => void;
-};
+type ToyFormData = z.infer<typeof createToySchema>;
 
-function ToyCreateForm({ onSave }: Props) {
+function ToyEditPage() {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [toy, setToy] = useState<Toy | null>(null);
+  const isEdit = Boolean(id);
+
+  useEffect(() => {
+    if (isEdit) {
+      const fetchToy = async () => {
+        const response = await fetch(`${API_BASE_URL}${ENDPOINT.toys}/${id}`);
+        const data = await response.json();
+        setToy(data.data);
+      };
+
+      fetchToy();
+    }
+  }, [id, isEdit]);
+
   const form = useForm<ToyFormData>({
-    resolver: zodResolver(formToySchema),
+    resolver: zodResolver(isEdit ? editToySchema : createToySchema),
     defaultValues: { ...initData }
   });
 
-  const onSubmit = (formDataJson: ToyFormData) => {
-    const formData = new FormData();
-    formData.append("name", formDataJson.name);
-    formData.append("quantity", formDataJson.quantity.toString());
-    formData.append("description", formDataJson.description);
-    formData.append("brand", formDataJson.brand);
-    formData.append("condition", formDataJson.condition);
-    formData.append("origin", formDataJson.origin);
-    formData.append("price", formDataJson.price.toString());
-    formData.append("tokenValue", formDataJson.tokenValue.toString());
-    formData.append("fullDescription", formDataJson.fullDescription);
+  useEffect(() => {
+    if (toy) {
+      form.reset({
+        ...toy,
+        images: toy.images.map(image => new File([], image))
+      });
+    }
+  }, [toy, form]);
 
-    formDataJson.ageCategory.forEach((ageCategory, index) => {
-      formData.append(`ageCategory[${index}]`, ageCategory);
-    });
-    formDataJson.category.forEach((category, index) => {
-      formData.append(`category[${index}]`, category);
+  const onSubmit = async (formDataJson: ToyFormData) => {
+    const payload = {
+      ...formDataJson,
+      images: formDataJson.images.map(image =>
+        typeof image === "string" ? image : URL.createObjectURL(image)
+      )
+    };
+
+    const method = isEdit ? "PUT" : "POST";
+    const url = isEdit
+      ? `${API_BASE_URL}${ENDPOINT.toys}/${id}`
+      : `${API_BASE_URL}${ENDPOINT.toys}`;
+
+    const response = await fetch(url, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      },
+      body: JSON.stringify(payload)
     });
 
-    Array.from(formDataJson.images).forEach(imageFile => {
-      formData.append(`images`, imageFile);
-    });
-
-    onSave(formData);
+    if (response.ok) {
+      navigate(isEdit ? `/toys/${id}` : `/toys`);
+    } else {
+      const errorData = await response.json();
+      throw new Error(`Error: ${errorData.message}`);
+    }
   };
 
   return (
@@ -114,9 +155,13 @@ function ToyCreateForm({ onSave }: Props) {
         className="bg-white shadow-md rounded-lg p-4 md:max-w-3xl mx-auto space-y-6"
       >
         <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
-          <h3 className="text-xl font-bold">Toy Details</h3>
+          <h3 className="text-xl font-bold">
+            {isEdit ? "Edit Toy Details" : "Create Toy"}
+          </h3>
           <h5 className="text-sm">
-            Add details about the toy you want to add to your inventory.
+            {isEdit
+              ? "Update the details of the toy you want to edit."
+              : "Add details about the toy you want to add to your inventory."}
           </h5>
         </div>
         <ToyFormDetails />
@@ -127,7 +172,7 @@ function ToyCreateForm({ onSave }: Props) {
             type="submit"
             className="bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-transform duration-300 ease-in-out transform hover:scale-105"
           >
-            Submit
+            {isEdit ? "Save Changes" : "Create Toy"}
           </Button>
         </div>
       </form>
@@ -135,4 +180,4 @@ function ToyCreateForm({ onSave }: Props) {
   );
 }
 
-export default ToyCreateForm;
+export default ToyEditPage;

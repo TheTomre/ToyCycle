@@ -10,6 +10,7 @@ import AppLayout from "./components/AppLayout";
 import AuthUserCallbackPage from "./features/auth/AuthUserCallbackPage";
 import ProtectedRoute from "./features/auth/ProtectedRoute";
 import ToyDetails from "./features/toy/ToyDetails";
+import ToyEditPage from "./features/toy/ToyEditPage";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/toys" element={<ToysPage />} />
         <Route path="/toys/:id" element={<ToyDetails />} />
         <Route path="/toys/create" element={<ToyCreatePage />} />
+        <Route path="/toys/edit/:id" element={<ToyEditPage />} />
         <Route path="/auth-user" element={<AuthUserCallbackPage />} />
         <Route path="/users" element={<UserProfilePage />} />
         <Route path="/users/:id" element={<UserProfilePage />} />
