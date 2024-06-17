@@ -13,6 +13,7 @@ import {
   faChevronDown,
   faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuth0 } from "@auth0/auth0-react";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { fetchToyDetails, fetchRelatedToys } from "./toySlice";
 import FullscreenImageSlider from "./FullscreenImageSlider";
@@ -35,6 +36,7 @@ function ToyDetails() {
   const [isFullDescriptionOpen, setIsFullDescriptionOpen] = useState(false);
   const [isReviewsOpen, setIsReviewsOpen] = useState(false);
   const [isRelatedToysOpen, setIsRelatedToysOpen] = useState(false);
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   useEffect(() => {
     if (id) {
@@ -69,7 +71,13 @@ function ToyDetails() {
   };
 
   const handleContactClick = () => {
-    setIsContactModalOpen(true);
+    if (isAuthenticated) {
+      setIsContactModalOpen(true);
+    } else {
+      loginWithRedirect({
+        appState: { returnTo: window.location.pathname }
+      });
+    }
   };
 
   const handleCloseContactModal = () => {
@@ -90,7 +98,7 @@ function ToyDetails() {
 
   return (
     <div className="max-w-6xl mx-auto p-6 bg-white mt-6">
-      <nav className="mb-4 text-purple-700">
+      <nav className="mb-4 text-[#5c18b0]">
         <button onClick={() => window.history.back()} className="mr-2">
           <FontAwesomeIcon icon={faArrowLeft} /> Back
         </button>
@@ -120,7 +128,7 @@ function ToyDetails() {
                 onClick={() => handleThumbnailClick(index)}
                 className={`w-16 h-16 object-cover cursor-pointer rounded-lg m-1 border ${
                   currentImageIndex === index
-                    ? "border-purple-600"
+                    ? "border-[#5c18b0]"
                     : "border-transparent"
                 }`}
                 aria-label={`Thumbnail ${index}`}
@@ -137,23 +145,17 @@ function ToyDetails() {
         <div className="space-y-4">
           <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
-              <FontAwesomeIcon
-                icon={faHeart}
-                className="text-purple-700 mr-2"
-              />
+              <FontAwesomeIcon icon={faHeart} className="text-[#5c18b0] mr-2" />
               <h2 className="text-xl font-mono">Description</h2>
             </div>
             <p className="text-gray-600 font-sans">{toy.description}</p>
           </div>
           <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
-              <FontAwesomeIcon
-                icon={faStore}
-                className="text-purple-700 mr-2"
-              />
+              <FontAwesomeIcon icon={faStore} className="text-[#5c18b0] mr-2" />
               <h2 className="text-xl font-mono">Token Value</h2>
             </div>
-            <p className="text-lg text-purple-700 font-bold">
+            <p className="text-lg text-[#5c18b0] font-bold">
               {toy.tokenValue} Tokens
             </p>
           </div>
@@ -161,7 +163,7 @@ function ToyDetails() {
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faBoxOpen}
-                className="text-purple-700 mr-2"
+                className="text-[#5c18b0] mr-2"
               />
               <h2 className="text-xl font-mono">Condition</h2>
             </div>
@@ -171,7 +173,7 @@ function ToyDetails() {
             <div className="flex items-center mb-2">
               <FontAwesomeIcon
                 icon={faShoppingCart}
-                className="text-purple-700 mr-2"
+                className="text-[#5c18b0] mr-2"
               />
               <h2 className="text-xl font-mono">Available Quantity</h2>
             </div>
@@ -179,16 +181,13 @@ function ToyDetails() {
           </div>
           <div className="shadow-lg rounded-lg p-3 sm:p-6 bg-white">
             <div className="flex items-center mb-2">
-              <FontAwesomeIcon
-                icon={faGlobe}
-                className="text-purple-700 mr-2"
-              />
+              <FontAwesomeIcon icon={faGlobe} className="text-[#5c18b0] mr-2" />
               <h2 className="text-xl font-mono">Origin</h2>
             </div>
             <p className="text-lg text-gray-800 font-bold">{toy.origin}</p>
           </div>
           <button
-            className="mt-6 w-full bg-purple-600 text-white px-6 py-3 rounded-lg hover:bg-purple-700 transition duration-300 text-lg font-bold"
+            className="mt-6 w-full bg-[#5c18b0] text-white px-6 py-3 rounded-lg hover:bg-[#2c0759] transition duration-300 text-lg font-bold"
             onClick={handleContactClick}
           >
             Contact Owner
@@ -255,7 +254,7 @@ function ToyDetails() {
                         {relatedToy.name}
                       </h3>
                       <p className="text-gray-600">{relatedToy.description}</p>
-                      <p className="text-sm text-purple-700">
+                      <p className="text-sm text-[#5c18b0]">
                         {relatedToy.tokenValue} Tokens
                       </p>
                     </div>
@@ -336,7 +335,7 @@ function ToyDetails() {
               </div>
               <button
                 type="submit"
-                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300"
+                className="bg-[#5c18b0] text-white px-4 py-2 rounded-lg hover:bg-[#2c0759] transition duration-300"
               >
                 Send
               </button>

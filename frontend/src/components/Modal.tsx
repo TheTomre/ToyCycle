@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 interface ModalProps {
-  onClose: () => void;
+  onClose: (event: React.MouseEvent) => void;
   children: React.ReactNode;
 }
 

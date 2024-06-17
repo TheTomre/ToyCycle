@@ -1,9 +1,10 @@
 /* eslint-disable no-underscore-dangle */
-import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import { Toy } from "./toyTypes";
 import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
-import Modal from "../../components/Modal";
+import EditButton from "../../components/buttons/EditButton";
+import DeleteButton from "../../components/buttons/DeleteButton";
 
 type ToyProps = {
   toy: Toy;
@@ -13,7 +14,7 @@ type ToyProps = {
 function UserToyCard({ toy, onDelete }: ToyProps) {
   const defaultImage = "../bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     if (toy.images?.length > 1) {
@@ -40,26 +41,27 @@ function UserToyCard({ toy, onDelete }: ToyProps) {
     }
   };
 
-  const openModal = () => {
-    setShowModal(true);
+  const handleEdit = () => {
+    navigate(`/toys/edit/${toy._id}`);
   };
 
-  const closeModal = () => {
-    setShowModal(false);
-  };
-
-  const confirmDelete = () => {
-    handleDelete(toy._id);
-    closeModal();
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      navigate(`/toys/${toy._id}`);
+    }
   };
 
   return (
     <div className="flex-col sm:flex-row flex w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-transform duration-300 hover:scale-[1.02]">
-      <Link
-        to={`/toys/${toy._id}`}
+      <div
         className="relative h-64 overflow-hidden flex items-center justify-center flex-[4_1_0]"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
+        onClick={() => navigate(`/toys/${toy._id}`)}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+        style={{ cursor: "pointer" }}
       >
         <img
           className="object-center object-cover m-0 h-[150px] sm:h-full w-full transition-transform duration-300 transform hover:scale-110"
@@ -70,7 +72,7 @@ function UserToyCard({ toy, onDelete }: ToyProps) {
           }
           alt={toy.name}
         />
-      </Link>
+      </div>
       <div className="p-4 flex-[6_1_0]">
         <h3 className="text-xl font-semibold mb-2">{toy.name}</h3>
         {toy.description && (
@@ -82,45 +84,11 @@ function UserToyCard({ toy, onDelete }: ToyProps) {
           </span>
           <span className="text-[#3a0e7b] font-semibold">{toy.price}$</span>
           <div className="flex space-x-2">
-            <Link
-              to={`/toys/edit/${toy._id}`}
-              className="bg-[#3a0e7b] text-white px-4 py-2 rounded-lg hover:bg-[#280b5f] transition duration-300"
-            >
-              Edit
-            </Link>
-            <button
-              className="bg-[#ff4d4d] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
-              onClick={openModal}
-            >
-              Delete
-            </button>
+            <EditButton onClick={handleEdit} />
+            <DeleteButton onDelete={() => handleDelete(toy._id)} />
           </div>
         </div>
       </div>
-      {showModal && (
-        <Modal onClose={closeModal}>
-          <div className="px-6 pb-6 font-sans">
-            <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
-            <p className="mb-4 text-lg">
-              Are you sure you want to delete this toy?
-            </p>
-            <div className="flex justify-end space-x-2">
-              <button
-                className="bg-[#70e2d2] text-gray-700 px-4 py-2 text-xl rounded-lg hover:bg-[#58f6e1] transition duration-300"
-                onClick={closeModal}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-[#ff4d4d] text-white  text-xl px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
-                onClick={confirmDelete}
-              >
-                Confirm
-              </button>
-            </div>
-          </div>
-        </Modal>
-      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider, AppState } from "@auth0/auth0-react";
 import { ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -20,8 +20,8 @@ function Auth0ProviderWithNavigate({
     throw new Error("Unable to retrieve Auth0 configuration.");
   }
 
-  const onRedirectCallack = () => {
-    navigate("/auth-user");
+  const onRedirectCallback = (appState?: AppState) => {
+    navigate(appState?.returnTo || "/auth-user");
   };
 
   return (
@@ -32,7 +32,7 @@ function Auth0ProviderWithNavigate({
         redirect_uri: redirectUri,
         audience
       }}
-      onRedirectCallback={onRedirectCallack}
+      onRedirectCallback={onRedirectCallback}
     >
       {children}
     </Auth0Provider>

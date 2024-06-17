@@ -71,7 +71,7 @@ function ToyList() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 py-5">
+    <div className="min-h-screen light-background py-5">
       <div className="container mx-auto px-4 sm:px-10">
         <div className="flex justify-between items-center">
           <button
