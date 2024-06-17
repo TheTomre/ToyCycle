@@ -13,7 +13,7 @@ import {
 import { Input } from "../../components/UI/input";
 import { User } from "./userTypes";
 import { Textarea } from "../../components/UI/textarea";
-import BlobButton from "../../components/BlobButton";
+import BlobButton from "../../components/buttons/BlobButton";
 
 const formUserSchema = z.object({
   email: z.string().optional(),

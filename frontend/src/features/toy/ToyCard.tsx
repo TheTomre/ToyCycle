@@ -1,5 +1,8 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+/* eslint-disable jsx-a11y/label-has-associated-control */
+import { useState, KeyboardEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import Modal from "../../components/Modal";
+import SlideButton from "../../components/buttons/SlideButton";
 
 type ToyProps = {
   id: string;
@@ -12,6 +15,8 @@ type ToyProps = {
 function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   const defaultImage = "../bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleMouseEnter = () => {
     if (images?.length > 1) {
@@ -23,10 +28,34 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
     setCurrentImageIndex(0);
   };
 
+  const handleExchangeClick = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setIsModalOpen(false);
+  };
+
+  const handleCardClick = () => {
+    navigate(`/toys/${id}`);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === "Enter" || event.key === " ") {
+      handleCardClick();
+    }
+  };
+
   return (
-    <Link
-      to={`/toys/${id}`}
+    <div
       className="max-w-md w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-transform duration-300 hover:scale-105"
+      onClick={handleCardClick}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      style={{ cursor: "pointer" }}
     >
       <div
         onMouseEnter={handleMouseEnter}
@@ -48,12 +77,61 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
         )}
         <div className="flex items-center justify-between mt-4">
           <span className="text-[#3a0e7b] font-semibold">{tokens} Tokens</span>
-          <button className="bg-[#3a0e7b] text-white px-4 py-2 rounded-lg hover:bg-[#280b5f] transition duration-300">
-            Exchange Now
-          </button>
+          <SlideButton
+            onClick={(event: React.MouseEvent) => handleExchangeClick(event)}
+            label="Exchange Now"
+          />
         </div>
       </div>
-    </Link>
+
+      {isModalOpen && (
+        <Modal onClose={handleCloseModal}>
+          <div className="p-6">
+            <h2 className="text-2xl font-semibold text-gray-800 font-mono">
+              Contact Owner
+            </h2>
+            <form className="mt-4 space-y-4">
+              <div>
+                <label className="block text-gray-600" htmlFor="yourName">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  id="yourName"
+                  className="w-full mt-1 p-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600" htmlFor="yourEmail">
+                  Your Email
+                </label>
+                <input
+                  type="email"
+                  id="yourEmail"
+                  className="w-full mt-1 p-2 border rounded-lg"
+                />
+              </div>
+              <div>
+                <label className="block text-gray-600" htmlFor="message">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  className="w-full mt-1 p-2 border rounded-lg"
+                  rows={4}
+                />
+              </div>
+              <button
+                type="submit"
+                className="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition duration-300"
+              >
+                Send
+              </button>
+            </form>
+          </div>
+        </Modal>
+      )}
+    </div>
   );
 }
 

@@ -1,4 +1,4 @@
-import "../custom/blobButton.css";
+import "./blobButton.css";
 
 function BlobButton({ text }: { text: string }) {
   return (

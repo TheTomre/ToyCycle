@@ -11,6 +11,7 @@ import traincloud from "../../assets/icons/train.svg";
 import lego2 from "../../assets/icons/lego2.svg";
 import CategoriesList from "../../components/CategoriesList";
 import { CATEGORIES_AGE } from "../../lib/consts";
+import PushButton from "../../components/buttons/PushButton";
 
 function Home() {
   const parallax = useRef<IParallax>(null!);
@@ -114,12 +115,18 @@ function Home() {
                   Exchange toys, earn tokens, and foster a sustainable toy
                   community.
                 </p>
-                <a
+                {/* <a
                   href="#signup"
                   className=" inline-block bg-[#fff24f] text-[#3a0e7b] mt-2 sm:mt-4 px-4 py-2 sm:px-8 sm:py-4 rounded hover:bg-[#ffca4f]"
                 >
                   Get Started
-                </a>
+                </a> */}
+                <PushButton
+                  label="Get Started"
+                  onClick={() => {
+                    window.location.href = "#signup";
+                  }}
+                />
               </div>
             </section>
             <section id="about" className="pt-6 pb-6 sm:pb-10 ">
@@ -232,12 +239,18 @@ function Home() {
                   Join ToyCycle today and start exchanging toys with our
                   community!
                 </p>
-                <a
+                {/* <a
                   href="#signup"
                   className="inline-block bg-[#fff24f] m-4 text-[#3a0e7b] px-4 py-2 rounded hover:bg-[#ffca4f]"
                 >
                   Sign Up Now
-                </a>
+                </a> */}
+                <PushButton
+                  label="Sign Up Now"
+                  onClick={() => {
+                    window.location.href = "#signup";
+                  }}
+                />
               </div>
             </section>
           </ParallaxLayer>

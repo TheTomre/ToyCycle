@@ -5,7 +5,7 @@ import { Form } from "../../../components/UI/form";
 import ToyFormDetails from "./ToyFormDetails";
 import ToyFormCategories from "./ToyFormCategories";
 import ToyFormImage from "./ToyFormImage";
-import BlobButton from "../../../components/BlobButton";
+import BlobButton from "../../../components/buttons/BlobButton";
 
 const initData = {
   name: "",

@@ -9,7 +9,7 @@ import ToyFormImage from "./Form/ToyFormImage";
 import { Form } from "../../components/UI/form";
 import { Toy } from "./toyTypes";
 import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
-import BlobButton from "../../components/BlobButton";
+import BlobButton from "../../components/buttons/BlobButton";
 
 const initData = {
   name: "",
