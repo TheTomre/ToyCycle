@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import { Toaster } from "sonner";
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -14,6 +15,7 @@ function AppLayout() {
       <Main className="mt-[118px] sm:mt-[118px] flex-1 bg-purple-50">
         <Outlet />
       </Main>
+      <Toaster richColors position="top-right" />
       <Footer />
     </div>
   );

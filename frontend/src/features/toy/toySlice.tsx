@@ -2,9 +2,15 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { Toy, ToysState } from "./toyTypes";
 
+type ToyDetailsPayload = {
+  toy: Toy;
+  relatedToys: Toy[];
+};
+
 const initialState: ToysState = {
   toys: [],
   selectedToy: null,
+  ownerId: null,
   relatedToys: [],
   error: null,
   currentPage: 1,
@@ -84,13 +90,19 @@ export const fetchToys = createAsyncThunk<
 );
 
 export const fetchToyDetails = createAsyncThunk<
-  Toy,
+  { toy: Toy; relatedToys: Toy[] },
   string,
   { rejectValue: string }
 >("toys/fetchToyDetails", async (id, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.get(`/toys/${id}`);
-    return response.data.data as Toy;
+    const responseRelated = await axiosInstance.get(
+      `/toys/related/${response.data.data.user}`
+    );
+    return {
+      toy: response.data.data as Toy,
+      relatedToys: responseRelated.data.data as Toy[]
+    };
   } catch (error) {
     let message = "Failed to fetch toy details";
     if (error instanceof AxiosError && error.response) {
@@ -191,8 +203,9 @@ const toySlice = createSlice({
       })
       .addCase(
         fetchToyDetails.fulfilled,
-        (state, action: PayloadAction<Toy>) => {
-          state.selectedToy = action.payload;
+        (state, action: PayloadAction<ToyDetailsPayload>) => {
+          state.selectedToy = action.payload.toy;
+          state.relatedToys = action.payload.relatedToys;
           state.loading = false;
         }
       )
