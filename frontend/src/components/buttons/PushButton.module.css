@@ -1,9 +1,5 @@
-body {
-  text-align: center;
-  background-color: #ffcc8e;
-}
-
 .push-button {
+  text-align: center;
   position: relative;
   display: inline-block;
   margin: 10px;

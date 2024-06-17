@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useState, KeyboardEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import Modal from "../../components/Modal";
 import SlideButton from "../../components/buttons/SlideButton";
 
@@ -17,6 +18,7 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   const handleMouseEnter = () => {
     if (images?.length > 1) {
@@ -30,7 +32,13 @@ function ToyCard({ id, name, description, images, tokens }: ToyProps) {
 
   const handleExchangeClick = (event: React.MouseEvent) => {
     event.stopPropagation();
-    setIsModalOpen(true);
+    if (isAuthenticated) {
+      setIsModalOpen(true);
+    } else {
+      loginWithRedirect({
+        appState: { returnTo: `/toys/${id}` }
+      });
+    }
   };
 
   const handleCloseModal = (event: React.MouseEvent) => {
