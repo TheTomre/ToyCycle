@@ -5,17 +5,18 @@ import { Toy, ToysState } from "./toyTypes";
 const initialState: ToysState = {
   toys: [],
   selectedToy: null,
+  relatedToys: [],
   error: null,
   currentPage: 1,
   resultsPerPage: 10,
   totalPages: 1,
-  sort: "name",
   totalResults: 0,
   loading: false,
   ageCategory: [],
   brand: [],
   category: [],
-  search: ""
+  search: "",
+  sort: "name"
 };
 
 const axiosInstance = axios.create({
@@ -99,6 +100,23 @@ export const fetchToyDetails = createAsyncThunk<
   }
 });
 
+export const fetchRelatedToys = createAsyncThunk<
+  Toy[],
+  string,
+  { rejectValue: string }
+>("toys/fetchRelatedToys", async (ownerId, { rejectWithValue }) => {
+  try {
+    const response = await axiosInstance.get(`/toys/related/${ownerId}`);
+    return response.data.data as Toy[];
+  } catch (error) {
+    let message = "Failed to fetch related toys";
+    if (error instanceof AxiosError && error.response) {
+      message = error.response.data?.message || message;
+    }
+    return rejectWithValue(message);
+  }
+});
+
 const toySlice = createSlice({
   name: "toys",
   initialState,
@@ -142,7 +160,7 @@ const toySlice = createSlice({
   },
   extraReducers: builder => {
     builder
-      .addCase(fetchToys.pending, function fetchToysPending(state) {
+      .addCase(fetchToys.pending, state => {
         state.loading = true;
       })
       .addCase(
@@ -163,31 +181,42 @@ const toySlice = createSlice({
       )
       .addCase(
         fetchToys.rejected,
-        function fetchToysRejected(
-          state,
-          action: PayloadAction<string | undefined>
-        ) {
+        (state, action: PayloadAction<string | undefined>) => {
           state.error = action.payload || "Failed to fetch toys";
           state.loading = false;
         }
       )
-      .addCase(fetchToyDetails.pending, function fetchToyDetailsPending(state) {
+      .addCase(fetchToyDetails.pending, state => {
         state.loading = true;
       })
       .addCase(
         fetchToyDetails.fulfilled,
-        function fetchToyDetailsFulfilled(state, action: PayloadAction<Toy>) {
+        (state, action: PayloadAction<Toy>) => {
           state.selectedToy = action.payload;
           state.loading = false;
         }
       )
       .addCase(
         fetchToyDetails.rejected,
-        function fetchToyDetailsRejected(
-          state,
-          action: PayloadAction<string | undefined>
-        ) {
+        (state, action: PayloadAction<string | undefined>) => {
           state.error = action.payload || "Failed to fetch toy details";
+          state.loading = false;
+        }
+      )
+      .addCase(fetchRelatedToys.pending, state => {
+        state.loading = true;
+      })
+      .addCase(
+        fetchRelatedToys.fulfilled,
+        (state, action: PayloadAction<Toy[]>) => {
+          state.relatedToys = action.payload; // Add this line
+          state.loading = false;
+        }
+      )
+      .addCase(
+        fetchRelatedToys.rejected,
+        (state, action: PayloadAction<string | undefined>) => {
+          state.error = action.payload || "Failed to fetch related toys";
           state.loading = false;
         }
       );
