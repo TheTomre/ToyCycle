@@ -4,6 +4,7 @@ import {
   createToy,
   fetchToyById,
   fetchAllToys,
+  fetchRelatedToys,
   updateToyById as updateToy,
   deleteToyById as deleteToy
 } from "../services/toyServices";
@@ -160,10 +161,46 @@ export const deleteToyById = async (
   }
 };
 
+export const getRelatedToys = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
+  const { ownerId } = req.params;
+  if (!ownerId) {
+    res.status(STATUS.BAD_REQUEST).json({
+      message: "Please provide an owner id",
+      status: STATUS_MESSAGE.FAIL
+    });
+    return;
+  }
+
+  try {
+    const relatedToys = await fetchRelatedToys(ownerId);
+    if (!relatedToys || relatedToys.length === 0) {
+      res.status(STATUS.NOT_FOUND).json({
+        message: "No related toys found",
+        status: STATUS_MESSAGE.FAIL
+      });
+      return;
+    }
+
+    res.status(STATUS.OK).json({
+      status: STATUS_MESSAGE.SUCCESS,
+      data: relatedToys
+    });
+    logger.info("Related toys fetched successfully");
+  } catch (err) {
+    logger.error("Error fetching related toys:", err);
+    next(err);
+  }
+};
+
 export default {
   createNewToy,
   deleteToyById,
   getAllToys,
   getToyById,
-  updateToyById
+  updateToyById,
+  getRelatedToys
 };

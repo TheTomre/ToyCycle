@@ -14,28 +14,39 @@ import {
   faChevronUp
 } from "@fortawesome/free-solid-svg-icons";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
-import { RootState } from "../../store/store";
-import { fetchToyDetails } from "./toySlice";
+import { fetchToyDetails, fetchRelatedToys } from "./toySlice";
 import FullscreenImageSlider from "./FullscreenImageSlider";
 import Modal from "../../components/Modal";
 import Reviews from "../../components/Reviews";
+import { RootState } from "../../store/store";
+import { Toy } from "./toyTypes";
 
 function ToyDetails() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const toy = useAppSelector((state: RootState) => state.toys.selectedToy);
+  const relatedToys = useAppSelector(
+    (state: RootState) => state.toys.relatedToys
+  );
   const { loading } = useAppSelector((state: RootState) => state.toys);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isContactModalOpen, setIsContactModalOpen] = useState(false);
   const [isFullDescriptionOpen, setIsFullDescriptionOpen] = useState(false);
   const [isReviewsOpen, setIsReviewsOpen] = useState(false);
+  const [isRelatedToysOpen, setIsRelatedToysOpen] = useState(false);
 
   useEffect(() => {
     if (id) {
       dispatch(fetchToyDetails(id));
     }
   }, [dispatch, id]);
+
+  useEffect(() => {
+    if (toy && toy.ownerId) {
+      dispatch(fetchRelatedToys(toy.ownerId));
+    }
+  }, [dispatch, toy]);
 
   if (loading) {
     return <div className="text-center">Loading...</div>;
@@ -71,6 +82,10 @@ function ToyDetails() {
 
   const toggleReviews = () => {
     setIsReviewsOpen(!isReviewsOpen);
+  };
+
+  const toggleRelatedToys = () => {
+    setIsRelatedToysOpen(!isRelatedToysOpen);
   };
 
   return (
@@ -126,12 +141,7 @@ function ToyDetails() {
                 icon={faHeart}
                 className="text-purple-700 mr-2"
               />
-              <h2
-                className="text-xl
-font-mono"
-              >
-                Description
-              </h2>
+              <h2 className="text-xl font-mono">Description</h2>
             </div>
             <p className="text-gray-600 font-sans">{toy.description}</p>
           </div>
@@ -208,6 +218,51 @@ font-mono"
         {isFullDescriptionOpen && (
           <div className="p-6 text-gray-600 font-sans bg-white mt-2">
             {toy.fullDescription}
+          </div>
+        )}
+      </div>
+      <div className="mt-6">
+        <div
+          className="cursor-pointer bg-gray-100 p-4 flex justify-between items-center"
+          onClick={toggleRelatedToys}
+          role="button"
+          tabIndex={0}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              toggleRelatedToys();
+            }
+          }}
+        >
+          <h2 className="text-xl font-mono text-gray-800">RELATED TOYS</h2>
+          <FontAwesomeIcon
+            icon={isRelatedToysOpen ? faChevronUp : faChevronDown}
+            className="text-gray-800"
+          />
+        </div>
+        {isRelatedToysOpen && (
+          <div className="p-6 text-gray-600 font-sans bg-white mt-2">
+            <ul className="space-y-2">
+              {relatedToys.map((relatedToy: Toy) => (
+                <li key={relatedToy._id} className="border-b pb-2">
+                  <div className="flex items-center space-x-4">
+                    <img
+                      src={relatedToy.images[0] || "../bear.webp"}
+                      alt={relatedToy.name}
+                      className="w-16 h-16 object-cover rounded-lg"
+                    />
+                    <div>
+                      <h3 className="text-lg font-mono text-gray-800">
+                        {relatedToy.name}
+                      </h3>
+                      <p className="text-gray-600">{relatedToy.description}</p>
+                      <p className="text-sm text-purple-700">
+                        {relatedToy.tokenValue} Tokens
+                      </p>
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         )}
       </div>

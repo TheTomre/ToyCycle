@@ -21,12 +21,6 @@ function ToyFormDetails() {
   const { control } = useFormContext();
   return (
     <div className="font-sans">
-      <div>
-        <h2 className="text-xl sm:text-2xl font-sans">Toy Details</h2>
-        <h3 className="font-sans">
-          Add details about the toy you want to add to your inventory.
-        </h3>
-      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <FormField
           control={control}

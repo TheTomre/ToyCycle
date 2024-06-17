@@ -3,14 +3,17 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { Toy } from "./toyTypes";
 import { API_BASE_URL, ENDPOINT } from "../../lib/consts";
+import Modal from "../../components/Modal";
 
 type ToyProps = {
   toy: Toy;
+  onDelete: () => void;
 };
 
-function UserToyCard({ toy }: ToyProps) {
+function UserToyCard({ toy, onDelete }: ToyProps) {
   const defaultImage = "../bear.webp";
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [showModal, setShowModal] = useState(false);
 
   const handleMouseEnter = () => {
     if (toy.images?.length > 1) {
@@ -31,18 +34,32 @@ function UserToyCard({ toy }: ToyProps) {
     });
 
     if (response.ok) {
-      // Handle successful deletion (e.g., show a success message, remove the toy from the list, etc.)
+      onDelete();
     } else {
       // Handle error
     }
   };
 
+  const openModal = () => {
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const confirmDelete = () => {
+    handleDelete(toy._id);
+    closeModal();
+  };
+
   return (
     <div className="flex-col sm:flex-row flex w-full bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-200 transform transition-transform duration-300 hover:scale-[1.02]">
-      <div
+      <Link
+        to={`/toys/${toy._id}`}
+        className="relative h-64 overflow-hidden flex items-center justify-center flex-[4_1_0]"
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
-        className="relative h-64 overflow-hidden flex items-center justify-center flex-[4_1_0]"
       >
         <img
           className="object-center object-cover m-0 h-[150px] sm:h-full w-full transition-transform duration-300 transform hover:scale-110"
@@ -53,7 +70,7 @@ function UserToyCard({ toy }: ToyProps) {
           }
           alt={toy.name}
         />
-      </div>
+      </Link>
       <div className="p-4 flex-[6_1_0]">
         <h3 className="text-xl font-semibold mb-2">{toy.name}</h3>
         {toy.description && (
@@ -73,13 +90,35 @@ function UserToyCard({ toy }: ToyProps) {
             </Link>
             <button
               className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
-              onClick={() => handleDelete(toy._id)}
+              onClick={openModal}
             >
               Delete
             </button>
           </div>
         </div>
       </div>
+      {showModal && (
+        <Modal onClose={closeModal}>
+          <div className="p-6">
+            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
+            <p className="mb-4">Are you sure you want to delete this toy?</p>
+            <div className="flex justify-end space-x-2">
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-300"
+                onClick={closeModal}
+              >
+                Cancel
+              </button>
+              <button
+                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                onClick={confirmDelete}
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </Modal>
+      )}
     </div>
   );
 }
