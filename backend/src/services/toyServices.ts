@@ -174,7 +174,7 @@ export const deleteToyById = async (id: string) => {
 export const fetchRelatedToys = async (ownerId: string) => {
   // Type ownerId as string
   try {
-    const relatedToys = await Toy.find({ ownerId }).limit(4);
+    const relatedToys = await Toy.find({ user: ownerId }).limit(4);
     return relatedToys;
   } catch (error) {
     throw new Error("Error fetching related toys");

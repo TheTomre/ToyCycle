@@ -89,7 +89,7 @@ function UserToyCard({ toy, onDelete }: ToyProps) {
               Edit
             </Link>
             <button
-              className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+              className="bg-[#ff4d4d] text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
               onClick={openModal}
             >
               Delete
@@ -99,18 +99,20 @@ function UserToyCard({ toy, onDelete }: ToyProps) {
       </div>
       {showModal && (
         <Modal onClose={closeModal}>
-          <div className="p-6">
-            <h2 className="text-lg font-semibold mb-4">Confirm Deletion</h2>
-            <p className="mb-4">Are you sure you want to delete this toy?</p>
+          <div className="px-6 pb-6 font-sans">
+            <h2 className="text-xl font-semibold mb-4">Confirm Deletion</h2>
+            <p className="mb-4 text-lg">
+              Are you sure you want to delete this toy?
+            </p>
             <div className="flex justify-end space-x-2">
               <button
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition duration-300"
+                className="bg-[#70e2d2] text-gray-700 px-4 py-2 text-xl rounded-lg hover:bg-[#58f6e1] transition duration-300"
                 onClick={closeModal}
               >
                 Cancel
               </button>
               <button
-                className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                className="bg-[#ff4d4d] text-white  text-xl px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
                 onClick={confirmDelete}
               >
                 Confirm
