@@ -14,8 +14,8 @@ import ToyDetails from "./features/toy/ToyDetails";
 function App() {
   return (
     <Routes>
+      <Route index element={<Home />} />
       <Route path="/" element={<AppLayout />}>
-        <Route index element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/toys" element={<ToysPage />} />
         <Route path="/toys/:id" element={<ToyDetails />} />

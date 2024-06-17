@@ -43,7 +43,7 @@ function ToyFilterList({ className }: { className?: string }) {
   };
 
   return (
-    <aside className={`max-w-[25%] min-w-[200px] ${className}`}>
+    <aside className={`max-w-[25%] min-w-[230px] ${className}`}>
       <ToysFilter
         isOpen={isAgeCategoryOpen}
         toggleIsOpen={() => setIsAgeCategoryOpen(!isAgeCategoryOpen)}

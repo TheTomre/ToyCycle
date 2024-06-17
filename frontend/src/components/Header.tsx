@@ -9,7 +9,11 @@ import { Button } from "./UI/button";
 import { useAppDispatch } from "../hooks/redux";
 import { toggleNav } from "../store/uiSlice";
 
-function Header() {
+type Props = {
+  className?: string;
+};
+
+function Header({ className }: Props) {
   const [isNav, setIsNav] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,15 +28,17 @@ function Header() {
     navigate("/");
   };
   return (
-    <header className="bg-white shadow-md flex justify-between items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full">
-      <nav className="w-full flex justify-between gap-3 px-3 py-4 sm:px-6 sm:py-6">
+    <header
+      className={`bg-white shadow-b-md flex justify-between self-center items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full  text-center   ${className}`}
+    >
+      <nav className="w-full flex justify-between mx-auto gap-3 px-3 py-2 sm:px-6 sm:py-6 max-w-[1440px]">
         {/* Desktop Navigation Items */}
         <ul className="w-full hidden md:flex items-center justify-between">
           <li>
             <Button
               variant="destructive"
               onClick={handleNavigateHome}
-              className="w-10 h-10 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/logo.svg')] hover:rotate-90 transition-all duration-300"
+              className="w-16 h-16 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/logo.svg')] hover:rotate-90 transition-all duration-300"
             />
           </li>
           {NAV_ITEMS.map(navEl => {
@@ -40,7 +46,7 @@ function Header() {
             return (
               <li
                 key={navEl}
-                className={`font-mono uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+                className={`font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
               >
                 <NavLink to={NAV[navEl] || "/"}>{navEl}</NavLink>
               </li>
@@ -56,7 +62,7 @@ function Header() {
             <Button
               variant="destructive"
               onClick={handleNavigateHome}
-              className="w-10 h-10 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/logo.svg')] hover:rotate-90 transition-all duration-300"
+              className="w-14 h-14 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/logo.svg')] hover:rotate-90 transition-all duration-300"
             />
           </li>
           <li>
@@ -89,7 +95,7 @@ function Header() {
         {NAV_ITEMS.map(navEl => (
           <li key={navEl} className="flex">
             <NavLink
-              className="w-full p-4 hover:bg-[#70e2d2] duration-300 cursor-pointer uppercase font-mono  px-6 py-4"
+              className="text-left text-2xl w-full p-5 hover:bg-[#70e2d2] duration-300 cursor-pointer uppercase font-mono  px-6 py-4"
               onClick={handleNav}
               to={NAV[navEl] || "/"}
             >
