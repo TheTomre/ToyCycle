@@ -45,7 +45,7 @@ function UserProfilePage() {
                 My Toys
               </button>
             </div>
-            <div className="mt-4">
+            <div className="mt-4 ">
               {activeTab === "profile" && (
                 <UserProfileForm
                   currentUser={currentUser as User}

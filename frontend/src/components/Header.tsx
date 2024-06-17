@@ -54,7 +54,7 @@ function Header({ className }: Props) {
               return (
                 <li
                   key={navEl}
-                  className={`font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+                  className={`font-mono text-lg sm:text-xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
                 >
                   <Button
                     className={`border-0 shadow-none font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
@@ -87,11 +87,14 @@ function Header({ className }: Props) {
               className="w-14 h-14 p-0 bg-cover bg-norepeat bg-[url('./assets/icons/logo.svg')] hover:rotate-90 transition-all duration-300"
             />
           </li>
-          <li>
-            <NavLink className="uppercase font-mono" to={NAV["toys"] || "/"}>
+          {/* <li>
+            <NavLink
+              className="uppercase text-lg sm:text-xl font-mono font-semibold"
+              to={NAV["toys"] || "/"}
+            >
               Toys
             </NavLink>
-          </li>
+          </li> */}
           <li>
             <Login />
           </li>
@@ -100,9 +103,9 @@ function Header({ className }: Props) {
 
       <Button
         onClick={handleNav}
-        className="block md:hidden hover:bg-[#3a0e7b] hover:text-white"
+        className="block md:hidden hover:bg-[#3a0e7b] hover:text-white h-[48px]"
       >
-        {isNav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
+        {isNav ? <AiOutlineClose size={25} /> : <AiOutlineMenu size={25} />}
       </Button>
 
       {/* Mobile drawer panel */}

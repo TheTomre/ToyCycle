@@ -73,7 +73,7 @@ function UserProfileForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handlerSubmit)}
-        className="p-4 md:max-w-3xl mx-auto"
+        className="p-4 md:max-w-5xl mx-auto"
       >
         <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
           <h3 className="text-xl font-bold">

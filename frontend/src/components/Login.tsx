@@ -30,7 +30,7 @@ function Login() {
             className="hover:bg-[#3a0e7b] hover:text-white w-12 h-12"
             onClick={handleLogout}
           >
-            <GrLogout size={24} />
+            <GrLogout size={30} />
           </Button>
         </Link>
       ) : (
@@ -42,7 +42,7 @@ function Login() {
             className="hover:bg-[#3a0e7b] hover:text-white w-12 h-12"
             onClick={handleLogin}
           >
-            <GrLogin size={24} />
+            <GrLogin size={30} />
           </Button>
         </>
       )}{" "}
