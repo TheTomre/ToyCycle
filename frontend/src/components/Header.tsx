@@ -49,15 +49,18 @@ function Header({ className }: Props) {
             />
           </li>
           {NAV_ITEMS.map(navEl => {
-            const nav = navEl === "home" ? "/" : `/${navEl}`;
+            const nav =
+              // eslint-disable-next-line no-nested-ternary
+              navEl === "home"
+                ? "/"
+                : navEl === "exchange"
+                  ? "/toys/create"
+                  : `/${navEl}`;
             if (navEl === "exchange" && !isAuthenticated) {
               return (
-                <li
-                  key={navEl}
-                  className={`font-mono text-lg sm:text-xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
-                >
+                <li key={navEl}>
                   <Button
-                    className={`border-0 shadow-none font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+                    className={`border-0 shadow-none font-mono text-lg sm:text-xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
                     onClick={handleLogin}
                   >
                     {navEl}
@@ -68,7 +71,7 @@ function Header({ className }: Props) {
             return (
               <li
                 key={navEl}
-                className={`font-mono text-xl sm:text-2xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
+                className={`font-mono text-lg sm:text-xl  uppercase menu-item ${location.pathname === nav ? "active" : ""}`}
               >
                 <NavLink to={NAV[navEl] || "/"}>{navEl}</NavLink>
               </li>

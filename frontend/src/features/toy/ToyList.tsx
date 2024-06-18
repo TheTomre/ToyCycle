@@ -75,7 +75,8 @@ function ToyList() {
 
   return (
     <>
-      {loading && <Loader />}
+      {/* <Loader /> */}
+      {loading && <Loader className="h-[3000px]" />}
       {error && !loading ? (
         <div className="max-w-6xl mx-auto p-6 mt-6 border-purple-50 min-h-screen">
           <h2 className="mb-4 text-[#3a0e7b] font-mono text-xl">

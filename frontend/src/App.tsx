@@ -11,6 +11,7 @@ import Error from "./components/Error";
 import ToyCreatePage from "./features/toy/ToyCreatePage";
 import BlogPage from "./features/blog/BlogPage";
 import BlogDetails from "./features/blog/BlogDetails";
+import ToyEditPage from "./features/toy/ToyEditPage";
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
         </Route>
         <Route element={<ProtectedRoute />}>
           <Route path="/toys/create" element={<ToyCreatePage />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path="/toys/edit/:id" element={<ToyEditPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Error errorMessage="Page not Found" />} />
