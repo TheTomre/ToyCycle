@@ -36,9 +36,9 @@ function Header({ className }: Props) {
   };
   return (
     <header
-      className={`bg-white shadow-b-md flex  justify-between self-center items-center px-4 text-[#3a0e7b] fixed top-0 z-50 w-full  text-center   ${className}`}
+      className={`bg-white shadow-b-md flex  justify-between self-center items-center px-4 text-[#3a0e7b] shadow-md fixed top-0 z-50 w-full  text-center   ${className}`}
     >
-      <nav className="w-full flex justify-between items-center mx-auto gap-3 px-3 py-2 sm:px-6 sm:py-6 max-w-[1440px]">
+      <nav className="w-full flex justify-between items-center mx-auto gap-3 px-3 py-2 sm:px-6 sm:py-4 max-w-[1440px]">
         {/* Desktop Navigation Items */}
         <ul className="w-full hidden md:flex items-center justify-between">
           <li>
@@ -115,8 +115,8 @@ function Header({ className }: Props) {
       <ul
         className={
           isNav
-            ? "fixed md:hidden left-0 top-[118px] w-full h-full bg-white ease-in-out duration-500"
-            : "ease-in-out w-full duration-500 fixed top-[118px] bottom-0 left-[-100%]"
+            ? "fixed md:hidden left-0 top-[100px] w-full h-full bg-white ease-in-out duration-500"
+            : "ease-in-out w-full duration-500 fixed top-[100px] bottom-0 left-[-100%]"
         }
       >
         {/* Mobile drawer Navigation Items */}
