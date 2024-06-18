@@ -61,7 +61,7 @@ function BlogDetails(): React.ReactElement {
             />
           </div>
           <aside className="lg:w-1/4 mt-8 lg:mt-0">
-            <div className="sticky top-8 bg-white rounded-lg shadow-lg p-6">
+            <div className="sticky top-32 bg-white rounded-lg shadow-lg p-6">
               <h3 className="text-xl font-bold mb-4 text-center">
                 Share this article
               </h3>

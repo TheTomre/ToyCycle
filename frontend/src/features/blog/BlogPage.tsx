@@ -85,7 +85,9 @@ function BlogPage(): React.ReactElement {
   return (
     <div className="min-h-screen py-8">
       <header className="text-center py-4">
-        <h1 className="text-4xl font-bold text-gray-800">Latest News</h1>
+        <h1 className="text-4xl font-bold font-mono  text-[#3a0e7b]">
+          Latest News
+        </h1>
       </header>
       <div className="container mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
