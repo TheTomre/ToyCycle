@@ -1,5 +1,5 @@
 export const PAGINATION = {
-  limit: 1,
-  page: 10,
+  limit: 10,
+  page: 1,
   sort: "asc"
 };
