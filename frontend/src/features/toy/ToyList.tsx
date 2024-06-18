@@ -77,7 +77,7 @@ function ToyList() {
     <>
       {loading && <Loader />}
       {error && !loading ? (
-        <div className="max-w-6xl mx-auto p-6 mt-6 border-purple-50 h-[100vh]">
+        <div className="max-w-6xl mx-auto p-6 mt-6 border-purple-50 min-h-screen">
           <h2 className="mb-4 text-[#3a0e7b] font-mono text-xl">
             No toys found, please try again.
           </h2>

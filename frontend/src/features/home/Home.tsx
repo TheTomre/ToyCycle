@@ -15,6 +15,7 @@ import CategoriesList from "../../components/CategoriesList";
 import { CATEGORIES_AGE } from "../../lib/consts";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import PushButton from "../../components/buttons/PushButton";
 
 function Home() {
   const { loginWithRedirect } = useAuth0();
@@ -189,11 +190,17 @@ function Home() {
                   Exchange toys, earn tokens, and foster a sustainable toy
                   community.
                 </p>
+                {/* <a
+                  href="#signup"
+                  className=" inline-block bg-[#fff24f] text-[#3a0e7b] mt-2 sm:mt-4 px-4 py-2 sm:px-8 sm:py-4 rounded hover:bg-[#ffca4f]"
                 <Link
                   to="/toys"
                   className="text-xl font-semibold sm:text-2xl font-mono tracking-tight inline-block bg-[#70e2d2] text-[#3a0e7b] mt-2 sm:mt-4 px-6 py-3 sm:px-8 sm:py-4 rounded hover:bg-[#56ffe8] transition-all duration-300"
                 >
                   Get Started
+                </a>  */}
+                <Link to="/toys">
+                  <PushButton label="Get Started" onClick={() => {}} />
                 </Link>
               </div>
             </section>
@@ -307,12 +314,7 @@ function Home() {
                   Join ToyCycle today and start exchanging toys with our
                   community!
                 </p>
-                <button
-                  onClick={() => handleLogin()}
-                  className="text-xl font-semibold sm:text-2xl font-mono tracking-tight inline-block bg-[#70e2d2] text-[#3a0e7b] mt-2 sm:mt-4 px-6 py-3 sm:px-8 sm:py-4 rounded hover:bg-[#56ffe8] transition-all duration-300"
-                >
-                  Sign Up Now
-                </button>
+                <PushButton label="Sign Up Now" onClick={() => handleLogin()} />
               </div>
             </section>
           </ParallaxLayer>

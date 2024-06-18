@@ -96,3 +96,8 @@
     transform: translateY(-3px);
   }
 }
+
+.light-background {
+  background-color: #f7f5fa;
+  min-height: 100vh;
+}
