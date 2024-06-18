@@ -1,5 +1,4 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable jsx-a11y/control-has-associated-label */
+/* eslint-disable react/no-danger */
 import React from "react";
 import { useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -42,6 +41,7 @@ function BlogDetails(): React.ReactElement {
             <button
               onClick={() => window.history.back()}
               className="mb-4 text-[#5c18b0] hover:underline flex items-center"
+              aria-label="Back to Blog"
             >
               <FontAwesomeIcon icon={faArrowLeft} className="mr-2" /> Back to
               Blog
@@ -50,16 +50,15 @@ function BlogDetails(): React.ReactElement {
               <FontAwesomeIcon
                 icon={faCalendarAlt}
                 className="mr-2 text-[#70e2d2]"
+                aria-hidden="true"
               />
               <p>{post.date}</p>
             </div>
-            <div className="prose max-w-none text-gray-800">
-              {post.content.split("\n").map((paragraph, idx) => (
-                <p key={idx} className="mb-4">
-                  {paragraph.trim()}
-                </p>
-              ))}
-            </div>
+            <div
+              className="prose max-w-none text-gray-800"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+              aria-label="Blog content"
+            />
           </div>
           <aside className="lg:w-1/4 mt-8 lg:mt-0">
             <div className="sticky top-8 bg-white rounded-lg shadow-lg p-6">
@@ -72,6 +71,7 @@ function BlogDetails(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center w-10 h-10 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition duration-300"
+                  aria-label="Share on Facebook"
                 >
                   <FontAwesomeIcon icon={faFacebookF} />
                 </a>
@@ -80,6 +80,7 @@ function BlogDetails(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center w-10 h-10 bg-blue-400 text-white rounded-full hover:bg-blue-500 transition duration-300"
+                  aria-label="Share on Twitter"
                 >
                   <FontAwesomeIcon icon={faTwitter} />
                 </a>
@@ -88,6 +89,7 @@ function BlogDetails(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center w-10 h-10 bg-blue-700 text-white rounded-full hover:bg-blue-800 transition duration-300"
+                  aria-label="Share on LinkedIn"
                 >
                   <FontAwesomeIcon icon={faLinkedinIn} />
                 </a>
@@ -96,6 +98,7 @@ function BlogDetails(): React.ReactElement {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center w-10 h-10 bg-red-600 text-white rounded-full hover:bg-red-700 transition duration-300"
+                  aria-label="Share on Pinterest"
                 >
                   <FontAwesomeIcon icon={faPinterestP} />
                 </a>

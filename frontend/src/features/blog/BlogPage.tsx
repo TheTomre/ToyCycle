@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -74,8 +72,14 @@ const blogPosts: BlogPost[] = [
 function BlogPage(): React.ReactElement {
   const navigate = useNavigate();
 
-  const handleImageClick = (link: string) => {
-    navigate(link);
+  const handleKeyDown = (
+    event: React.KeyboardEvent<HTMLAnchorElement>,
+    link: string
+  ) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      navigate(link);
+    }
   };
 
   return (
@@ -90,12 +94,22 @@ function BlogPage(): React.ReactElement {
               key={post.id}
               className="bg-white rounded-xl shadow-lg overflow-hidden transform transition-transform duration-300 hover:scale-105 flex flex-col justify-between"
             >
-              <img
-                src={post.image}
-                alt={post.title}
-                className="w-full h-64 object-cover mb-4 cursor-pointer"
-                onClick={() => handleImageClick(post.link)}
-              />
+              <a
+                href={post.link}
+                onClick={e => {
+                  e.preventDefault();
+                  navigate(post.link);
+                }}
+                onKeyDown={event => handleKeyDown(event, post.link)}
+                tabIndex={0}
+                className="block"
+              >
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  className="w-full h-64 object-cover mb-4 cursor-pointer"
+                />
+              </a>
               <div className="p-4 flex flex-col flex-grow">
                 <div className="flex-grow">
                   <h2 className="text-2xl font-bold text-[#3a0e7b] mb-2">
