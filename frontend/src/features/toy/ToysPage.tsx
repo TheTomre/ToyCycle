@@ -5,7 +5,7 @@ function ToysPage() {
   return (
     <>
       <Search />
-      <ToyList />;
+      <ToyList />
     </>
   );
 }

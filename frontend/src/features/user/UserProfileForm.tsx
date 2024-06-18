@@ -15,6 +15,18 @@ import { User } from "./userTypes";
 import { Textarea } from "../../components/UI/textarea";
 import BlobButton from "../../components/buttons/BlobButton";
 
+const initValues = {
+  email: "",
+  bio: "",
+  firstName: "",
+  lastName: "",
+  city: "",
+  country: "",
+  street1: "",
+  street2: "",
+  zipcode: ""
+};
+
 const formUserSchema = z.object({
   email: z.string().optional(),
   bio: z.string().min(1).max(120),
@@ -42,7 +54,7 @@ function UserProfileForm({
 }: UserProfileFormProps) {
   const form = useForm<UserFormSchema>({
     resolver: zodResolver(formUserSchema),
-    defaultValues: currentUser
+    defaultValues: { ...initValues, ...currentUser }
   });
 
   useEffect(() => {
@@ -61,7 +73,7 @@ function UserProfileForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handlerSubmit)}
-        className="p-4 md:max-w-3xl mx-auto"
+        className="p-4 md:max-w-5xl mx-auto"
       >
         <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
           <h3 className="text-xl font-bold">

@@ -8,7 +8,7 @@ type ErrorProps = {
 function Error({ errorMessage }: ErrorProps) {
   const navigate = useNavigate();
   return (
-    <div className="flex pt-[5rem] justify-center min-h-screen bg-indigo-50 p-6">
+    <div className="flex pt-[5rem] justify-center min-h-screen  bg-purple-50 p-6">
       <div className="rounded-lg p-4 sm:p-8 w-full sm:w-[50vw] max-w-full  md:max-w-[400px] mx-auto text-center">
         <div className="flex justify-center">
           <svg

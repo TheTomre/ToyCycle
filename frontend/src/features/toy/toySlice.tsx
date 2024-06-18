@@ -2,9 +2,15 @@ import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import axios, { AxiosError } from "axios";
 import { Toy, ToysState } from "./toyTypes";
 
+type ToyDetailsPayload = {
+  toy: Toy;
+  relatedToys: Toy[];
+};
+
 const initialState: ToysState = {
   toys: [],
   selectedToy: null,
+  ownerId: null,
   relatedToys: [],
   error: null,
   currentPage: 1,
@@ -84,13 +90,19 @@ export const fetchToys = createAsyncThunk<
 );
 
 export const fetchToyDetails = createAsyncThunk<
-  Toy,
+  { toy: Toy; relatedToys: Toy[] },
   string,
   { rejectValue: string }
 >("toys/fetchToyDetails", async (id, { rejectWithValue }) => {
   try {
     const response = await axiosInstance.get(`/toys/${id}`);
-    return response.data.data as Toy;
+    const responseRelated = await axiosInstance.get(
+      `/toys/related/${response.data.data.user}`
+    );
+    return {
+      toy: response.data.data as Toy,
+      relatedToys: responseRelated.data.data as Toy[]
+    };
   } catch (error) {
     let message = "Failed to fetch toy details";
     if (error instanceof AxiosError && error.response) {
@@ -129,18 +141,24 @@ const toySlice = createSlice({
     },
     setCategory: (state, action: PayloadAction<string[]>) => {
       state.category = action.payload;
+      state.currentPage = 1;
     },
     setAgeCategory: (state, action: PayloadAction<string[]>) => {
       state.ageCategory = action.payload;
+      state.currentPage = 1;
     },
     setBrandCategory: (state, action: PayloadAction<string[]>) => {
       state.brand = action.payload;
+
+      state.currentPage = 1;
     },
     setSort: (state, action: PayloadAction<string>) => {
       state.sort = action.payload;
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
+
+      state.currentPage = 1;
     },
     resetToyList: state => {
       state.currentPage = 1;
@@ -191,8 +209,9 @@ const toySlice = createSlice({
       })
       .addCase(
         fetchToyDetails.fulfilled,
-        (state, action: PayloadAction<Toy>) => {
-          state.selectedToy = action.payload;
+        (state, action: PayloadAction<ToyDetailsPayload>) => {
+          state.selectedToy = action.payload.toy;
+          state.relatedToys = action.payload.relatedToys;
           state.loading = false;
         }
       )

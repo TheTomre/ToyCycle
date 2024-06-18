@@ -27,7 +27,7 @@ function CategoryItem({
   return (
     <Button
       onClick={hangleClick}
-      className={`px-3 py-2 sm:px-6 sm:py-4 h-auto w-auto font-mono tracking-tight bg-[#3a0e7b] hover:scale-105 hover:bg-[#3a0e7b] transition-all duration-300 text-white ${styles}`}
+      className={`px-3 py-2 sm:px-6 sm:py-4 text-xl sm:text-2xl h-auto w-auto font-mono tracking-tight bg-[#3a0e7b] hover:scale-105 hover:bg-[#3a0e7b] transition-all duration-300 text-white ${styles}`}
     >
       {title}
     </Button>
