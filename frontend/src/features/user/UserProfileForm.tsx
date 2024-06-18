@@ -11,9 +11,21 @@ import {
   FormMessage
 } from "../../components/UI/form";
 import { Input } from "../../components/UI/input";
-import { Button } from "../../components/UI/button";
 import { User } from "./userTypes";
 import { Textarea } from "../../components/UI/textarea";
+import BlobButton from "../../components/buttons/BlobButton";
+
+const initValues = {
+  email: "",
+  bio: "",
+  firstName: "",
+  lastName: "",
+  city: "",
+  country: "",
+  street1: "",
+  street2: "",
+  zipcode: ""
+};
 
 const formUserSchema = z.object({
   email: z.string().optional(),
@@ -42,7 +54,7 @@ function UserProfileForm({
 }: UserProfileFormProps) {
   const form = useForm<UserFormSchema>({
     resolver: zodResolver(formUserSchema),
-    defaultValues: currentUser
+    defaultValues: { ...initValues, ...currentUser }
   });
 
   useEffect(() => {
@@ -61,7 +73,7 @@ function UserProfileForm({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(handlerSubmit)}
-        className="p-4 md:max-w-3xl mx-auto"
+        className="p-4 md:max-w-5xl mx-auto"
       >
         <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
           <h3 className="text-xl font-bold">
@@ -244,15 +256,7 @@ function UserProfileForm({
           />
         </div>
         <div className="flex justify-center mt-6">
-          <Button
-            type="submit"
-            disabled={isLoading}
-            className={`${
-              isLoading ? "animate-spin" : ""
-            } bg-[#3a0e7b] font-mono px-6 py-3 text-white hover:bg-[#4e2a85] transition-transform duration-300 ease-in-out transform hover:scale-105`}
-          >
-            {isLoading ? "Loading" : "Submit"}
-          </Button>
+          <BlobButton text={isLoading ? "Loading" : "Submit"} />
         </div>
       </form>
     </Form>

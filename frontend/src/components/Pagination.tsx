@@ -44,7 +44,7 @@ function Pagination({
               id="resultsPerPage"
               value={resultsPerPage}
               onChange={e => onResultsPerPageChange(Number(e.target.value))}
-              className="border-0 rounded-md p-1 text-gray-700 text-sm ml-1 focus-visible:outline-0  focus-visible:ring-1 focus-visible:ring-gray-300"
+              className="border-0 rounded-md bg-transparent p-1 text-gray-700 text-sm ml-1 focus-visible:outline-0  focus-visible:ring-1 focus-visible:ring-gray-300"
             >
               {LIMITS_PER_PAGE.map(limit => (
                 <option key={limit} value={limit}>
@@ -60,7 +60,7 @@ function Pagination({
               id="sort"
               value={sort}
               onChange={e => dispatch(setSort(e.target.value))}
-              className="border-0 rounded-md p-1 text-gray-700 text-sm ml-1 focus-visible:outline-0  focus-visible:ring-1 focus-visible:ring-gray-300"
+              className="border-0 rounded-md bg-transparent p-1 text-gray-700 text-sm ml-1 focus-visible:outline-0  focus-visible:ring-1 focus-visible:ring-gray-300"
             >
               {Object.entries(SORT_RESULTS).map(sortEl => (
                 <option key={sortEl[0]} value={sortEl[0]}>

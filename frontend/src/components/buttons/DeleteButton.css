@@ -1,0 +1,106 @@
+.unique-delete-button {
+  display: block;
+  background-color: #c0392b;
+  width: 80px;
+  height: 40px;
+  line-height: 40px;
+  margin: auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #fff;
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.unique-delete-button span,
+.unique-delete-button .icon {
+  display: block;
+  height: 100%;
+  text-align: center;
+  position: absolute;
+  top: 0;
+}
+
+.unique-delete-button span {
+  width: 72%;
+  line-height: inherit;
+  font-size: 12px;
+  text-transform: uppercase;
+  left: 0;
+  transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.unique-delete-button span:after {
+  content: "";
+  background-color: #a53125;
+  width: 2px;
+  height: 70%;
+  position: absolute;
+  top: 15%;
+  right: -1px;
+}
+
+.unique-delete-button .icon {
+  width: 28%;
+  right: 0;
+  transition: all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4);
+}
+
+.unique-delete-button .icon .fa {
+  font-size: 16px;
+  vertical-align: middle;
+  transition:
+    all 0.25s cubic-bezier(0.31, -0.105, 0.43, 1.4),
+    height 0.25s ease;
+}
+
+.unique-delete-button .icon .fa-remove {
+  height: 20px;
+}
+
+.unique-delete-button .icon .fa-check {
+  display: none;
+}
+
+.unique-delete-button.success span,
+.unique-delete-button:hover span {
+  left: -72%;
+  opacity: 0;
+}
+
+.unique-delete-button.success .icon,
+.unique-delete-button:hover .icon {
+  width: 100%;
+}
+
+.unique-delete-button.success .icon .fa,
+.unique-delete-button:hover .icon .fa {
+  font-size: 16px;
+}
+
+.unique-delete-button.success {
+  background-color: #27ae60;
+}
+
+.unique-delete-button.success .icon .fa-remove {
+  display: none;
+}
+
+.unique-delete-button.success .icon .fa-check {
+  display: inline-block;
+}
+
+.unique-delete-button:hover {
+  opacity: 0.9;
+}
+
+.unique-delete-button:hover .icon .fa-remove {
+  height: 19px;
+}
+
+.unique-delete-button:active {
+  opacity: 1;
+}

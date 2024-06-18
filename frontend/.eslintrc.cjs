@@ -21,7 +21,8 @@ const config = {
     "spellcheck/spell-checker": "off",
     "unicorn/no-null": "off",
     "import/prefer-default-export": "off",
-    "react/jsx-props-no-spreading": "off"
+    "react/jsx-props-no-spreading": "off",
+    "no-underscore-dangle": "off"
   }
 };
 

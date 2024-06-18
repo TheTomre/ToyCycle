@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { GrLogout, GrLogin } from "react-icons/gr";
+import { Link } from "react-router-dom";
 import { AvatarImage, Avatar, AvatarFallback } from "./UI/avatar";
 import { Button } from "./UI/button";
 
@@ -17,31 +18,31 @@ function Login() {
   return (
     <span className="flex gap-6 sm:gap-4">
       {isAuthenticated ? (
-        <>
-          <Avatar className=" w-9 h-9">
+        <Link to="/profile" className="flex gap-2 sm:gap-4">
+          <Avatar className="w-12 h-12">
             <AvatarImage src={user?.picture || "./assets/icons/avatar.svg"} />
 
             <AvatarFallback>
-              <span className="block p-0 bg-cover w-9 h-9  bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
+              <span className="block p-0 bg-cover w-12 h-12  bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
             </AvatarFallback>
           </Avatar>
           <Button
-            className="hover:bg-[#3a0e7b] hover:text-white"
+            className="hover:bg-[#3a0e7b] hover:text-white w-12 h-12"
             onClick={handleLogout}
           >
-            <GrLogout />
+            <GrLogout size={30} />
           </Button>
-        </>
+        </Link>
       ) : (
         <>
-          <Avatar className="w-9 h-9">
-            <span className="block p-0 w-9 h-9 bg-cover bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
+          <Avatar className="w-12 h-12">
+            <span className="block p-0 w-12 h-12 bg-cover bg-norepeat bg-[url('./assets/icons/avatar.svg')]" />
           </Avatar>
           <Button
-            className="hover:bg-[#3a0e7b] hover:text-white"
+            className="hover:bg-[#3a0e7b] hover:text-white w-12 h-12"
             onClick={handleLogin}
           >
-            <GrLogin />
+            <GrLogin size={30} />
           </Button>
         </>
       )}{" "}

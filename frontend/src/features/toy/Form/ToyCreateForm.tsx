@@ -2,10 +2,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Form } from "../../../components/UI/form";
-import { Button } from "../../../components/UI/button";
 import ToyFormDetails from "./ToyFormDetails";
 import ToyFormCategories from "./ToyFormCategories";
 import ToyFormImage from "./ToyFormImage";
+import BlobButton from "../../../components/buttons/BlobButton";
 
 const initData = {
   name: "",
@@ -111,7 +111,7 @@ function ToyCreateForm({ onSave }: Props) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="bg-white shadow-md rounded-lg p-4 md:max-w-3xl mx-auto space-y-6"
+        className="bg-transporent  rounded-lg p-4 md:max-w-5xl mx-auto space-y-6"
       >
         <div className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-4 rounded-t-lg">
           <h3 className="text-xl font-bold">Toy Details</h3>
@@ -123,12 +123,13 @@ function ToyCreateForm({ onSave }: Props) {
         <ToyFormCategories />
         <ToyFormImage />
         <div className="flex justify-center">
-          <Button
+          {/* <Button
             type="submit"
             className="bg-indigo-500 text-white px-6 py-2 rounded-lg hover:bg-indigo-600 transition-transform duration-300 ease-in-out transform hover:scale-105"
           >
             Submit
-          </Button>
+          </Button> */}
+          <BlobButton text="Create Toy" />
         </div>
       </form>
     </Form>
