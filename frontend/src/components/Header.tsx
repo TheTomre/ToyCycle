@@ -115,8 +115,8 @@ function Header({ className }: Props) {
       <ul
         className={
           isNav
-            ? "fixed md:hidden left-0 top-[100px] w-full h-full bg-white ease-in-out duration-500"
-            : "ease-in-out w-full duration-500 fixed top-[100px] bottom-0 left-[-100%]"
+            ? "fixed md:hidden left-0 top-[78px] w-full h-full bg-white ease-in-out duration-500"
+            : "ease-in-out w-full duration-500 fixed top-[78px] bottom-0 left-[-100%]"
         }
       >
         {/* Mobile drawer Navigation Items */}
