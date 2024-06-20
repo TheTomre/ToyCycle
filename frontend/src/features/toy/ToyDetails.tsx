@@ -86,7 +86,7 @@ function ToyDetails() {
 
   return (
     <>
-      {loading && !error && <Loader className="opacity-100 h-[2000px]" />}
+      {loading && !error && <Loader className="opacity-100" />}
       <div className="max-w-6xl mx-auto p-6 mt-6 border-purple-50">
         {!loading && error ? (
           <Error errorMessage={error} />

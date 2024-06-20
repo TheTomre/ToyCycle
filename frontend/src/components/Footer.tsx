@@ -12,7 +12,7 @@ function Footer({ className }: Props) {
 
   return (
     <footer
-      className={`w-full px-7 py-4 sm:px-10 sm:py-6 self-end bg-[#70e2d2] font-sans z-[100] ${className}`}
+      className={`w-full px-7 py-4 sm:px-10 sm:py-6 self-end bg-[#70e2d2] font-sans ${className}`}
     >
       <div className="max-w-[1440px] mx-auto">
         <div className="flex flex-col gap-5 sm:flex-row w-full sm:justify-between sm:gap-10">
