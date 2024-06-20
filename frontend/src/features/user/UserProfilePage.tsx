@@ -17,7 +17,7 @@ function UserProfilePage() {
 
   return (
     <>
-      {isGetLoading || (isLoading && <Loader className="h-[100vh]" />)}
+      {isGetLoading || (isLoading && <Loader />)}
       <div className="w-full max-w-4xl mx-auto mt-8 min-h-[100vh]">
         {currentUser === undefined && !isGetLoading ? (
           <span>Unable to load user profile</span>

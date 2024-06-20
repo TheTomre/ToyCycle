@@ -157,10 +157,10 @@ const toySlice = createSlice({
     },
     setSearchQuery: (state, action: PayloadAction<string>) => {
       state.search = action.payload;
-
       state.currentPage = 1;
     },
     resetToyList: state => {
+      state.error = null;
       state.currentPage = 1;
       state.resultsPerPage = 10;
       state.totalPages = 1;
@@ -171,6 +171,7 @@ const toySlice = createSlice({
       state.sort = "name";
     },
     resetToysFilter: state => {
+      state.error = null;
       state.category = [];
       state.ageCategory = [];
       state.brand = [];

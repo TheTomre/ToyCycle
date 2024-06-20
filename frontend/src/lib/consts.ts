@@ -6,7 +6,8 @@ export const NAV: { [key: string]: string } = {
   home: "/",
   toys: "/toys",
   exchange: "/toys/create",
-  about: "/about"
+  about: "/about",
+  blog: "/blog"
 };
 
 export const NAV_ITEMS = Object.keys(NAV);

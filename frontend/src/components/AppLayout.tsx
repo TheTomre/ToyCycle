@@ -12,7 +12,7 @@ function AppLayout() {
       className={`${isNavOpen ? "overflow-y-hidden" : ""} flex flex-col min-h-full w-full`}
     >
       <Header />
-      <Main className="mt-[118px] sm:mt-[118px] flex-1 bg-purple-50">
+      <Main className="mt-[78px] sm:mt-[100px] flex-1 bg-purple-50">
         <Outlet />
       </Main>
       <Toaster richColors position="top-right" />

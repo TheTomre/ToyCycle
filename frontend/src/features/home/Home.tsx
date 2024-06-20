@@ -29,7 +29,7 @@ function Home() {
     <div className="relative">
       <div className="w-[100vw] h-[100vh] bg-indigo-50">
         <Parallax ref={parallax} pages={4}>
-          <div className="bg-white w-full flex justify-center p-2 h-[118px]">
+          <div className="bg-white w-full flex justify-center p-2">
             <Header />
           </div>
           <ParallaxLayer

@@ -19,7 +19,7 @@
   padding: 15px 50px;
   text-align: center;
   text-transform: uppercase;
-  color: #3a0e7b; /* Updated color */
+  color: #ffffff;
   font-size: 14px;
   font-weight: 500;
   background-color: transparent;
@@ -73,7 +73,7 @@
   width: 100%;
   height: 100%;
   border-radius: 2px;
-  background: #ffffff;
+  background: #a855f7;
 }
 
 .blob-btn__blobs {

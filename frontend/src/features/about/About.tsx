@@ -1,8 +1,8 @@
 function About() {
   return (
-    <div className="px-36 w-full max-w-[1440px] mx-auto pt-20 pb-32 space-y-10">
+    <div className="px-5 sm:px-10 md:px-36 w-full max-w-[1440px] mx-auto pt-20 pb-32 space-y-10">
       <div className="flex gap-8 font-sans w-full min-h-44">
-        <div className="bg-contain bg-[url('./assets/icons/we.svg')] flex-[1_1_0] bg-no-repeat" />
+        <div className="bg-contain bg-[url('./assets/icons/we.svg')] flex-[1_1_0] bg-no-repeat hidden lg:block" />
         <div className="flex-[5_1_0]">
           <h3 className="font-mono tracking-tight text-2xl text-[#3a0e7b] pb-4">
             Who We Are
@@ -20,7 +20,7 @@ function About() {
         </div>
       </div>
       <div className="flex gap-8 font-sans w-full flex-row-reverse justify-between min-h-44">
-        <div className="bg-contain bg-[url('./assets/icons/target.svg')] flex-[1_1_0] bg-no-repeat " />
+        <div className="bg-contain bg-[url('./assets/icons/target.svg')] flex-[1_1_0] bg-no-repeat hidden lg:block" />
         <div className="flex-[5_1_0]">
           <h3 className="font-mono tracking-tight text-2xl text-[#3a0e7b] pb-4">
             Our Mission
@@ -40,7 +40,7 @@ function About() {
       </div>
       <div>
         <div className="flex gap-8 font-sans w-full min-h-44">
-          <div className="bg-contain bg-[url('./assets/icons/why.svg')] flex-[1_1_0] bg-no-repeat " />
+          <div className="bg-contain bg-[url('./assets/icons/why.svg')] flex-[1_1_0] bg-no-repeat hidden lg:block" />
           <div className="flex-[5_1_0]">
             <h3 className="font-mono tracking-tight text-2xl text-[#3a0e7b] pb-4">
               Why use Toy Cycle?
@@ -59,7 +59,7 @@ function About() {
       </div>
       <div>
         <div className="flex gap-8 font-sans w-full flex-row-reverse min-h-44">
-          <div className="bg-contain bg-[url('./assets/icons/recycle.svg')] flex-[1_1_0] bg-no-repeat " />
+          <div className="bg-contain bg-[url('./assets/icons/recycle.svg')] flex-[1_1_0] bg-no-repeat hidden lg:block" />
           <div className="flex-[5_1_0]">
             <h3 className="font-mono tracking-tight text-2xl text-[#3a0e7b] pb-4">
               Eco-friendly Recycling
